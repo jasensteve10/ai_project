@@ -243,18 +243,19 @@ def save_data(df: pd.DataFrame, output_dir = "dataset" ) -> None:
 # lauching 
 ###############################
 
-pdf_path = r"dataset\EDAN_2025_RESULTAT_NATIONAL_DETAILS.pdf"
-df = extract_pdf(pdf_path)
+if __name__ == "__main__":
+    pdf_path = r"dataset\EDAN_2025_RESULTAT_NATIONAL_DETAILS.pdf"
+    df = extract_pdf(pdf_path)
 
-print("\n=== Aperçu des données extraites (raw) ===")
-print(df.head(20))
+    print("\n=== Aperçu des données extraites (raw) ===")
+    print(df.head(20))
 
-df_clean = transform_data(df)
+    df_clean = transform_data(df)
 
-print("\n=== Aperçu des données transformées (clean) ===")
-print_summary(df_clean)
+    print("\n=== Aperçu des données transformées (clean) ===")
+    print_summary(df_clean)
 
-print("\n=== Sauvegarde des données nettoyées ===")
+    print("\n=== Sauvegarde des données nettoyées ===")
 
-save_data(df_clean)
+    save_data(df_clean)
 
