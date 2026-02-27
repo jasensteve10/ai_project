@@ -1,4 +1,6 @@
 import unicodedata
+import pandas as pd
+import re
 
 # les indices des colonnes dans le pdf
 _COLONNE_INDICES = dict(
@@ -8,24 +10,42 @@ _COLONNE_INDICES = dict(
 )
 
 ## nous permet de verifier les entetes des row dans les tables contre les rows avec les des valeurs
-_HEADER_NAMES = {"REGI", "ON", "TOTAL", "CIRCONSCRIPTION"} # l'ajout de circonscription est un cas de securité , au cas ou 
+_HEADER_NAMES = {"REGI", "ON", "TOTAL"}
 
 
-# ── Fonctions de Nettoyage & Normalisation ────────────────────────────────
-
-def _normalize_text(text: str) -> str:
+# ══════════════════════════════════════════════════════════════════════════════
+# Fonctions de Nettoyage & Normalisation
+# ══════════════════════════════════════════════════════════════════════════════
+def _fix_spaced_text(text: str) -> str:
     """
-    Supprime les accents, met en majuscules et nettoie les espaces.
-
+    Supprime les espaces entre les lettres tout en essayant 
+    de préserver les séparateurs réels (comme les tirets).
     """
     if not text:
         return ""
-    # Décomposition des caractères accentués
-    nfkd_form = unicodedata.normalize('NFKD', str(text))
-    # Filtrage des caractères de ponctuation/accents et mise en majuscules
-    res = "".join([c for c in nfkd_form if not unicodedata.combining(c)])
-    return " ".join(res.split()).upper()
+    
+    # 1. On supprime tous les espaces simples entre des lettres isolées
+    # Exemple : "A S S A" -> "ASSA"
+    text = re.sub(r'(?<=[A-Z])\s(?=[A-Z])', '', text)
+    
+    # 2. On nettoie les espaces restants autour des tirets ou caractères spéciaux
+    text = text.replace(" - ", "-").replace("- ", "-").replace(" -", "-")
+    
+    return text.strip()
 
+
+def _normalize_text(text: str) -> str:
+    if not text:
+        return ""
+    
+    # Correction des espaces étalés avant la normalisation
+    text = _fix_spaced_text(text)
+    
+    # Normalisation standard (accents et majuscules)
+    nfkd_form = unicodedata.normalize('NFKD', str(text))
+    res = "".join([c for c in nfkd_form if not unicodedata.combining(c)])
+    
+    return " ".join(res.split()).upper()
 
 
 def _clean_val(value) -> str:
@@ -47,6 +67,42 @@ def _is_header_row(row:list) -> bool:
     val = _clean_val(row[0])
     return any(marker in val for marker in _HEADER_NAMES)
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  NETTOYAGE & CONVERSION DES TYPES du data frame
+# ══════════════════════════════════════════════════════════════════════════════
+
+def _fr_pct_to_float(series: pd.Series) -> pd.Series:
+    """
+    Convertit les porcentage en float "35,04%" → 0.3504
+    Règle : supprime "%", remplace "," par ".", divise par 100.
+    """
+    return (
+        series
+        .str.replace("%", "", regex=False)
+        .str.replace(",", ".", regex=False)
+        .str.strip()
+        .pipe(pd.to_numeric, errors="coerce")
+        .div(100)
+    )
+
+def _fr_int(series: pd.Series) -> pd.Series:
+    """
+    Convertit "1 234" ou "1 234" (espace insécable) → 1234 (Int64 nullable).
+    """
+    return (
+        series
+        .str.replace(r"\s+", "", regex=True)
+        .str.replace("\u00a0", "", regex=False)
+        .str.replace("\u202f", "", regex=False)
+        .pipe(pd.to_numeric, errors="coerce")
+        .astype("Int64")
+    )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  afficahge d'un résumé lisible des données extraites
+# ══════════════════════════════════════════════════════════════════════════════
 
 def print_summary(df: pd.DataFrame) -> None:
     """Affiche un résumé lisible des données extraites."""

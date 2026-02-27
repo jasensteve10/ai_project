@@ -1,0 +1,18 @@
+This is my follow through part 
+
+son step 1 is to take and create the data base for a later vectorization part 
+
+put let me create a virtual environment and  a requirement.txt ( done automaticaly)
+
+1) voir et comprendre la difference entre pdf plumnber et camelot 
+so far we will go for pdf plumber ( because the way it deals with complexe pdf extractions  is better)
+
+let me finish reading the info i get on it 
+
+enuite je met en place le code et je teste 
+
+
+
+2) le choix de DB, entre parquet + duckdb  ( nous sommes la on implemente le parquet avec duck db et le vector base )
+
+
