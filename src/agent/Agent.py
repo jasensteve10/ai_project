@@ -12,10 +12,13 @@ from typing import Any, Dict, List, Tuple
 
 import duckdb
 import sqlglot
+import time
+from google.api_core import exceptions
 from sqlglot import exp
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from dotenv import load_dotenv
+
 
 # =========================
 # CONFIG
@@ -198,7 +201,7 @@ class ElectionSQLAgent:
 
     def __init__(self) -> None:
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-2.0-flash",
             temperature=0,
         )
         self._system_prompt  = PROMPT_STORE["sql_system"]
@@ -207,6 +210,7 @@ class ElectionSQLAgent:
     # --------------------------------------------------
     # Point d'entrée public
     # --------------------------------------------------
+    
     def run_query(self, question: str) -> Dict[str, Any]:
         """
         Boucle : Génération → Validation → Réparation.
@@ -215,34 +219,42 @@ class ElectionSQLAgent:
         initial_sql  = self._generate_sql(question)
         current_sql  = initial_sql
         last_error   = ""
+        
+        try:
+            for attempt in range(MAX_REPAIR_ATTEMPTS + 1):
+                result = run_safe_sql(current_sql)
 
-        for attempt in range(MAX_REPAIR_ATTEMPTS + 1):
-            result = run_safe_sql(current_sql)
+                if result["ok"]:
+                    return {
+                        "ok":           True,
+                        "attempts":     attempt,
+                        "proposed_sql": initial_sql,
+                        "final_sql":    result["sql"],
+                        "columns":      result["columns"],
+                        "rows":         result["rows"],
+                    }
 
-            if result["ok"]:
-                return {
-                    "ok":           True,
-                    "attempts":     attempt,
-                    "proposed_sql": initial_sql,
-                    "final_sql":    result["sql"],
-                    "columns":      result["columns"],
-                    "rows":         result["rows"],
-                }
+                last_error = f"[{result.get('stage', '?')}] {result['error']}"
 
-            last_error = f"[{result.get('stage', '?')}] {result['error']}"
+                if attempt == MAX_REPAIR_ATTEMPTS:
+                    break
 
-            if attempt == MAX_REPAIR_ATTEMPTS:
-                break
+                current_sql = self._repair_sql(question, current_sql, last_error)
 
-            current_sql = self._repair_sql(question, current_sql, last_error)
-
-        return {
-            "ok":           False,
-            "attempts":     attempt,
-            "proposed_sql": initial_sql,
-            "final_sql":    None,
-            "error":        f"Échec après {attempt} tentative(s). Dernière erreur : {last_error}",
-        }
+            return {
+                "ok":           False,
+                "attempts":     attempt,
+                "proposed_sql": initial_sql,
+                "final_sql":    None,
+                "error":        f"Échec après {attempt} tentative(s). Dernière erreur : {last_error}",
+            }
+        except exceptions.ResourceExhausted as e:
+            return {
+                "ok":           False,
+                "error": "Quota API atteint. Veuillez réessayer dans quelques secondes ou demain.",
+                "retry_after": 5
+            }   
+        
 
     # --------------------------------------------------
     # Méthodes privées LLM

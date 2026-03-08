@@ -4,6 +4,7 @@
 # Assure que src/ est importable
 import streamlit as st
 import pandas as pd
+from typing import Dict, Any
 from src.agent.Agent import ElectionSQLAgent
 
 #---------------- 
@@ -49,7 +50,7 @@ with st.sidebar:
 
     chart_mode = st.selectbox(
         "Graphique",
-        [ "None", "Auto", "Bar", "Line"],
+        ["Auto", "Bar", "Line", "None"],
         index=0
     )
 
@@ -64,12 +65,6 @@ with st.sidebar:
 - Taux de participation moyen par région 
         """.strip()
     )
-
-    try:
-        _meta = agent.run_query("SELECT * FROM mart.vw_circonscriptions LIMIT 1")
-        st.info(f"Tables indexées : {len(_meta['columns'])} colonnes")
-    except Exception:
-        st.warning(" Impossible de lire les métadonnées (DB non prête ?)")
 
 
     st.divider()
@@ -149,6 +144,11 @@ def build_chart(df: pd.DataFrame, mode: str):
 
 prompt = st.chat_input("Pose ta question sur les résultats (ex: 'Top 10 candidats par score_pct en 001')")
 
+@st.cache_data(show_spinner=False)
+def cached_query(question: str) -> Dict[str, Any]:
+    # Cette fonction ne sera appelée par le LLM que si la question est NOUVELLE
+    return agent.run_query(question)
+
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -164,7 +164,7 @@ if prompt:
                 "ok": False
             }
             try:
-                out = agent.run_query(prompt)
+                out = cached_query(prompt)
             except Exception as e:
                 st.error("Erreur interne (agent). Vérifie GOOGLE_API_KEY et les prompts.")
                 if show_debug:
