@@ -1,2 +1,4 @@
 /project
 /.vscode
+/_pycache_
+/.env
