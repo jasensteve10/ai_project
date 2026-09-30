@@ -19,3 +19,16 @@ Public demo: retrieval only, saved Claude Haiku answers, **no language-model cal
 Files used by Community Cloud: `app/app.py`, `app/requirements.txt` (read before the root
 requirements), `.streamlit/config.toml`. Apps sleep after 12 h without traffic; memory limit 2.7 GB
 (measured peak ≈1.9 GB with E5 loaded).
+
+## Optional: live answers with your Gemini key
+
+Replace the secrets with the following (free tier; the app answers with real SQL). Anyone with
+the URL can then use your quota, so consider making the app private (App settings → Sharing).
+
+```toml
+PUBLIC_DEMO = "0"
+E5_ALLOW_DOWNLOAD = "1"
+GOOGLE_API_KEY = "your-key"
+GEMINI_MODEL = "gemini-3.8-flash"
+GEMINI_FALLBACK_MODELS = "gemini-3.6-flash,gemini-3.5-flash,gemini-3.1-flash-lite"
+```

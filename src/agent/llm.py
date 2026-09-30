@@ -187,27 +187,88 @@ class FallbackLLM:
         return response
 
 
+_UNAVAILABLE_NAMES = {'GoogleModelNotFoundError', 'NotFound'}
+
+
+def _model_unavailable(exc):
+    """Overloaded, rate-limited, timed out or retired: worth trying the next Gemini model."""
+    code = getattr(exc, 'code', None) or getattr(exc, 'status_code', None)
+    return is_transient(exc) or code in (404, 504) or type(exc).__name__ in _UNAVAILABLE_NAMES
+
+
+class GeminiChain:
+    """Free-tier Gemini models tried in order (GEMINI_MODEL, then GEMINI_FALLBACK_MODELS).
+
+    Google's 503 "model is experiencing high demand" can last for hours on one model
+    while others answer; the chain moves on within the same request. A model that failed
+    is skipped for ``cooldown`` seconds. Other errors (bad key, invalid request) propagate.
+    """
+
+    def __init__(self, models, *, factory=make_gemini_llm, cooldown=120.0, clock=time.monotonic):
+        if not models:
+            raise ValueError('Set GEMINI_MODEL in .env to a model available in your account.')
+        self.models, self.factory, self.cooldown, self.clock = list(models), factory, cooldown, clock
+        self._clients, self._down_until = {}, {}
+
+    def _client(self, model):
+        if model not in self._clients:
+            self._clients[model] = self.factory(model)
+        return self._clients[model]
+
+    def invoke(self, messages):
+        now = self.clock()
+        ready = [m for m in self.models if self._down_until.get(m, 0) <= now]
+        order = ready or self.models  # all cooling down: try them all again rather than fail
+        last = None
+        for model in order:
+            try:
+                response = self._client(model).invoke(messages)
+            except Exception as exc:
+                if type(exc).__name__ == 'BudgetExceeded' or not _model_unavailable(exc):
+                    raise
+                self._down_until[model] = self.clock() + self.cooldown
+                last = exc
+                continue
+            tagged = _tag(response, 'google', model)
+            if model != self.models[0]:
+                tagged.response_metadata['fallback_reason'] = f'{self.models[0]} unavailable'
+            return tagged
+        raise last
+
+
+def gemini_models(model=None):
+    primary = model or os.getenv('GEMINI_MODEL')
+    extra = [m.strip() for m in (os.getenv('GEMINI_FALLBACK_MODELS') or '').split(',') if m.strip()]
+    return [m for m in dict.fromkeys([primary, *extra]) if m]
+
+
+def make_gemini(model=None):
+    """One Gemini model, or a GeminiChain when GEMINI_FALLBACK_MODELS is set."""
+    models = gemini_models(model)
+    return make_gemini_llm(models[0] if models else None) if len(models) <= 1 else GeminiChain(models)
+
+
 def fallback_enabled():
     return (os.getenv('LLM_FALLBACK') or 'none').strip().lower() in {'claude', 'anthropic'}
 
 
 def llm_descriptor(gemini_model=None):
     """What the app will call; part of the cache/runtime fingerprint."""
-    return {'primary': gemini_model or os.getenv('GEMINI_MODEL'),
+    return {'primary': gemini_model or os.getenv('GEMINI_MODEL'), 'gemini_chain': gemini_models(gemini_model),
             'fallback': (os.getenv('ANTHROPIC_MODEL') or DEFAULT_CLAUDE_MODEL) if fallback_enabled() else None}
 
 
 def make_llm(model):
     """The application model: Gemini, wrapped with the Claude fallback only when enabled."""
     if not fallback_enabled():
-        return make_gemini_llm(model)
+        return make_gemini(model)
     claude_model = os.getenv('ANTHROPIC_MODEL') or DEFAULT_CLAUDE_MODEL
     try:
         cap = int(os.getenv('CLAUDE_FALLBACK_MAX_CALLS', DEFAULT_FALLBACK_MAX_CALLS))
     except ValueError as exc:
         raise ValueError('CLAUDE_FALLBACK_MAX_CALLS must be an integer') from exc
     try:
-        primary = make_gemini_llm(model)
+        primary = make_gemini(model)
     except Exception:  # Gemini unconfigured or SDK broken: serve from Claude, still capped
         primary = None
     return FallbackLLM(primary, ClaudeChat(claude_model), primary_model=model, secondary_model=claude_model,

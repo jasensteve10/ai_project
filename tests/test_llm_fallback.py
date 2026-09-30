@@ -9,6 +9,12 @@ from src.agent.Agent import ElectionSQLAgent, _parse_response, runtime_fingerpri
 from src.agent.llm import (ClaudeChat, ClaudeRefusal, FallbackBudgetExceeded, FallbackLLM, RESPONSE_SCHEMA,
                            is_transient)
 
+@pytest.fixture(autouse=True)
+def _isolate_gemini_chain(monkeypatch):
+    """src.agent.Agent loads the developer's .env at import; tests set the chain explicitly."""
+    monkeypatch.delenv('GEMINI_FALLBACK_MODELS', raising=False)
+
+
 ANSWER = {'status': 'answerable', 'sql': 'SELECT COUNT(*) FROM mart.vw_vainqueur', 'response': None, 'search': None}
 
 
@@ -199,7 +205,8 @@ def test_fallback_is_off_by_default(monkeypatch):
     sentinel = object()
     monkeypatch.setattr(llm, 'make_gemini_llm', lambda model: sentinel)
     assert llm.make_llm('gemini-test') is sentinel
-    assert llm.llm_descriptor('gemini-test') == {'primary': 'gemini-test', 'fallback': None}
+    assert llm.llm_descriptor('gemini-test') == {'primary': 'gemini-test', 'gemini_chain': ['gemini-test'],
+                                                 'fallback': None}
 
 
 def test_enabled_fallback_wraps_gemini_with_capped_claude(monkeypatch):
@@ -270,3 +277,63 @@ def test_workspace_header_from_env(monkeypatch):
     assert ClaudeChat('claude-haiku-4-5').client.default_headers.get('anthropic-workspace-id') == 'wrkspc_test'
     monkeypatch.delenv('ANTHROPIC_WORKSPACE_ID')
     assert 'anthropic-workspace-id' not in ClaudeChat('claude-haiku-4-5').client.default_headers
+
+
+# ---------------------------------------------------------------- Gemini model chain
+class Overloaded(Exception):
+    code = 503
+
+
+class Timeout504(Exception):
+    code = 504
+
+
+class BadKey(Exception):
+    code = 400
+
+
+def _gemini_factory(behaviour, calls):
+    def factory(model):
+        def invoke(messages):
+            calls.append(model)
+            outcome = behaviour[model]
+            if isinstance(outcome, Exception):
+                raise outcome
+            return SimpleNamespace(content=json.dumps(ANSWER), usage_metadata={'input_tokens': 1, 'output_tokens': 1},
+                                   response_metadata={})
+        return SimpleNamespace(invoke=invoke)
+    return factory
+
+
+def test_gemini_chain_moves_past_overloaded_models_and_remembers():
+    now, calls = [0.0], []
+    chain = llm.GeminiChain(['g-38', 'g-37', 'g-36'], clock=lambda: now[0], cooldown=60,
+                            factory=_gemini_factory({'g-38': Overloaded(), 'g-37': Timeout504(), 'g-36': 'ok'}, calls))
+    out = chain.invoke([msg('human', 'q')])
+    assert out.response_metadata['model_name'] == 'g-36' and 'g-38 unavailable' in out.response_metadata['fallback_reason']
+    assert calls == ['g-38', 'g-37', 'g-36']
+    chain.invoke([msg('human', 'q')])
+    assert calls[3:] == ['g-36']  # failed models skipped during cooldown
+    now[0] = 61
+    chain.invoke([msg('human', 'q')])
+    assert calls[4:] == ['g-38', 'g-37', 'g-36']  # retried after cooldown
+
+
+def test_gemini_chain_does_not_mask_real_errors_and_raises_when_all_down():
+    chain = llm.GeminiChain(['a', 'b'], factory=_gemini_factory({'a': BadKey(), 'b': 'ok'}, []))
+    with pytest.raises(BadKey):
+        chain.invoke([msg('human', 'q')])
+    chain = llm.GeminiChain(['a', 'b'], factory=_gemini_factory({'a': Overloaded(), 'b': Overloaded()}, []))
+    with pytest.raises(Overloaded):  # transient: the agent's own retry/backoff still applies
+        chain.invoke([msg('human', 'q')])
+
+
+def test_gemini_chain_configuration(monkeypatch):
+    monkeypatch.delenv('LLM_FALLBACK', raising=False)
+    monkeypatch.setenv('GEMINI_MODEL', 'g-38')
+    monkeypatch.setenv('GEMINI_FALLBACK_MODELS', ' g-36, g-38 ,g-35 ')
+    assert llm.gemini_models() == ['g-38', 'g-36', 'g-35']
+    assert isinstance(llm.make_llm('g-38'), llm.GeminiChain)
+    monkeypatch.delenv('GEMINI_FALLBACK_MODELS')
+    monkeypatch.setattr(llm, 'make_gemini_llm', lambda model: 'single')
+    assert llm.make_llm('g-38') == 'single'
