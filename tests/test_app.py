@@ -3,6 +3,7 @@ from src.agent.Agent import ElectionSQLAgent
 
 
 def test_app_success_abstention_and_clear(monkeypatch):
+    monkeypatch.setenv('PUBLIC_DEMO', '0')  # the Docker image defaults to the public demo
     monkeypatch.setenv('GEMINI_MODEL', 'offline-test')
     monkeypatch.setattr(ElectionSQLAgent, '__init__', lambda self, **kw: None)
     responses = iter([
@@ -24,6 +25,7 @@ def test_app_success_abstention_and_clear(monkeypatch):
 
 
 def test_local_search_and_condition_switch(monkeypatch):
+    monkeypatch.setenv('PUBLIC_DEMO', '0')
     monkeypatch.setenv('RAG_CONDITION', 'B')
     def unexpected(*args, **kwargs):
         raise AssertionError('Local search must not call the LLM')
@@ -41,3 +43,26 @@ def test_local_search_and_condition_switch(monkeypatch):
     result = app.session_state['messages'][-1]['result']
     assert result['condition'] == 'A'
     assert {c['kind'] for c in result['sources']} == {'schema', 'domain'}
+
+
+def test_public_demo_never_builds_a_model_client(monkeypatch):
+    monkeypatch.setenv('PUBLIC_DEMO', '1')
+    monkeypatch.setenv('RAG_CONDITION', 'B')
+    monkeypatch.setenv('GEMINI_MODEL', 'must-not-be-used')
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Public demo must not construct or call a model client')
+    monkeypatch.setattr(ElectionSQLAgent, '__init__', forbidden)
+    monkeypatch.setattr(ElectionSQLAgent, 'run_query', forbidden)
+    app = AppTest.from_file('../app/app.py').run(timeout=10)
+    assert not app.exception
+    assert all('sources uniquement' not in t.label for t in app.toggle)  # no model-call switch offered
+    app.chat_input[0].set_value('Qui a gagné à Yopougon ?').run()
+    assert not app.exception and not app.error
+    assert app.session_state['messages'][-1]['result']['status'] == 'search'
+    # Saved answer from the archived Haiku run, rendered with its retrieval context.
+    app.selectbox[1].select('dev-002').run()
+    saved = app.session_state['messages'][-1]['result']
+    assert not app.exception and saved['saved'] and saved['condition'] == 'B'
+    assert 129515 in saved['rows'][0] and saved['outcome'] == 'correct'
+    assert len(app.dataframe) == 1

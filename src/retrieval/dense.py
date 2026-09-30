@@ -12,6 +12,11 @@ DEFAULT_MODEL = 'intfloat/multilingual-e5-small'
 DEFAULT_REVISION = '614241f622f53c4eeff9890bdc4f31cfecc418b3'
 
 
+def _download_allowed():
+    """Hosts without a build step (Streamlit Community Cloud) opt in to fetching the pinned revision."""
+    return os.getenv('E5_ALLOW_DOWNLOAD', '').strip() == '1'
+
+
 class DenseRetriever:
     def __init__(self, cards, model_name=DEFAULT_MODEL, cache_dir=CACHE_DIR, corpus_version=None, device=None,
                  revision=None, download=False):
@@ -24,7 +29,7 @@ class DenseRetriever:
             raise ValueError('An explicit dense model revision is required')
         try:
             self.model = SentenceTransformer(model_name, revision=self.revision, device=device or 'cpu',
-                                              local_files_only=not download)
+                                              local_files_only=not (download or _download_allowed()))
         except OSError as exc:
             raise RuntimeError('Modèle local absent : python -m src.retrieval.cli prepare --download-model') from exc
         # E5 expects "query: " / "passage: " prefixes; vectors are L2-normalized for cosine.

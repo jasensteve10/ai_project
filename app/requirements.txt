@@ -1,0 +1,20 @@
+# Runtime dependencies for Streamlit Community Cloud (read before the root requirements
+# because it sits next to the entrypoint app/app.py). Python 3.14, Linux x86-64.
+streamlit==1.64.0
+pandas==3.0.6
+pyarrow==25.0.1
+numpy==2.5.3
+duckdb==1.5.5
+sqlglot==30.20.0
+pdfplumber==0.11.10
+python-dotenv==1.2.3
+huggingface-hub==1.33.0
+transformers==5.17.0
+sentence-transformers==6.1.0
+# CPU-only PyTorch on the Linux host: the default wheel adds ~6 GB of unused CUDA libraries.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and platform_machine == "x86_64" and python_version == "3.14"
+torch==2.14.0 ; sys_platform != "linux" or platform_machine != "x86_64" or python_version != "3.14"
+# Only used when PUBLIC_DEMO=0 and API keys are configured.
+langchain-google-genai==4.4.0
+google-api-core==2.39.0
+anthropic==1.9.0

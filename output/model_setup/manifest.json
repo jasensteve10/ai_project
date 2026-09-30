@@ -1,0 +1,17 @@
+{
+  "training_performed": false,
+  "train_split": null,
+  "epochs": null,
+  "optimizer": null,
+  "learning_rate": null,
+  "method": "Inference with frozen pretrained models; retrieval settings evaluated on development data.",
+  "encoder": {
+    "model": "intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "device": "cpu"
+  },
+  "generator": "Selected per evaluation run; inspect its manifest for provider/model.",
+  "unverified_artifacts": "models/e5-small-edan-ft is not referenced by the comparison config; its name alone does not establish that training occurred.",
+  "config_sha256": "c23b5ce3cad904faecf315c2a964136b11d2f0b1f3ef8a9f98c10fc84c0dee03",
+  "indexed_cards": 300
+}

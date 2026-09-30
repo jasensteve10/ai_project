@@ -7,7 +7,7 @@ from pathlib import Path
 
 import duckdb
 
-from src.schema.schema import DB_PATH, DESCRIPTIONS, read_catalog
+from src.preprocessing.schema import DB_PATH, DESCRIPTIONS, read_catalog
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 GLOSSARY_PATH = PROJECT_ROOT / 'src/semantic/glossary.json'

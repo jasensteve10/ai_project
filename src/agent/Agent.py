@@ -14,7 +14,7 @@ from sqlglot import exp
 from sqlglot.optimizer.scope import traverse_scope
 
 from src.agent.llm import is_transient, llm_descriptor, make_gemini_llm, make_llm  # noqa: F401 (re-exported)
-from src.schema.schema import DB_PATH, DESCRIPTIONS, read_catalog
+from src.preprocessing.schema import DB_PATH, DESCRIPTIONS, read_catalog
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PROMPT_DIR = PROJECT_ROOT / 'src/prompts'
@@ -134,7 +134,7 @@ def run_safe_sql(sql: str, db_path=DB_PATH, timeout_seconds=5.0) -> dict[str, An
 def runtime_fingerprint(db_path=DB_PATH, model=None):
     """Versions data, live view definitions, prompts, model and query policy."""
     digest = hashlib.sha256()
-    for path in [Path(db_path), Path(__file__), PROJECT_ROOT / 'src/schema/schema.py',
+    for path in [Path(db_path), Path(__file__), PROJECT_ROOT / 'src/preprocessing/schema.py',
                  PROMPT_DIR / 'sql_system.md', PROMPT_DIR / 'sql_repair.md', PROMPT_DIR / 'examples.json',
                  PROMPT_DIR / 'agent_retrieval.md', PROJECT_ROOT / 'requirements.lock']:
         digest.update(path.read_bytes())

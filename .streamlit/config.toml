@@ -1,0 +1,7 @@
+[server]
+# The file watcher scans imported torch modules and errors on Community Cloud.
+fileWatcherType = "none"
+headless = true
+
+[browser]
+gatherUsageStats = false

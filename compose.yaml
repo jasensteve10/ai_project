@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        INCLUDE_E5: "1"
+    image: electoral-rag:local
+    ports:
+      - "127.0.0.1:8501:8501"
+    environment:
+      # Explicit runtime opt-in; no .env file is copied into the image.
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-}
+      LLM_FALLBACK: none
+      # The image defaults to the public, call-free demo; set PUBLIC_DEMO=0 to use your keys locally.
+      PUBLIC_DEMO: ${PUBLIC_DEMO:-1}
+    volumes:
+      - results:/app/output
+    restart: "no"
+  tests:
+    image: electoral-rag:local
+    build:
+      context: .
+    profiles: ["test"]
+    command: ["python", "-m", "pytest", "-q"]
+    network_mode: none
+    environment:
+      HF_HUB_OFFLINE: "1"
+      LLM_FALLBACK: none
+volumes:
+  results:

@@ -2,6 +2,8 @@
 /.vscode
 /_pycache_
 /.env
+.env.*
+!.env.example
 .venv/
 __pycache__/
 *.py[cod]
@@ -11,3 +13,12 @@ tmp/
 
 # Retrieval/experiment caches (rebuilt on demand)
 dataset/retrieval/embeddings/
+
+# Large local model artifacts are not evidence of a reproducible training run.
+models/**/*.safetensors
+models/**/*.bin
+models/**/*.gguf
+dist/
+
+# Local Streamlit secrets (API keys) are never committed
+.streamlit/secrets.toml

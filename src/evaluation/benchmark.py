@@ -17,7 +17,7 @@ from sqlglot import exp
 from src.agent.Agent import DEFAULT_LIMIT, run_safe_sql, validate_sql
 from src.retrieval.bm25 import fold
 from src.retrieval.corpus import load_cards
-from src.schema.schema import DB_PATH
+from src.preprocessing.schema import DB_PATH
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 BENCHMARK_PATH = PROJECT_ROOT / 'benchmarks/edan_2025_v1.jsonl'
