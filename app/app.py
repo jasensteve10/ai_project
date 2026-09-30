@@ -82,7 +82,8 @@ with st.sidebar:
         unlocked = bool(code) and hmac.compare_digest(code, ACCESS_CODE)
     LIVE = not PUBLIC_DEMO and unlocked
     if LIVE:
-        st.success(f"Réponses en direct · {llm_descriptor()['primary'] or 'Gemini non configuré'}")
+        chain = llm_descriptor()['gemini_chain']
+        st.success('Réponses en direct · ' + (' → '.join(chain) if chain else 'Gemini non configuré'))
     elif PUBLIC_DEMO:
         st.caption('Mode démonstration : réponses issues de l’évaluation enregistrée.')
     else:
@@ -121,8 +122,12 @@ def render_result(out, compact=False):
     elif out.get('status') in {'unsupported', 'needs_clarification'}:
         st.info(out['response'])
     elif not out.get('ok'):
-        st.error('Impossible de répondre à cette question.')
-        st.caption(f"{out.get('stage', 'application')} : {(out.get('error') or 'erreur inconnue')[:300]}")
+        error = out.get('error') or 'erreur inconnue'
+        if out.get('stage') == 'transport' and ('503' in error or '504' in error or 'indisponibles' in error):
+            st.warning('Les modèles Gemini sont momentanément surchargés (côté Google). Réessayez dans une minute.')
+        else:
+            st.error('Impossible de répondre à cette question.')
+        st.caption(f"{out.get('stage', 'application')} : {error[:300]}")
     else:
         df = pd.DataFrame(out['rows'], columns=out['columns'])
         if not compact:

@@ -34,3 +34,20 @@ GOOGLE_API_KEY = "your-key"
 GEMINI_MODEL = "gemini-3.8-flash"
 GEMINI_FALLBACK_MODELS = "gemini-3.6-flash,gemini-3.5-flash,gemini-3.1-flash-lite"
 ```
+
+`GEMINI_FALLBACK_MODELS` is optional: when it is absent the app uses gemini-3.6-flash,
+gemini-3.5-flash and gemini-3.1-flash-lite after `GEMINI_MODEL`; an empty value disables the chain.
+
+### Optional: Claude as last resort (billed)
+
+Used only when every Gemini model fails. Add to the secrets above:
+
+```toml
+LLM_FALLBACK = "claude"
+ANTHROPIC_API_KEY = "your-anthropic-key"
+ANTHROPIC_MODEL = "claude-haiku-4-5"
+ANTHROPIC_WORKSPACE_ID = "your-workspace-id"
+CLAUDE_FALLBACK_MAX_CALLS = "20"
+```
+Each Claude answer costs about USD 0.003 with Haiku; the cap stops paid calls per app process and
+the app shows a warning whenever Claude answered.

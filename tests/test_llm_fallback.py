@@ -11,8 +11,8 @@ from src.agent.llm import (ClaudeChat, ClaudeRefusal, FallbackBudgetExceeded, Fa
 
 @pytest.fixture(autouse=True)
 def _isolate_gemini_chain(monkeypatch):
-    """src.agent.Agent loads the developer's .env at import; tests set the chain explicitly."""
-    monkeypatch.delenv('GEMINI_FALLBACK_MODELS', raising=False)
+    """src.agent.Agent loads the developer's .env at import; '' = no fallbacks unless a test sets them."""
+    monkeypatch.setenv('GEMINI_FALLBACK_MODELS', '')
 
 
 ANSWER = {'status': 'answerable', 'sql': 'SELECT COUNT(*) FROM mart.vw_vainqueur', 'response': None, 'search': None}
@@ -323,9 +323,11 @@ def test_gemini_chain_does_not_mask_real_errors_and_raises_when_all_down():
     chain = llm.GeminiChain(['a', 'b'], factory=_gemini_factory({'a': BadKey(), 'b': 'ok'}, []))
     with pytest.raises(BadKey):
         chain.invoke([msg('human', 'q')])
-    chain = llm.GeminiChain(['a', 'b'], factory=_gemini_factory({'a': Overloaded(), 'b': Overloaded()}, []))
-    with pytest.raises(Overloaded):  # transient: the agent's own retry/backoff still applies
+    chain = llm.GeminiChain(['a', 'b'], factory=_gemini_factory({'a': Overloaded(), 'b': Timeout504()}, []))
+    with pytest.raises(llm.GeminiUnavailable) as err:
         chain.invoke([msg('human', 'q')])
+    assert 'a (503)' in str(err.value) and 'b (504)' in str(err.value)
+    assert is_transient(err.value)  # the agent's own retry/backoff still applies
 
 
 def test_gemini_chain_configuration(monkeypatch):
@@ -334,6 +336,8 @@ def test_gemini_chain_configuration(monkeypatch):
     monkeypatch.setenv('GEMINI_FALLBACK_MODELS', ' g-36, g-38 ,g-35 ')
     assert llm.gemini_models() == ['g-38', 'g-36', 'g-35']
     assert isinstance(llm.make_llm('g-38'), llm.GeminiChain)
-    monkeypatch.delenv('GEMINI_FALLBACK_MODELS')
+    monkeypatch.setenv('GEMINI_FALLBACK_MODELS', '')  # explicitly disabled
     monkeypatch.setattr(llm, 'make_gemini_llm', lambda model: 'single')
     assert llm.make_llm('g-38') == 'single'
+    monkeypatch.delenv('GEMINI_FALLBACK_MODELS')  # not configured: built-in defaults
+    assert llm.gemini_models() == ['g-38', *llm.DEFAULT_GEMINI_FALLBACKS]

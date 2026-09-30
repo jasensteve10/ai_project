@@ -187,6 +187,15 @@ class FallbackLLM:
         return response
 
 
+# Used when GEMINI_FALLBACK_MODELS is not set at all (set it to an empty value to disable).
+DEFAULT_GEMINI_FALLBACKS = ('gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.1-flash-lite')
+
+
+class GeminiUnavailable(Exception):
+    """Every model of the chain failed with a capacity/availability error (retryable)."""
+    code = 503
+
+
 _UNAVAILABLE_NAMES = {'GoogleModelNotFoundError', 'NotFound'}
 
 
@@ -219,7 +228,7 @@ class GeminiChain:
         now = self.clock()
         ready = [m for m in self.models if self._down_until.get(m, 0) <= now]
         order = ready or self.models  # all cooling down: try them all again rather than fail
-        last = None
+        failures = []
         for model in order:
             try:
                 response = self._client(model).invoke(messages)
@@ -227,18 +236,21 @@ class GeminiChain:
                 if type(exc).__name__ == 'BudgetExceeded' or not _model_unavailable(exc):
                     raise
                 self._down_until[model] = self.clock() + self.cooldown
-                last = exc
+                code = getattr(exc, 'code', None) or getattr(exc, 'status_code', None) or type(exc).__name__
+                failures.append(f'{model} ({code})')
                 continue
             tagged = _tag(response, 'google', model)
             if model != self.models[0]:
                 tagged.response_metadata['fallback_reason'] = f'{self.models[0]} unavailable'
             return tagged
-        raise last
+        raise GeminiUnavailable('Tous les modèles Gemini sont momentanément indisponibles : ' + ', '.join(failures))
 
 
 def gemini_models(model=None):
     primary = model or os.getenv('GEMINI_MODEL')
-    extra = [m.strip() for m in (os.getenv('GEMINI_FALLBACK_MODELS') or '').split(',') if m.strip()]
+    configured = os.getenv('GEMINI_FALLBACK_MODELS')
+    extra = (list(DEFAULT_GEMINI_FALLBACKS) if configured is None
+             else [m.strip() for m in configured.split(',') if m.strip()])
     return [m for m in dict.fromkeys([primary, *extra]) if m]
 
 
