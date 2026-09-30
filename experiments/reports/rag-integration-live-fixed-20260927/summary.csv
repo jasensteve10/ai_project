@@ -1,0 +1,3 @@
+condition,n,success,answerable_correct,executed,abstention_correct,slot_recall,complete_evidence,p50_s,p95_s,n_latency,input_tokens,output_tokens,api_calls,retrieval_calls,repairs,budget_exceeded,cost_per_success_est,success_ci_low,success_ci_high
+B,3,1.0,1.0,1.0,,1.0,1.0,20.88711979193613,41.05769707891159,3,2276.0,1180.0,2.0,0.0,0.0,0,,1.0,1.0
+D,3,1.0,1.0,1.0,,1.0,1.0,18.94865633302834,21.110017470410092,3,2377.0,1179.3333333333333,1.3333333333333333,0.0,0.0,0,,1.0,1.0

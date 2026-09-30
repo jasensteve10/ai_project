@@ -1,0 +1,4 @@
+condition,display_label,baseline,baseline_display_label,n,n_paired_trials,n_families,diff,ci_low,ci_high,ci_method,wins,losses,both_correct,both_wrong,mcnemar_exact_p_unadjusted
+B,B1,A,A,18,18,18,0.16666666666666666,0.0,0.3333333333333333,cluster_bootstrap_paraphrase_families,3,0,15,0,0.25
+C,B2,A,A,18,18,18,0.1111111111111111,0.0,0.2777777777777778,cluster_bootstrap_paraphrase_families,2,0,15,1,0.5
+D,B3,A,A,18,18,18,0.1111111111111111,-0.1111111111111111,0.3333333333333333,cluster_bootstrap_paraphrase_families,3,1,14,0,0.625

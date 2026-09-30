@@ -1,0 +1,6 @@
+calculation,value,interpretation
+"National turnout, one row per constituency",0.3503619596021538,Registered-voter-weighted rate
+Mean exact constituency turnout,0.42216222947791343,Each constituency has equal weight
+Mean printed turnout over candidate rows,0.37178862222222225,Weights constituencies by number of entries
+Ratio of duplicated candidate-row totals,0.2944856906590188,Incorrect national aggregation
+Inflation factor for registered totals at candidate grain,5.7868428068467805,Repeated constituency totals

@@ -10,7 +10,7 @@ _COLONNE_INDICES = dict(
 )
 
 ## nous permet de verifier les entetes des row dans les tables contre les rows avec les des valeurs
-_HEADER_NAMES = {"REGI", "ON", "TOTAL"}
+_HEADER_NAMES = {"REGI", "ON", "REGI ON", "REGION", "TOTAL"}
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -18,15 +18,14 @@ _HEADER_NAMES = {"REGI", "ON", "TOTAL"}
 # ══════════════════════════════════════════════════════════════════════════════
 def _fix_spaced_text(text: str) -> str:
     """
-    Supprime les espaces entre les lettres tout en essayant 
-    de préserver les séparateurs réels (comme les tirets).
+    Normalise les espaces sans supprimer les séparateurs entre mots.
     """
     if not text:
         return ""
     
-    # 1. On supprime tous les espaces simples entre des lettres isolées
-    # Exemple : "A S S A" -> "ASSA"
-    text = re.sub(r'(?<=[A-Z])\s(?=[A-Z])', '', text)
+    # Ordinary uppercase word boundaries are meaningful. Vertical PDF text is
+    # reconstructed from character coordinates by the extractor instead.
+    text = " ".join(str(text).split())
     
     # 2. On nettoie les espaces restants autour des tirets ou caractères spéciaux
     text = text.replace(" - ", "-").replace("- ", "-").replace(" -", "-")
@@ -38,7 +37,7 @@ def _normalize_text(text: str) -> str:
     if not text:
         return ""
     
-    # Correction des espaces étalés avant la normalisation
+    # Préserver les espaces entre les mots avant la normalisation
     text = _fix_spaced_text(text)
     
     # Normalisation standard (accents et majuscules)
@@ -64,8 +63,8 @@ def _is_header_row(row:list) -> bool:
     Returns:
         bool: True if the row is a header row, False otherwise.
     """
-    val = _clean_val(row[0])
-    return any(marker in val for marker in _HEADER_NAMES)
+    val = _clean_val(row[0]).upper() if row else ""
+    return val in _HEADER_NAMES or (len(row) > 10 and _clean_val(row[9]) == "NOMBRE" and _clean_val(row[10]) == "%")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -112,7 +111,7 @@ def print_summary(df: pd.DataFrame) -> None:
     print("  RÉSUMÉ — EDAN 2025 Résultats Nationaux")
     print(sep)
     print(f"  Candidats total          : {len(df):>8,}")
-    print(f"  Élus (députés)           : {df['elu'].sum():>8,}")
+    print(f"  Candidatures/listes élues : {df['elu'].sum():>8,}")
     print(f"  Circonscriptions         : {df['circonscription_id'].nunique():>8,}")
     print(f"  Régions                  : {df['region'].nunique():>8,}")
     print(f"  Inscrits total           : {df.groupby('circonscription_id')['inscrits'].first().sum():>8,}")

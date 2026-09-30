@@ -1,0 +1,44 @@
+{
+  "source_draft": "project-report.docx",
+  "source_draft_sha256": "75ae6766b6dcaec88149bb789394e8faa649493da0bfb62e70eedbec80568e38",
+  "edited_text": "docs/report/comparison/PROJECT_REPORT_COMPARISON.md",
+  "docx": "output/docx/PROJECT_REPORT_COMPARISON.docx",
+  "evidence_cutoff": "2026-09-30",
+  "report_date": "2026-09-30",
+  "pdf": "output/pdf/PROJECT_REPORT_COMPARISON.pdf",
+  "pages": 8,
+  "scope": "local verification; new real-generator comparison unmeasured",
+  "visual_qa": {
+    "status": "passed",
+    "pages_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "render_directory": "tmp/report_comparison/release"
+  },
+  "regression_tests": {
+    "passed": 134,
+    "warnings": 1
+  },
+  "scripted_checks": {
+    "passed": 72,
+    "real_model_accuracy_evidence": false
+  },
+  "artifact_sha256": {
+    "docx": "b65eb4e8dad0d9c2cd355273add0930830ae8830f5b8f1884446a9186c81eafe",
+    "pdf": "1b9de476d80147441c1665866d330732a8803b3f9f7466f2c149b1205e6de16e",
+    "markdown": "0ca19c3f80a354fd57ed7901e02c412062fff91320e3aa22fcc810e4989a85a2"
+  },
+  "evidence": {
+    "configs/text_to_sql_comparison.json": "c23b5ce3cad904faecf315c2a964136b11d2f0b1f3ef8a9f98c10fc84c0dee03",
+    "docs/evaluation/comparison_preflight_2026-09-30.json": "881a5867931a88b54cc152caf496e55e20e55cbd44c6e77d77a8ee9f1a4806da",
+    "experiments/runs/text-to-sql-comparison-retrieval-20260930/retrieval.jsonl": "80592159bdca71c851716f2e11308ac3035b083ae72a9ff384d26cf84050c95b",
+    "experiments/runs/text-to-sql-comparison-preflight-20260930/traces.jsonl": "a2506f77489aba7c3034a3fadec27c5dd0842fc6bb831be2506c89e2fe13e120"
+  }
+}

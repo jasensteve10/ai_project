@@ -1,0 +1,42 @@
+{
+  "pages": 8,
+  "output": "output/pdf/PROJECT_REPORT.pdf",
+  "sources": {
+    "docs/report/PROJECT_REPORT.md": "918eeab27c7c6bf08a6a04036fbdef852d39634cfff972e3d7293555633d352a",
+    "experiments/runs/rag-integration-retrieval-20260927/retrieval.jsonl": "c59ae898dce6d161c08f8fbb46e3604cf2f83600e4786a0353764fa2e5711b72",
+    "experiments/runs/rag-integration-live-fixed-20260927/traces.jsonl": "3a381f151dc5d63cd0d44f1cb1e9d0de7d3c01a085e9798084802db88fa144c9",
+    "docs/eda/summary.json": "415e7a2743a3d353998448d4da1907a6869d8a055adea673ce4f70d8c58933df",
+    "src/analysis/project_report.py": "ea287fe1e7127dd8bbcbf378a5cea3336a67bec2e28d23d3c8d8f03f51119848",
+    "docs/eda/tables/constituencies.csv": "aad8290dcb718d43588d54fba8d231283182ffa1ee909e910a7faf57c3fcdace",
+    "docs/eda/tables/aggregation_comparison.csv": "eaca4c55656f06a4201523bc21b3f899bcf71bc33893e3dd558730cbf7803000"
+  },
+  "pdf_sha256": "de7a9f77c9288dae097ac694b0037afb58d92ca319d08b602307403895bf0360",
+  "versions": {
+    "reportlab": "5.0.1",
+    "matplotlib": "3.11.2",
+    "pdfplumber": "0.11.10"
+  },
+  "retrieval_results": [
+    {
+      "method": "bm25",
+      "n_questions": 18,
+      "complete_contexts": 11,
+      "complete_context_rate": 0.6111111111111112,
+      "mean_slot_recall": 0.8009259259259259
+    },
+    {
+      "method": "dense",
+      "n_questions": 18,
+      "complete_contexts": 17,
+      "complete_context_rate": 0.9444444444444444,
+      "mean_slot_recall": 0.9814814814814815
+    },
+    {
+      "method": "hybrid",
+      "n_questions": 18,
+      "complete_contexts": 16,
+      "complete_context_rate": 0.8888888888888888,
+      "mean_slot_recall": 0.9444444444444444
+    }
+  ]
+}

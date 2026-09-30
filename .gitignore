@@ -2,3 +2,12 @@
 /.vscode
 /_pycache_
 /.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+tmp/
+
+# Retrieval/experiment caches (rebuilt on demand)
+dataset/retrieval/embeddings/

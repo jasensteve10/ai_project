@@ -1,0 +1,17 @@
+column,raw_candidate_slots,raw_empty_slots,interpretation
+region,1124,1073,Merged constituency cells; emptiness is structural
+circonscription_id,1124,920,Merged constituency cells; emptiness is structural
+circonscription_name,1124,919,Merged constituency cells; emptiness is structural
+nb_bureaux_vote,1124,920,Merged constituency cells; emptiness is structural
+inscrits,1124,920,Merged constituency cells; emptiness is structural
+votants,1124,920,Merged constituency cells; emptiness is structural
+taux_participation,1124,920,Merged constituency cells; emptiness is structural
+bulletins_nuls,1124,920,Merged constituency cells; emptiness is structural
+suffrages_exprimes,1124,920,Merged constituency cells; emptiness is structural
+bulletins_blancs_nb,1124,920,Merged constituency cells; emptiness is structural
+bulletins_blancs_pct,1124,920,Merged constituency cells; emptiness is structural
+parti,1124,0,Candidate-level value
+candidat,1124,0,Candidate-level value
+score,1124,0,Candidate-level value
+score_pct,1124,0,Candidate-level value
+elu,1124,919,Blank means not marked elected

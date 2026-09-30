@@ -1,0 +1,46 @@
+{
+  "source_pdf_sha256": "b36e9fcb7141512ddf465245ec6ef1404669af03d2028101cb7f065222b6a517",
+  "rows": 1125,
+  "constituencies": 205,
+  "regions": 33,
+  "parties": 43,
+  "winning_rows": 205,
+  "missing_cells": 0,
+  "winning_row_count_distribution": {
+    "1": 205
+  },
+  "id_gaps_within_observed_range": [],
+  "extracted_totals": {
+    "nb_bureaux_vote": 25338,
+    "inscrits": 8597092,
+    "votants": 3012094,
+    "bulletins_nuls": 68525,
+    "suffrages_exprimes": 2943569,
+    "bulletins_blancs_nb": 29578,
+    "score": 2913991
+  },
+  "pdf_printed_national_totals": {
+    "nb_bureaux_vote": 25338,
+    "inscrits": 8597092,
+    "votants": 3012094,
+    "bulletins_nuls": 68525,
+    "suffrages_exprimes": 2943569,
+    "bulletins_blancs_nb": 29578,
+    "score": 2913991
+  },
+  "national_total_differences": {
+    "nb_bureaux_vote": 0,
+    "inscrits": 0,
+    "votants": 0,
+    "bulletins_nuls": 0,
+    "suffrages_exprimes": 0,
+    "bulletins_blancs_nb": 0,
+    "score": 0
+  },
+  "notes": [
+    "Counts refer only to records present in this PDF.",
+    "Winning rows are candidates/lists, not a count of seats.",
+    "Printed national totals are retained separately; no missing constituency is fabricated."
+  ],
+  "csv_sha256": "e97725cd19922ad97817b1a27fe1982a2785540fec0665db387b9b316a75712a"
+}

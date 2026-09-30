@@ -3,11 +3,11 @@
 # =========================
 
 
-import Agent
+from src.agent.Agent import ElectionSQLAgent
 
 
 if __name__ == "__main__":
-    agent = Agent.ElectionSQLAgent()
+    agent = ElectionSQLAgent()
 
     tests = [
         "Top 10 candidats par score_pct dans la circonscription 001",

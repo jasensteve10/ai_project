@@ -1,0 +1,7 @@
+question_id,condition,outcome,rows,api_calls,input_tokens,output_tokens
+dev-003,D,correct,[[291906]],2,2267,470
+dev-003,B,correct,[[291906]],1,2247,355
+dev-012,D,correct,"[[""HAUT- SASSANDRA"", 0.2955082439078201]]",1,2365,555
+dev-012,B,correct,"[[""HAUT- SASSANDRA"", 0.2955082439078201]]",3,2091,1855
+dev-019,B,correct,"[[""053"", ""YAMOUSSOUKRO,COMMUNE"", 10]]",2,2490,1330
+dev-019,D,correct,"[[""053"", ""YAMOUSSOUKRO,COMMUNE"", 10]]",1,2499,2513

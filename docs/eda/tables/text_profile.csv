@@ -1,0 +1,5 @@
+column,unique_strings,min_characters,median_characters,max_characters,rows_with_non_ascii,rows_with_replacement_character,rows_with_repeated_spaces
+region,33,3,7.0,33,0,0,0
+circonscription_name,205,12,53.0,132,41,0,0
+parti,43,3,11.0,23,0,0,0
+candidat,1074,4,20.0,76,43,0,0

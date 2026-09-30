@@ -1,0 +1,5 @@
+condition,display_label,all_trace_attempts,latest_trials,scored_trials,superseded_trace_attempts,all_metered_calls,scored_metered_calls,all_recorded_input_tokens,all_recorded_output_tokens,all_failed_transport_attempts,all_trace_seconds,provider_audit_calls,provider_audit_failures,provider_audit_seconds,provider_audit_pacing_seconds,provider_audit_input_tokens,provider_audit_output_tokens
+A,A,18,18,18,0,18,18,81291,1545,0,35.49475416680798,18,0,30.941291122697294,0.0,81291,1545
+B,B1,18,18,18,0,19,19,47591,1506,1,94.78634553973097,19,1,89.21357766760048,0.0,47591,1506
+C,B2,18,18,18,0,18,18,54801,1568,0,38.18744912475813,18,0,33.572760961949825,0.0,54801,1568
+D,B3,18,18,18,0,18,18,53990,1510,0,35.13587254320737,18,0,30.48174462420866,0.0,53990,1510

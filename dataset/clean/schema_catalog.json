@@ -1,0 +1,184 @@
+{
+  "schema_version": "63778da16d99031a20b8a2f1213602714e8303f4f0cb6f1e1666b5bf6e6819af",
+  "relations": {
+    "mart.vw_circonscriptions": {
+      "description": "Une ligne par circonscription; totaux et participation sans double comptage.",
+      "columns": [
+        {
+          "name": "region",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "circonscription_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "circonscription_name",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "nb_bureaux_vote",
+          "type": "BIGINT"
+        },
+        {
+          "name": "inscrits",
+          "type": "BIGINT"
+        },
+        {
+          "name": "votants",
+          "type": "BIGINT"
+        },
+        {
+          "name": "taux_participation",
+          "type": "DOUBLE"
+        },
+        {
+          "name": "bulletins_nuls",
+          "type": "BIGINT"
+        },
+        {
+          "name": "suffrages_exprimes",
+          "type": "BIGINT"
+        },
+        {
+          "name": "bulletins_blancs_nb",
+          "type": "BIGINT"
+        },
+        {
+          "name": "bulletins_blancs_pct",
+          "type": "DOUBLE"
+        }
+      ]
+    },
+    "mart.vw_resultats_candidats": {
+      "description": "Une ligne par candidature/liste; score = voix, elu = marque ELU(E) du PDF.",
+      "columns": [
+        {
+          "name": "region",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "circonscription_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "circonscription_name",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "parti",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "candidat",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "score",
+          "type": "BIGINT"
+        },
+        {
+          "name": "score_pct",
+          "type": "DOUBLE"
+        },
+        {
+          "name": "elu",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "source_page",
+          "type": "BIGINT"
+        },
+        {
+          "name": "source_table",
+          "type": "BIGINT"
+        },
+        {
+          "name": "source_row",
+          "type": "BIGINT"
+        }
+      ]
+    },
+    "mart.vw_vainqueur": {
+      "description": "Candidatures/listes marquées ELU(E); leur nombre ne représente pas les sièges.",
+      "columns": [
+        {
+          "name": "region",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "circonscription_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "circonscription_name",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "nb_bureaux_vote",
+          "type": "BIGINT"
+        },
+        {
+          "name": "inscrits",
+          "type": "BIGINT"
+        },
+        {
+          "name": "votants",
+          "type": "BIGINT"
+        },
+        {
+          "name": "taux_participation",
+          "type": "DOUBLE"
+        },
+        {
+          "name": "bulletins_nuls",
+          "type": "BIGINT"
+        },
+        {
+          "name": "suffrages_exprimes",
+          "type": "BIGINT"
+        },
+        {
+          "name": "bulletins_blancs_nb",
+          "type": "BIGINT"
+        },
+        {
+          "name": "bulletins_blancs_pct",
+          "type": "DOUBLE"
+        },
+        {
+          "name": "parti",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "candidat",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "score",
+          "type": "BIGINT"
+        },
+        {
+          "name": "score_pct",
+          "type": "DOUBLE"
+        },
+        {
+          "name": "elu",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "source_page",
+          "type": "BIGINT"
+        },
+        {
+          "name": "source_table",
+          "type": "BIGINT"
+        },
+        {
+          "name": "source_row",
+          "type": "BIGINT"
+        }
+      ]
+    }
+  }
+}

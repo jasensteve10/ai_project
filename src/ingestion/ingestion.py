@@ -1,261 +1,192 @@
-##################################################
-# Ingestion script for the data pipeline 
-##################################################
+"""Rebuild election data from the PDF's ruled cells, with source provenance."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
 
-
-
-## import libraries 
 import pandas as pd
-from ETL_fonctions.fonctions_ingest import _COLONNE_INDICES, _HEADER_NAMES, _normalize_text, _clean_val, _is_header_row, _fr_pct_to_float, _fr_int , print_summary
 import pdfplumber
 
-import argparse
-import logging
+from src.ETL_fonctions.fonctions_ingest import (
+    _clean_val, _is_header_row, _fr_int, _fr_pct_to_float, print_summary,
+)
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PDF_PATH = PROJECT_ROOT / 'dataset/raw/EDAN_2025_RESULTAT_NATIONAL_DETAILS.pdf'
+OUTPUT_DIR = PROJECT_ROOT / 'dataset/clean'
+COLUMNS = [
+    'region', 'circonscription_id', 'circonscription_name', 'nb_bureaux_vote',
+    'inscrits', 'votants', 'taux_participation', 'bulletins_nuls',
+    'suffrages_exprimes', 'bulletins_blancs_nb', 'bulletins_blancs_pct',
+    'parti', 'candidat', 'score', 'score_pct', 'elu',
+]
+INTEGER_COLUMNS = [COLUMNS[i] for i in [3, 4, 5, 7, 8, 9, 13]]
+PERCENT_COLUMNS = [COLUMNS[i] for i in [6, 10, 14]]
+CONSTITUENCY_COLUMNS = COLUMNS[:11]
 
 
-from pathlib import Path
-from ETL_fonctions.fonctions_ingest import * 
-################################
-# set up logging
-###############################
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)-8s - %(message)s',
-    datefmt='%H:%M:%S')
-
-log = logging.getLogger(__name__)
-
-################################
-# extraction de pdf 
-###############################
-
-def extract_pdf(pdf_path: str) -> pd.DataFrame:
-    """
-    Extracts data from a PDF file and returns it as a DataFrame.
-    
-    Args:
-        pdf_path (str): The path to the PDF file.
-
-    Returns:
-        pd.DataFrame: A DataFrame containing the extracted data.
-    """
-    pdf_path = str(pdf_path)
-    log.info(f"Extracting data from PDF: {pdf_path}")
-    
-    records = []
-
-    # Initialisation du contexte pour stocker les valeurs extraites
-    ctx = dict(
-        region="", circ_id="", circ_name="",
-        nb_bv="", inscrits="", votants="", taux_de_part="",
-        nuls="", suffrages="", blancs_nb="", blancs_pct="",
-    )
+def _keep_table_object(obj):
+    # This PDF draws rules as thin filled rectangles. Large shaded rectangles
+    # are backgrounds, not borders; their edges split otherwise merged cells.
+    return obj['object_type'] != 'rect' or min(obj['width'], obj['height']) < 2
 
 
-    try:
-
-        with pdfplumber.open(pdf_path) as pdf:
-            log.info("PDF ouvert — %d pages détectées", len(pdf.pages))
-
-            for page_num, page in enumerate(pdf.pages, start=1):
-
-                tables = page.extract_tables()
-                
-                if not tables:
-                    log.info(f"No tables found on page {page_num }")
-                    continue
-
-                for row in tables[0]:
-                    # Normalise à 16 colonnes
-                    row = list(row) + [None] * (16 - len(row))
-
-                    
+def extract_pdf(pdf_path=PDF_PATH) -> pd.DataFrame:
+    records, source_totals, pending = [], {}, []
+    context = None
+    region = ''
+    with pdfplumber.open(pdf_path) as pdf:
+        for page_number, original_page in enumerate(pdf.pages, 1):
+            page = original_page.filter(_keep_table_object)
+            # Some tables have no closing rule (notably page 20). Close them
+            # at the bottom of their actual rules so the final row is retained.
+            bottom = max(r['bottom'] for r in page.rects)
+            tables = page.find_tables({'explicit_horizontal_lines': [bottom]})
+            if not tables:
+                raise ValueError(f'No ruled table found on page {page_number}')
+            for table_number, table in enumerate(tables, 1):
+                for row_number, (cells, geometry) in enumerate(zip(table.extract(), table.rows), 1):
+                    if len(cells) != 16:
+                        raise ValueError(f'Unexpected table width on page {page_number}: {len(cells)}')
+                    row = [_clean_val(v) for v in cells]
                     if _is_header_row(row):
-                        log.info(f"Header row detected on page {page_num}")
+                        if row[0] == 'TOTAL':
+                            source_totals = {COLUMNS[i]: row[i] for i in [3, 4, 5, 7, 8, 9, 13]}
                         continue
-                    
-                    #Mise à jour du contexte 
-                    cid_raw = _clean_val(row[_COLONNE_INDICES["CIRC_ID"]])
-                    if cid_raw:
-                        ctx["circ_id"] = cid_raw  
-                        #on met a jour le contexte de la circonscription , pour les lignes suivantes , jusqu'à ce qu'on trouve une nouvelle circonscription ou une nouvelle region
-                        for key in ["nb_bv", "inscrits", "votants", "taux_de_part", "nuls", "suffrages", "blancs_nb", "blancs_pct"]:
-                            ctx[key] = ""  # reset des stats pour la nouvelle circonscription 
-
-                    # extraction et normalisation des colonnes de region    
-                    reg_row = _clean_val(row[_COLONNE_INDICES["REGION"]])
-                    if reg_row:
-                        # le texte de region est vertical dans le pdf 
-                        ctx["region"] = _normalize_text(reg_row.replace("\n", " "))
-                    
-
-                    cnm_raw = _clean_val(row[_COLONNE_INDICES["CIRC_NAME"]])
-                    if cnm_raw:
-                        ctx["circ_name"] = cnm_raw
-
-                    # extraction des stats ( si elles sont présentes )
-                    if _clean_val(row[_COLONNE_INDICES["NB_BV"]]):
-                        # NB_BV, INSCRITS, VOTANTS, TAUX, NULL, SUFFRAGES, BLANCS_NB, BLANCS_PCT
-                        ctx["nb_bv"] = _clean_val(row[_COLONNE_INDICES["NB_BV"]])
-                        ctx["inscrits"] = _clean_val(row[_COLONNE_INDICES["INSCRITS"]])
-                        ctx["votants"] = _clean_val(row[_COLONNE_INDICES["VOTANTS"]])
-                        ctx["taux_de_part"] = _clean_val(row[_COLONNE_INDICES["TAUX"]])
-                        ctx["nuls"] = _clean_val(row[_COLONNE_INDICES["NULS"]])
-                        ctx["suffrages"] = _clean_val(row[_COLONNE_INDICES["SUFFRAGES"]])
-                        ctx["blancs_nb"] = _clean_val(row[_COLONNE_INDICES["BLANCS_NB"]])
-                        ctx["blancs_pct"] = _clean_val(row[_COLONNE_INDICES["BLANCS_PCT"]])
-
-                    # maintenant le parti et le candidat
-                    part_raw = _clean_val(row[_COLONNE_INDICES["PARTIS"]])
-                    cand_raw = _clean_val(row[_COLONNE_INDICES["CANDIDATS"]])
-                    if part_raw or cand_raw:
-                        records.append({
-                            "region": ctx["region"],
-                            "circ_id": ctx["circ_id"],
-                            "circ_name": ctx["circ_name"],
-                            "nb_bv": ctx["nb_bv"],
-                            "inscrits": ctx["inscrits"],
-                            "votants": ctx["votants"],
-                            "taux_de_part": ctx["taux_de_part"],
-                            "nuls": ctx["nuls"],
-                            "suffrages": ctx["suffrages"],
-                            "blancs_nb": ctx["blancs_nb"],
-                            "blancs_pct": ctx["blancs_pct"],
-                            "parti": part_raw,
-                            "candidat": cand_raw,
-                            "score": _clean_val(row[_COLONNE_INDICES["SCORE"]]),
-                            "score_pct": _clean_val(row[_COLONNE_INDICES["SCORE_PCT"]]),
-                            "elu":       _clean_val(row[_COLONNE_INDICES["ELU"]]) == "ELU(E)"
-                        })
-
-            log.info(f"Extraction completed — {len(records)} records extracted corresponding to the 35 pages of the PDF.")
-
-        return pd.DataFrame(records)      
-
-    except Exception as e:
-        log.error(f"Error processing PDF: {e}")
-
-################################
-# mise en forme du dataframe, nettoyage et normalisation des données
-###############################
-def transform_data(df_raw: pd.DataFrame) -> pd.DataFrame:
-    """
-    convertit les colonnes brutes en types Python/pandas propres.
-
-    Contexte (str)  : region, circonscription_id, circonscription_name, parti, candidat
-    Entiers (Int64) : nb_bureaux_vote, inscrits, votants, bulletins_nuls,
-                      suffrages_exprimes, bulletins_blancs_nb, score
-    Flottants [0,1] : taux_participation, bulletins_blancs_pct, score_pct
-    Booléen         : elu
-
-    """
-    df = df_raw.copy()
-
-    df = df.rename(columns={
-        "circ_id": "circonscription_id",
-        "circ_name": "circonscription_name"
-    })
-
-    # ── Colonnes entières ─────────────────────────────────────────────────
-    int_cols = {
-        "nb_bureaux_vote":   "nb_bv",
-        "inscrits":          "inscrits",
-        "votants":           "votants",
-        "bulletins_nuls":    "nuls",
-        "suffrages_exprimes":"suffrages",
-        "bulletins_blancs_nb":"blancs_nb",
-        "score":             "score",
-    }
-    for col_out, col_in in int_cols.items():
-        df[col_out] = _fr_int(df[col_in])
-
-    # ── Colonnes pourcentages → float [0, 1] ─────────────────────────────
-    pct_cols = {
-        "taux_participation":   "taux_de_part",
-        "bulletins_blancs_pct": "blancs_pct",
-        "score_pct":            "score_pct",
-    }
-    for col_out, col_in in pct_cols.items():
-        df[col_out] = _fr_pct_to_float(df[col_in])
-
-    # ── Ordre logique des colonnes ────────────────────────────────────────
-    ordered = [
-        "region", "circonscription_id", "circonscription_name",
-        "nb_bureaux_vote", "inscrits", "votants", "taux_participation",
-        "bulletins_nuls", "suffrages_exprimes",
-        "bulletins_blancs_nb", "bulletins_blancs_pct",
-        "parti", "candidat", "score", "score_pct", "elu",
-    ]
-    df = df[ordered]
-
-    log.info("Nettoyage terminé — shape finale : %s", df.shape)
-
-    # ── Rapport qualité ───────────────────────────────────────────────────
-    nulls = df.isnull().sum()
-    nulls = nulls[nulls > 0]
-    if not nulls.empty:
-        log.warning("Valeurs nulles détectées :\n%s", nulls.to_string())
-        # Affiche les 5 premières lignes où 'inscrits' est null
-        if "inscrits" in nulls:
-            bad_rows = df[df["inscrits"].isnull()].head(30)
-            log.warning("Exemples de lignes avec 'inscrits' null :\n%s", bad_rows[["region", "circonscription_name", "parti", "candidat"]].to_string())
-
+                    if row[0]:
+                        # Region glyphs are placed bottom-to-top, even though
+                        # this file reports them as upright. Preserve real spaces.
+                        chars = page.crop(geometry.cells[0]).chars
+                        region = _clean_val(''.join(c['text'] for c in sorted(chars, key=lambda c: -c['top'])))
+                    if row[1]:
+                        if not row[1].isdigit():
+                            raise ValueError(f'Invalid constituency ID at page {page_number}: {row[1]}')
+                        context = dict(zip(CONSTITUENCY_COLUMNS, [region, *row[1:11]]))
+                        for record in pending:
+                            record.update(context)
+                        pending.clear()
+                    elif any(row[1:11]):
+                        raise ValueError(f'Unresolved constituency cell at page {page_number}, row {row_number}')
+                    elif geometry.cells[1] is not None:
+                        # A new, empty merged cell starts before the page break;
+                        # its constituency label and totals occur on the next page.
+                        context = None
+                    if row[11] or row[12]:
+                        if not region:
+                            raise ValueError(f'Candidate without constituency at page {page_number}')
+                        record = {
+                            **(context or {}), **dict(zip(COLUMNS[11:], row[11:])),
+                            'source_page': page_number, 'source_table': table_number,
+                            'source_row': row_number,
+                        }
+                        records.append(record)
+                        if context is None:
+                            pending.append(record)
+    if pending:
+        raise ValueError('Unresolved constituency at end of PDF')
+    if not source_totals:
+        raise ValueError('Printed national totals were not found')
+    if not records:
+        raise ValueError('PDF contains no candidate records')
+    df = pd.DataFrame(records)
+    df.attrs['source_totals'] = source_totals
+    df.attrs['source_pdf_sha256'] = hashlib.sha256(Path(pdf_path).read_bytes()).hexdigest()
     return df
 
 
-################################
-# saving the cleaned data to a parquet file, csv file  
-###############################
+def transform_data(df_raw: pd.DataFrame) -> pd.DataFrame:
+    df = df_raw.copy()
+    for col in INTEGER_COLUMNS:
+        df[col] = _fr_int(df[col])
+    for col in PERCENT_COLUMNS:
+        df[col] = _fr_pct_to_float(df[col])
+    if not set(df['elu']).issubset({'', 'ELU(E)'}):
+        raise ValueError('Unknown elected marker in PDF')
+    df['elu'] = df['elu'].eq('ELU(E)')
+    validate_data(df)
+    return df
 
-def save_data(df: pd.DataFrame, output_dir = "dataset" ) -> None:
-    """
-    Sauvegarde le DataFrame nettoyé au format Parquet et CSV.
 
-    compression Snappy pour Parquet.
+def validate_data(df: pd.DataFrame) -> None:
+    """Reject extraction defects before any aggregate can hide them."""
+    if df.empty or df[COLUMNS].isna().any().any():
+        raise ValueError('Empty dataset or missing required election values')
+    if df[COLUMNS[:3] + ['parti', 'candidat']].eq('').any().any():
+        raise ValueError('Empty required text')
+    if not df['circonscription_id'].str.fullmatch(r'\d{3}').all():
+        raise ValueError('Constituency IDs must be three-character strings')
+    conflicts = df.groupby('circonscription_id')[CONSTITUENCY_COLUMNS].nunique(dropna=False)
+    if (conflicts > 1).any().any():
+        raise ValueError(f'Conflicting constituency values: {conflicts.index[(conflicts > 1).any(axis=1)].tolist()}')
+    if df[COLUMNS].duplicated().any():
+        raise ValueError('Duplicate candidate records')
+    if (df[INTEGER_COLUMNS] < 0).any().any():
+        raise ValueError('Negative count')
+    if ((df[PERCENT_COLUMNS] < 0) | (df[PERCENT_COLUMNS] > 1)).any().any():
+        raise ValueError('Percentage outside [0, 1]')
+    c = df.drop_duplicates('circonscription_id')
+    if not (c['votants'] == c['bulletins_nuls'] + c['suffrages_exprimes']).all():
+        raise ValueError('Voters do not reconcile with invalid and expressed ballots')
+    if (c['votants'] > c['inscrits']).any():
+        raise ValueError('Voters exceed registrations')
+    scores = df.groupby('circonscription_id')['score'].sum()
+    expected = c.set_index('circonscription_id').eval('suffrages_exprimes - bulletins_blancs_nb')
+    if not scores.sort_index().equals(expected.sort_index()):
+        raise ValueError('Candidate scores do not reconcile with constituency ballots')
+    for numerator, denominator, pct in [('votants', 'inscrits', 'taux_participation'),
+                                        ('bulletins_blancs_nb', 'suffrages_exprimes', 'bulletins_blancs_pct'),
+                                        ('score', 'suffrages_exprimes', 'score_pct')]:
+        if ((df[numerator] / df[denominator] - df[pct]).abs() > 0.000051).any():
+            raise ValueError(f'Percentage does not reconcile: {pct}')
 
-    Args:
-        df (pd.DataFrame): Le DataFrame à sauvegarder.
-        output_dir (str): Le répertoire de sortie pour les fichiers sauvegardés.
-    """
+
+def build_audit(df):
+    c = df.drop_duplicates('circonscription_id')
+    winners = df.groupby('circonscription_id')['elu'].sum()
+    totals = {col: int(c[col].sum()) for col in INTEGER_COLUMNS if col != 'score'}
+    totals['score'] = int(df['score'].sum())
+    source_totals = {col: int(value.replace(' ', '')) for col, value in df.attrs.get('source_totals', {}).items()}
+    ids = set(df['circonscription_id'])
+    return {
+        'source_pdf_sha256': df.attrs.get('source_pdf_sha256'),
+        'rows': len(df), 'constituencies': len(c), 'regions': df['region'].nunique(),
+        'parties': df['parti'].nunique(), 'winning_rows': int(df['elu'].sum()),
+        'missing_cells': int(df.isna().sum().sum()),
+        'winning_row_count_distribution': {str(k): int(v) for k, v in winners.value_counts().sort_index().items()},
+        'id_gaps_within_observed_range': [f'{i:03}' for i in range(int(min(ids)), int(max(ids)) + 1) if f'{i:03}' not in ids],
+        'extracted_totals': totals, 'pdf_printed_national_totals': source_totals,
+        'national_total_differences': {col: totals[col] - value for col, value in source_totals.items()},
+        'notes': ['Counts refer only to records present in this PDF.',
+                  'Winning rows are candidates/lists, not a count of seats.',
+                  'Printed national totals are retained separately; no missing constituency is fabricated.'],
+    }
+
+
+def save_data(df, output_dir=OUTPUT_DIR):
+    validate_data(df)
+    audit = build_audit(df)
+    if any(audit['national_total_differences'].values()):
+        raise ValueError('Extracted data does not reconcile with printed national totals')
     output_dir = Path(output_dir)
-
-    parquet_path = output_dir / "edan_2025_resultats.parquet"
-    
-    df.to_parquet(
-        parquet_path,
-        engine="pyarrow",
-        compression="snappy",
-        index=False,
-    )
-
-    size_kb = parquet_path.stat().st_size / 1024
-    log.info("Parquet sauvegardé → %s  (%.1f KB)", parquet_path, size_kb)
-    log.info(f"Data saved to Parquet: {parquet_path}")
-
-
-    csv_path = output_dir / "edan_2025_resultats.csv"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(output_dir / 'edan_2025_resultats.parquet', index=False)
+    csv_path = output_dir / 'edan_2025_resultats.csv'
     df.to_csv(csv_path, index=False)
-    log.info(f"Data saved to CSV: {csv_path}")
+    audit['csv_sha256'] = hashlib.sha256(csv_path.read_bytes()).hexdigest()
+    (output_dir / 'edan_2025_validation.json').write_text(json.dumps(audit, indent=2, ensure_ascii=False) + '\n')
+    return audit
 
 
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--pdf', type=Path, default=PDF_PATH)
+    parser.add_argument('--output-dir', type=Path, default=OUTPUT_DIR)
+    args = parser.parse_args()
+    df = transform_data(extract_pdf(args.pdf))
+    audit = save_data(df, args.output_dir)
+    print_summary(df)
+    print(json.dumps(audit, indent=2, ensure_ascii=False))
 
-################################
-# lauching 
-###############################
 
-if __name__ == "__main__":
-    pdf_path = r"dataset\EDAN_2025_RESULTAT_NATIONAL_DETAILS.pdf"
-    df = extract_pdf(pdf_path)
-
-    print("\n=== Aperçu des données extraites (raw) ===")
-    print(df.head(20))
-
-    df_clean = transform_data(df)
-
-    print("\n=== Aperçu des données transformées (clean) ===")
-    print_summary(df_clean)
-
-    print("\n=== Sauvegarde des données nettoyées ===")
-
-    save_data(df_clean)
-
+if __name__ == '__main__':
+    main()

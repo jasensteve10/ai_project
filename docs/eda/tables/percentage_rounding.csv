@@ -1,0 +1,4 @@
+column,max_abs_difference_pp,tolerance_pp,denominator
+taux_participation,0.00498861446837362,0.0051,inscrits
+bulletins_blancs_pct,0.0049885249321928934,0.0051,suffrages_exprimes
+score_pct,0.004991413852318237,0.0051,suffrages_exprimes

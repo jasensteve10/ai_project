@@ -1,0 +1,11 @@
+pandas==3.0.6
+pyarrow==25.0.1
+pdfplumber==0.11.10
+duckdb==1.5.5
+sqlglot==30.20.0
+python-dotenv==1.2.3
+langchain-google-genai==4.4.0
+google-api-core==2.39.0
+streamlit==1.64.0
+pytest==9.1.1
+anthropic==1.9.0

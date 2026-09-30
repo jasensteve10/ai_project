@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Top 5 des régions par participation",
+    "status": "answerable",
+    "sql": "SELECT region, SUM(votants) / NULLIF(SUM(inscrits), 0) AS participation FROM mart.vw_circonscriptions GROUP BY region ORDER BY participation DESC LIMIT 5"
+  },
+  {
+    "question": "Qui a gagné à Agboville ?",
+    "status": "answerable",
+    "sql": "SELECT circonscription_id, circonscription_name, candidat, parti, source_page FROM mart.vw_vainqueur WHERE circonscription_name ILIKE '%AGBOVILLE%' LIMIT 100"
+  },
+  {
+    "question": "Top 10 candidats par score_pct dans la circonscription 001",
+    "status": "answerable",
+    "sql": "SELECT candidat, parti, score_pct FROM mart.vw_resultats_candidats WHERE circonscription_id = '001' ORDER BY score_pct DESC LIMIT 10"
+  },
+  {
+    "question": "Liste des vainqueurs par circonscription",
+    "status": "answerable",
+    "sql": "SELECT circonscription_id, circonscription_name, candidat, parti, score_pct FROM mart.vw_vainqueur ORDER BY circonscription_id LIMIT 500"
+  },
+  {
+    "question": "Classement des partis par score total",
+    "status": "answerable",
+    "sql": "SELECT parti, SUM(score) AS total_voix FROM mart.vw_resultats_candidats GROUP BY parti ORDER BY total_voix DESC LIMIT 100"
+  },
+  {
+    "question": "Taux de participation moyen par région",
+    "status": "answerable",
+    "sql": "SELECT region, AVG(taux_participation) AS moyenne_non_ponderee FROM mart.vw_circonscriptions GROUP BY region ORDER BY moyenne_non_ponderee DESC LIMIT 100"
+  }
+]

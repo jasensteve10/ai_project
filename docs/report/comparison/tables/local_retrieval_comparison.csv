@@ -1,0 +1,4 @@
+method,eligible_questions,complete_contexts,complete_context_rate,mean_slot_recall,global_recall_at_5,global_ndcg_at_5
+B1 BM25,16,10,0.625,0.796875,0.6041666666666666,0.6229708702034172
+B2 E5,16,15,0.9375,0.9791666666666666,0.609375,0.6173108148381381
+B3 Hybrid,16,14,0.875,0.9375,0.546875,0.5636250791772585

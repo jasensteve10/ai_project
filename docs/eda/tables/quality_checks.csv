@@ -1,0 +1,22 @@
+check,failures,scope
+Missing business values,0,"1,125 rows x 16 business columns"
+Empty business text,0,5 text columns
+Exact duplicate business rows,0,"1,125 rows"
+Duplicate natural key: constituency/party/candidate,0,"1,125 rows"
+Duplicate provenance tuple,0,"1,125 rows"
+Invalid constituency ID format,0,3-digit text IDs
+Conflicting constituency-level fields,0,205 constituencies x 11 fields
+Negative counts,0,7 count columns
+Noninteger counts,0,7 count columns
+"Percentages outside [0,1]",0,3 percentage columns
+Voters exceed registered,0,205 constituencies
+Voters != invalid + expressed,0,205 constituencies
+Candidate votes != expressed - blank,0,205 constituencies
+Elected row count differs from one,0,Observed PDF outcome; not a universal electoral rule
+Marked winner is not maximum score,0,205 constituencies
+Tied maximum score,0,205 constituencies
+National total mismatch,0,7 totals independently read from PDF TOTAL row
+Fresh extraction / ingested CSV cell differences,0,"All 21,375 cells; numeric tolerance 1e-12"
+Rounding error > 0.0051 pp: taux_participation,0,PDF percentages printed to 0.01 percentage points
+Rounding error > 0.0051 pp: bulletins_blancs_pct,0,PDF percentages printed to 0.01 percentage points
+Rounding error > 0.0051 pp: score_pct,0,PDF percentages printed to 0.01 percentage points

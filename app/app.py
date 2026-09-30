@@ -1,98 +1,111 @@
-#---------------- 
-# imports
-#-----------------
-# Assure que src/ est importable
-import streamlit as st
+"""Streamlit client of the same RAG pipeline used by the experiment runner."""
+import json
+import os
+
 import pandas as pd
-from typing import Dict, Any
-from src.agent.Agent import ElectionSQLAgent
+import streamlit as st
 
-#---------------- 
-# streamlit page configuration
-#-----------------
+from src.agent.cache import ResultCache
+from src.agent.llm import llm_descriptor
+from src.retrieval.corpus import PDF_PATH
+from src.retrieval.pipeline import APP_CONDITIONS, ElectionRAG, rag_fingerprint
 
-st.set_page_config(
-    page_title="CI Election Chatbot 2025",
-    page_icon="🗳️",
-    layout="wide"
-)
-
+st.set_page_config(page_title="CI Election Chatbot 2025", page_icon="🗳️", layout="wide")
 st.title("Côte d'Ivoire 2025 — Election Chatbot")
-st.markdown("""
-    Posez vos questions sur les résultats, la participation ou demandez des classements.
-    *en manque d'inspiration regardez les exemples  dans la sidebar !*""")
+st.caption("Chaque question est indépendante. Les résultats concernent des candidatures/listes, pas un décompte de sièges.")
 
-st.caption("Assistant IA entraîné sur les données électorales de Côte d'Ivoire 2025")
-
-#------------------------
-#  sidebar 
-#-----------------------
-
-#-----------------
-# initialize agent
-#-----------------
-@st.cache_resource
-def init_agent():
-    return ElectionSQLAgent()
-
-agent = init_agent()
-
-#------------------------
-#  sidebar 
-#-----------------------
-
-with st.sidebar:
-    st.header(" Options")
-
-    show_sql = st.toggle("Afficher la SQL finale", value=True)
-    show_proposed_sql = st.toggle("Afficher la SQL proposée", value=False)
-    show_debug = st.toggle("Afficher les détails d'erreur", value=True)
-
-    chart_mode = st.selectbox(
-        "Graphique",
-        ["Auto", "Bar", "Line", "None"],
-        index=0
-    )
-
-    st.divider()
-    st.subheader(" Exemples de questions")
-    st.markdown(
-        """
-       
-- Top 10 candidats par score_pct dans la circonscription 001
-- Liste des vainqueurs (elu=true) par circonscription
-- Classement des partis par score total
-- Taux de participation moyen par région 
-        """.strip()
-    )
-
-
-    st.divider()
-    if st.button("Effacer l'historique"):
-        st.session_state.messages = []
-        st.rerun()
-
-
-
-
-#-----------------
-# session state
-#-----------------
-
-if "messages" not in st.session_state:
+LABELS = {'A': 'A · Catalogue complet', 'B': 'B · Recherche BM25', 'C': 'C · Recherche sémantique',
+          'D': 'D · Recherche hybride', 'F1': 'F1 · Agent (1 recherche supplémentaire)',
+          'F3': 'F3 · Agent (3 recherches supplémentaires)'}
+if 'result_cache' not in st.session_state:
+    st.session_state.result_cache = ResultCache()
+if 'messages' not in st.session_state:
     st.session_state.messages = []
 
-## gestion de messages et historique 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+with st.sidebar:
+    st.header("Options")
+    default = os.getenv('RAG_CONDITION', 'B')
+    condition = st.selectbox('Mode RAG', APP_CONDITIONS, format_func=LABELS.get,
+                             index=APP_CONDITIONS.index(default) if default in APP_CONDITIONS else 0)
+    search_only = st.toggle('Recherche dans les sources uniquement', value=False,
+                            help='Recherche locale, sans appel Gemini.')
+    show_sql = st.toggle('Afficher la SQL finale', value=True)
+    show_proposed_sql = st.toggle('Afficher la SQL proposée', value=False)
+    show_debug = st.toggle("Afficher les détails d'erreur", value=True)
+    chart_mode = st.selectbox('Graphique', ['Auto', 'Bar', 'Line', 'None'])
+    st.divider()
+    st.markdown('''**Exemples**
+- Quel est le taux de participation national ?
+- Qui a gagné dans la circonscription 001 ? Donne la page source.
+- Classement des partis par score total
+- Taux de participation dans le Haut-Sassandra''')
+    if st.button("Effacer l'historique et le cache"):
+        st.session_state.messages = []
+        st.session_state.result_cache.clear()
+        st.rerun()
+    if PDF_PATH.exists():
+        st.download_button('Télécharger le PDF source', PDF_PATH.read_bytes(),
+                           file_name=PDF_PATH.name, mime='application/pdf')
 
-        if message.get("df") is not None:
-            st.dataframe(message["df"])
 
-#-----------------
-# chart et graphique builder
-#-----------------
+@st.cache_resource
+def init_rag(version, condition):
+    return ElectionRAG(condition)
+
+
+try:
+    version = rag_fingerprint(condition)
+    rag = init_rag(version, condition)
+except Exception as exc:
+    st.error(f'Initialisation du RAG : {exc}')
+    st.info('Préparer les données : python -m src.retrieval.cli prepare')
+    st.stop()
+
+
+def render_sources(sources, dataset_source=None):
+    with st.expander(f'Contexte retrouvé · {len(sources)} fiches'):
+        st.caption('Ces fiches guident la génération SQL. Les totaux affichés sont calculés sur la base complète ; '
+                   'les pages des fiches ne constituent pas une preuve de tous les agrégats.')
+        for card in sources:
+            st.markdown(f"**{card['title']}**")
+            st.caption(f"{card['id']} · {card.get('provenance', '')}")
+            st.text(card['text'])
+            if card.get('source_pages'):
+                st.caption('Pages PDF de cette circonscription : ' + ', '.join(map(str, card['source_pages'])))
+        if dataset_source:
+            st.caption(f"Source : {dataset_source['file']} · SHA-256 {dataset_source['sha256']}")
+
+
+def render_result(out):
+    if out.get('status') == 'search':
+        st.info('Recherche locale terminée — aucun appel Gemini.')
+    elif out.get('status') in {'unsupported', 'needs_clarification'}:
+        st.info(out['response'])
+    elif not out.get('ok'):
+        st.error('Impossible de répondre à cette question.')
+        if out.get('error_type') == 'FallbackBudgetExceeded':
+            st.warning('Gemini est indisponible et le plafond d’appels Claude (payants) est atteint.')
+        if show_debug:
+            st.text(f"{out.get('stage', 'application')} : {out.get('error', 'Erreur inconnue')}")
+    else:
+        df = pd.DataFrame(out['rows'], columns=out['columns'])
+        served = ', '.join(out.get('served_by') or []) or 'modèle'
+        st.success(f"{len(df)} ligne(s) · {out.get('api_calls', 0)} appel(s) · {served}"
+                   + (' · réponse en cache' if out.get('cache_hit') else ''))
+        st.dataframe(df, width='stretch')
+        if 'source_page' in df.columns and not df.empty:
+            st.caption('Pages PDF retournées par SQL : ' + ', '.join(map(str, sorted(set(df['source_page'].dropna())))))
+        if show_proposed_sql:
+            st.code(out.get('proposed_sql') or '', language='sql')
+        if show_sql:
+            st.code(out.get('final_sql') or '', language='sql')
+        build_chart(df, chart_mode)
+    if out.get('sources'):
+        render_sources(out['sources'], out.get('dataset_source'))
+    if out.get('fallback_used'):
+        st.warning('Réponse produite par le modèle de secours Claude (API payante) : Gemini était indisponible.')
+    if out.get('condition'):
+        st.caption(f"Mode {out['condition']} · corpus {out.get('corpus_version', '')[:12]}")
 
 def build_chart(df: pd.DataFrame, mode: str):
     """
@@ -138,85 +151,32 @@ def build_chart(df: pd.DataFrame, mode: str):
             st.info("Aucune colonne numérique pour un line chart.")
         return
 
-#-----------------
-# gestion de saisie utilisateur
-#-----------------
-
-prompt = st.chat_input("Pose ta question sur les résultats (ex: 'Top 10 candidats par score_pct en 001')")
-
-@st.cache_data(show_spinner=False)
-def cached_query(question: str) -> Dict[str, Any]:
-    # Cette fonction ne sera appelée par le LLM que si la question est NOUVELLE
-    return agent.run_query(question)
-
-if prompt:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.chat_message("assistant"):
-        with st.spinner("Réflexion en cours..."):
-            out = {
-                "response": "Aucune réponse générée.",
-                "error": None,
-                "df": None,
-                "chart": None,
-                "ok": False
-            }
-            try:
-                out = cached_query(prompt)
-            except Exception as e:
-                st.error("Erreur interne (agent). Vérifie GOOGLE_API_KEY et les prompts.")
-                if show_debug:
-                    st.exception(e)
-                out = {
-                    "response": "Désolé, une erreur est survenue. Vérifie ta clé API et les prompts.",
-                    "error": str(e),
-                    "df": None,
-                    "chart": None,
-                    "ok": False
-                }
-
-        if not out.get("ok"):
-            st.error(" Erreur du chatbot — impossible de répondre à la question.")
-            st.markdown(f"**Détail bug :** {out.get('error', 'erreur inconnue')}")
-            st.session_state.messages.append({
-                "role": "assistant",
-                "content": out.get("response", "Erreur."),
-                "df": None,    
-                "chart": None
-            })
+for message in st.session_state.messages:
+    with st.chat_message(message['role']):
+        if 'result' in message:
+            render_result(message['result'])
         else:
-            if show_proposed_sql:
-                st.markdown("**SQL proposée (première génération)**")
-                st.code(out.get("proposed_sql", ""), language="sql")
+            st.markdown(message['content'])
 
-            if show_sql:
-                st.markdown("**SQL exécutée (après validation/repair)**")
-                st.code(out.get("final_sql", ""), language="sql")
-
-            # construction du DataFrame
-            cols = out["columns"]
-            rows = out["rows"]
-            df = pd.DataFrame(rows, columns=cols)
-
-            # Rendu résultat
-            st.success(f" {len(df)} ligne(s) retournée(s) — attempts: {out.get('attempts', 0)}")
-            st.dataframe(df, use_container_width=True)
-
-            # Chart c'est une option 
-            st.markdown("### Visualisation")
-            build_chart(df, chart_mode)
-
-            st.session_state.messages.append({
-                "role": "assistant",
-                "content": (
-                    "Résultats disponibles.\n\n"
-                    + (f"SQL finale:\n```sql\n{out.get('final_sql','')}\n```" if show_sql else "")
-                ),
-                "df": df,
-            })
-
-# Footer
+prompt = st.chat_input('Pose ta question sur les résultats électoraux')
+if prompt:
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    with st.chat_message('user'):
+        st.markdown(prompt)
+    with st.chat_message('assistant'):
+        with st.spinner('Recherche dans les sources…'):
+            try:
+                if search_only:
+                    out = {'ok': True, 'status': 'search', 'sources': rag.search(prompt),
+                           'condition': condition, 'corpus_version': rag.corpus_version}
+                else:
+                    out = st.session_state.result_cache.query(prompt, version, rag.run_query)
+            except Exception as exc:
+                out = {'ok': False, 'stage': 'application', 'error': str(exc)}
+        render_result(out)
+        st.session_state.messages.append({'role': 'assistant', 'result': out})
 st.divider()
-st.caption("By Jasen using Google Gemini API")
+_llm = llm_descriptor()
+st.caption(f"Gemini ({_llm['primary'] or 'non configuré'})"
+           + (f" · secours Claude ({_llm['fallback']}, payant, plafonné)" if _llm['fallback'] else '')
+           + ' · DuckDB · RAG local — configurations partagées avec le banc d’évaluation')

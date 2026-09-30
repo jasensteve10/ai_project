@@ -1,0 +1,564 @@
+{
+  "scope": "Predeclared development audit; no real-model output inspected or API called.",
+  "input_sha256": {
+    "benchmark": "5d7a74c72d407cda7711fb8a331fa76195de3d7a411469b2eb39709ea4afb372",
+    "csv": "e97725cd19922ad97817b1a27fe1982a2785540fec0665db387b9b316a75712a",
+    "parquet": "04f0dee4133599dec67a1b5b28beed288aba036160fdc387f07568b2e88e247a",
+    "pdf": "b36e9fcb7141512ddf465245ec6ef1404669af03d2028101cb7f065222b6a517",
+    "database": "b9105f7a7e67125a718ab3dbc21e72cb60871b39c1c4d4cc6afb01e87bae5b4d",
+    "cards": "421f448f3c6df726e504dca0b4777dcabfe5b118ef1a0be95c2384b23eaef85b"
+  },
+  "inputs_unchanged": true,
+  "counts": {
+    "dev": 20,
+    "answerable": 16,
+    "draft": 80,
+    "total": 80
+  },
+  "fresh_pdf_extraction_matches_parquet_and_csv": true,
+  "source_reconciliation": {
+    "source_pdf_sha256": "b36e9fcb7141512ddf465245ec6ef1404669af03d2028101cb7f065222b6a517",
+    "rows": 1125,
+    "constituencies": 205,
+    "regions": 33,
+    "parties": 43,
+    "winning_rows": 205,
+    "missing_cells": 0,
+    "winning_row_count_distribution": {
+      "1": 205
+    },
+    "id_gaps_within_observed_range": [],
+    "extracted_totals": {
+      "nb_bureaux_vote": 25338,
+      "inscrits": 8597092,
+      "votants": 3012094,
+      "bulletins_nuls": 68525,
+      "suffrages_exprimes": 2943569,
+      "bulletins_blancs_nb": 29578,
+      "score": 2913991
+    },
+    "pdf_printed_national_totals": {
+      "nb_bureaux_vote": 25338,
+      "inscrits": 8597092,
+      "votants": 3012094,
+      "bulletins_nuls": 68525,
+      "suffrages_exprimes": 2943569,
+      "bulletins_blancs_nb": 29578,
+      "score": 2913991
+    },
+    "national_total_differences": {
+      "nb_bureaux_vote": 0,
+      "inscrits": 0,
+      "votants": 0,
+      "bulletins_nuls": 0,
+      "suffrages_exprimes": 0,
+      "bulletins_blancs_nb": 0,
+      "score": 0
+    },
+    "notes": [
+      "Counts refer only to records present in this PDF.",
+      "Winning rows are candidates/lists, not a count of seats.",
+      "Printed national totals are retained separately; no missing constituency is fabricated."
+    ]
+  },
+  "cross_split_paraphrase_overlap": [],
+  "dev_results": [
+    {
+      "id": "dev-001",
+      "question": "Qui est arrivé en tête dans la circonscription de Bouaké ville ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          "UNE CÔTE DIVOIRE EN PAIX, PROSPERE ET SOLIDARITE",
+          "RHDP"
+        ]
+      ]
+    },
+    {
+      "id": "dev-002",
+      "question": "Combien d'inscrits compte la circonscription de Daloa ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          129515
+        ]
+      ]
+    },
+    {
+      "id": "dev-003",
+      "question": "Combien de votants au total dans la région du Poro ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          291906
+        ]
+      ]
+    },
+    {
+      "id": "dev-004",
+      "question": "Nombre total de voix obtenues par les candidatures indépendantes",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          656466
+        ]
+      ]
+    },
+    {
+      "id": "dev-005",
+      "question": "Quelles sont les 3 circonscriptions avec le plus d'inscrits ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          "047",
+          "YOPOUGON,COMMUNE",
+          555901
+        ],
+        [
+          "038",
+          "ABOBO, COMMUNE",
+          438021
+        ],
+        [
+          "041",
+          "COCODY, COMMUNE",
+          279785
+        ]
+      ]
+    },
+    {
+      "id": "dev-006",
+      "question": "Classement des 5 régions ayant le plus faible taux de participation",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": true,
+      "stored_gold_rows": [
+        [
+          "DISTRICT AUTONOME D'ABIDJAN",
+          0.18875279696720965
+        ],
+        [
+          "NAWA",
+          0.2367620235698827
+        ],
+        [
+          "GRANDS PONTS",
+          0.26313686313686313
+        ],
+        [
+          "SAN-PEDRO",
+          0.2662592795481592
+        ],
+        [
+          "SUD-COMOE",
+          0.29400100401606427
+        ]
+      ]
+    },
+    {
+      "id": "dev-007",
+      "question": "Pour chaque circonscription de la région du Goh, donner le vainqueur et le taux de participation",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": true,
+      "stored_gold_rows": [
+        [
+          "067",
+          "BAYOTA, DAHIEPA·KEHI, OURAGAHIO ET YOPOHUE, COMMUNES ET SOUS-PREFECTURES",
+          "KONE ISSA",
+          0.2526
+        ],
+        [
+          "068",
+          "DIGNAGO, GALEBOUO ET GUIBEROUA, COMMUNES ET SOUS-PREFECTURES",
+          "DOGO LOGBO MYSS BELMONDE",
+          0.29
+        ],
+        [
+          "069",
+          "DOUGROUPALEGNOA, DOUKOUYO, GNAGBODOUGNOA ET SERIHIO, COMMUNES ET SOUS-PREFECTURES, GAGNOA, SOUS-PREFECTURE",
+          "MOUSSA KONATE",
+          0.2891
+        ],
+        [
+          "070",
+          "GAGNOA, COMMUNE",
+          "UNE COTE D'IVOIRE EN PAIX PROSPERE ET SOLIDAIRE",
+          0.1408
+        ],
+        [
+          "071",
+          "DIEGONEFLA ET TONLA, COMMUNES ET SOUS- PREFECTURES",
+          "BAGROU GOLI",
+          0.34369999999999995
+        ],
+        [
+          "072",
+          "GUEPAHOUO ET OUME, COMMUNES ET SOUS- PREFECTURES",
+          "KOUASSI DJA FLORE",
+          0.2548
+        ],
+        [
+          "073",
+          "APPIMANDOUM, BONDOUKOU ET PINDA-BOROKO, COMMUNES ET SOUS-PREFECTURES",
+          "UNE CÔTE D'IVOIRE EN PAIX, PROSPERE ET SOLIDAIRE",
+          0.3256
+        ],
+        [
+          "074",
+          "BONDO, LAOUDI-BA, SAPLI-SEPINGO, TAOUDI ET YEZIMALA, COMMUNES ET SOUS-PREFECTURES",
+          "UNE COTE D'IVOIRE EN PAIX ,PROSPERE ET SOLIDAIRE",
+          0.5232
+        ],
+        [
+          "075",
+          "GOUMERE ET TABAGNE, COMMUNES ET SOUS- PREFECTURES",
+          "DIABAGATE MOUSSA",
+          0.5448
+        ],
+        [
+          "076",
+          "SOROBANGO ET TAGADI, COMMUNES ET SOUS- PREFECTURES",
+          "KOUASSI KOFFI KRA PAULIN",
+          0.6028
+        ],
+        [
+          "077",
+          "BOAHIA ET KOUASSI-DATEKRO, COMMUNES ET SOUS- PREFECTURES",
+          "MOUTAYE AZOUMANA",
+          0.5789
+        ]
+      ]
+    },
+    {
+      "id": "dev-008",
+      "question": "Quelle est la participation globale dans les circonscriptions remportées par le PDCI-RDA ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          0.24802983022161104
+        ]
+      ]
+    },
+    {
+      "id": "dev-009",
+      "question": "Quel est le taux de bulletins nuls au niveau national ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          0.022749954018699284
+        ]
+      ]
+    },
+    {
+      "id": "dev-010",
+      "question": "Quelle part des voix des candidatures est allée au RHDP ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          0.6258979523272378
+        ]
+      ]
+    },
+    {
+      "id": "dev-011",
+      "question": "Résultats de la circonscription de San-Pédro commune",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          "SAN-PEDRO, VISION NOUVELLE",
+          "INDEPENDANT",
+          870
+        ],
+        [
+          "VISION NOUVELLE",
+          "INDEPENDANT",
+          180
+        ],
+        [
+          "DEVELOPPEMENT-ESPOIR-PAIX",
+          "INDEPENDANT",
+          3813
+        ],
+        [
+          "UNE COTE DIVOIRE EN PAIX ,PROSPERE ET SOLIDAIRE",
+          "RHDP",
+          12719
+        ],
+        [
+          "PAIX ET COHESION SOCIALE",
+          "INDEPENDANT",
+          3931
+        ],
+        [
+          "JEUNESSE ENGAGEE NATION TRANSFORMEE",
+          "INDEPENDANT",
+          282
+        ],
+        [
+          "ENSEMBLE SAUVONS SAN-PERO",
+          "INDEPENDANT",
+          411
+        ],
+        [
+          "ENSEMBLE, OSONS LE CHANGEMENT",
+          "CODE",
+          166
+        ],
+        [
+          "TOUS ENSEMBLE POUR LA CÔTE D'IVOIRE",
+          "PDCI-RDA",
+          1786
+        ]
+      ]
+    },
+    {
+      "id": "dev-012",
+      "question": "Participation dans le Haut Sassandra",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          0.2955082439078201
+        ]
+      ]
+    },
+    {
+      "id": "dev-013",
+      "question": "Quel est le score du candidat ?",
+      "answerability": "ambiguous",
+      "all_evidence_card_ids_exist": true
+    },
+    {
+      "id": "dev-014",
+      "question": "Et à Korhogo ?",
+      "answerability": "ambiguous",
+      "all_evidence_card_ids_exist": true
+    },
+    {
+      "id": "dev-015",
+      "question": "Dans quelle région le RHDP a-t-il remporté le plus de circonscriptions, et combien ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          "DISTRICT AUTONOME D'ABIDJAN",
+          10
+        ]
+      ]
+    },
+    {
+      "id": "dev-016",
+      "question": "Quelle circonscription a le plus petit écart de voix entre le premier et le second ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          "122",
+          "GBELEBAN ET SEYDOUGOU, COMMUNES ET SOUS- PREFECTURES",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "dev-017",
+      "question": "Combien de femmes ont été élues députées ?",
+      "answerability": "unsupported",
+      "all_evidence_card_ids_exist": true
+    },
+    {
+      "id": "dev-018",
+      "question": "Quels étaient les résultats de la présidentielle 2020 à Abidjan ?",
+      "answerability": "unsupported",
+      "all_evidence_card_ids_exist": true
+    },
+    {
+      "id": "dev-019",
+      "question": "À quelle page du PDF figure le résultat de la circonscription de Yamoussoukro commune ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          10
+        ]
+      ]
+    },
+    {
+      "id": "dev-020",
+      "question": "Sur quelle page du document source apparaît le candidat élu à Cocody ?",
+      "answerability": "answerable",
+      "all_evidence_card_ids_exist": true,
+      "gold_columns_match_database": true,
+      "gold_rows_match_database": true,
+      "gold_rows_match_independent_csv_formula": true,
+      "hypothetical_region_reassignment_changes_answer": false,
+      "stored_gold_rows": [
+        [
+          7
+        ]
+      ]
+    }
+  ],
+  "dev007_recomputed_turnout_precision_scoring": [
+    false,
+    "no predicted column matches ['taux_participation']"
+  ],
+  "hypothetical_only_region_sensitivity": {
+    "changed_ids": [
+      "073",
+      "074",
+      "075",
+      "076",
+      "077"
+    ],
+    "from": "GOH",
+    "to": "GONTOUGO",
+    "dev006_before": [
+      [
+        "DISTRICT AUTONOME D'ABIDJAN",
+        0.18875279696720965
+      ],
+      [
+        "NAWA",
+        0.2367620235698827
+      ],
+      [
+        "GRANDS PONTS",
+        0.26313686313686313
+      ],
+      [
+        "SAN-PEDRO",
+        0.2662592795481592
+      ],
+      [
+        "SUD-COMOE",
+        0.29400100401606427
+      ]
+    ],
+    "dev006_after": [
+      [
+        "DISTRICT AUTONOME D'ABIDJAN",
+        0.18875279696720965
+      ],
+      [
+        "NAWA",
+        0.2367620235698827
+      ],
+      [
+        "GOH",
+        0.23851564716589718
+      ],
+      [
+        "GRANDS PONTS",
+        0.26313686313686313
+      ],
+      [
+        "SAN-PEDRO",
+        0.2662592795481592
+      ]
+    ],
+    "dev015_before": [
+      [
+        "DISTRICT AUTONOME D'ABIDJAN",
+        10
+      ]
+    ],
+    "dev015_after": [
+      [
+        "DISTRICT AUTONOME D'ABIDJAN",
+        10
+      ]
+    ]
+  },
+  "recommended_exclusions": [
+    "dev-006",
+    "dev-007"
+  ],
+  "recommended_included_ids": [
+    "dev-001",
+    "dev-002",
+    "dev-003",
+    "dev-004",
+    "dev-005",
+    "dev-008",
+    "dev-009",
+    "dev-010",
+    "dev-011",
+    "dev-012",
+    "dev-013",
+    "dev-014",
+    "dev-015",
+    "dev-016",
+    "dev-017",
+    "dev-018",
+    "dev-019",
+    "dev-020"
+  ]
+}

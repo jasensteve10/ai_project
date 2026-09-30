@@ -1,0 +1,157 @@
+{
+  "run_id": "text-to-sql-comparison-retrieval-20260930",
+  "created": "2026-09-30T00:50:50+00:00",
+  "mode": "retrieval-only",
+  "split": "dev",
+  "conditions": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "repeats": 1,
+  "question_ids": [
+    "dev-001",
+    "dev-002",
+    "dev-003",
+    "dev-004",
+    "dev-005",
+    "dev-008",
+    "dev-009",
+    "dev-010",
+    "dev-011",
+    "dev-012",
+    "dev-013",
+    "dev-014",
+    "dev-015",
+    "dev-016",
+    "dev-017",
+    "dev-018",
+    "dev-019",
+    "dev-020"
+  ],
+  "config": {
+    "benchmark": "benchmarks/edan_2025_v1.jsonl",
+    "dense_model": "intfloat/multilingual-e5-small",
+    "retrieval": {
+      "quotas": {
+        "schema": 3,
+        "domain": 3,
+        "entity": 5
+      },
+      "entity_k_grid": [
+        3,
+        5,
+        8
+      ],
+      "ranking_k": [
+        5,
+        10,
+        20
+      ]
+    },
+    "agent": {
+      "static_retriever": "hybrid",
+      "search_k": 5,
+      "selection": null
+    },
+    "conditions": {
+      "A": {
+        "context": "full_schema"
+      },
+      "B": {
+        "context": "retrieval",
+        "retriever": "bm25"
+      },
+      "C": {
+        "context": "retrieval",
+        "retriever": "dense"
+      },
+      "D": {
+        "context": "retrieval",
+        "retriever": "hybrid"
+      }
+    },
+    "default_conditions": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "result_row_cap_in_trace": 50,
+    "prices": {
+      "as_of": null,
+      "currency": "USD",
+      "input_per_million_tokens": null,
+      "output_per_million_tokens": null,
+      "note": "Fill from the provider's price page for the exact model, with the date checked. Free-tier runs have no billed cost; any cost shown is an estimate."
+    },
+    "dense_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "display_labels": {
+      "A": "A — Text-to-SQL without retrieval",
+      "B": "B1 — RAG with BM25",
+      "C": "B2 — RAG with E5",
+      "D": "B3 — Hybrid RAG"
+    },
+    "comparison": {
+      "split": "dev",
+      "seed": 0,
+      "repeats": 1,
+      "excluded_ids": {
+        "dev-006": "Ranking depends on ambiguous PDF page 14 region carry.",
+        "dev-007": "GOH membership depends on ambiguous PDF page 14 region carry; rounded gold rate also requires policy review."
+      },
+      "primary_metric": "Strict SQL result correctness among 14 answerable questions",
+      "secondary_metrics": [
+        "overall task success on 18 questions",
+        "execution rate on answerable questions",
+        "clarification and unsupported-request handling",
+        "repair rate",
+        "tokens",
+        "paced and provider time"
+      ],
+      "baseline": "All 7 schema and 12 domain cards; no entity cards, search or query-dependent context. Same rules and six SQL examples as all RAG conditions.",
+      "tuning": "No tuning or prompt changes after seeing outcomes; existing 3 schema/3 domain/5 entity quotas fixed."
+    }
+  },
+  "benchmark": {
+    "path": "benchmarks/edan_2025_v1.jsonl",
+    "sha256": "5d7a74c72d407cda7711fb8a331fa76195de3d7a411469b2eb39709ea4afb372",
+    "freeze_status": "unfrozen"
+  },
+  "corpus": {
+    "path": "dataset/retrieval/cards.jsonl",
+    "sha256": "86412bb2b9e8d294edc8e33d0266799c01d336f1c0bbf3bf7936102aa6e0178b",
+    "cards": 300
+  },
+  "provider": null,
+  "llm_fallback": "disabled",
+  "model": null,
+  "runtime_fingerprint": null,
+  "dense_model": "intfloat/multilingual-e5-small",
+  "dense_model_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "rag_fingerprint": "1b169f763edb8754cb3ff4bb38945168e210f4fbff388344238488be9ce10d92",
+  "answer_cache": "disabled",
+  "git": {
+    "sha": "a22eb2a97e1c8279729fd47652e1ac5fa1cb8a98",
+    "dirty": true
+  },
+  "versions": {
+    "python": "3.14.4",
+    "duckdb": "1.5.5",
+    "sqlglot": "30.20.0",
+    "langchain-google-genai": "4.4.0",
+    "sentence-transformers": "6.1.0",
+    "torch": "2.14.0",
+    "numpy": "2.5.3"
+  },
+  "evaluation_fingerprint": "18238817f11a3f10b19ffabbf264416a2d118ba53ad7ecce6403a0d6085dc8d4",
+  "seed": 0,
+  "invocations": [
+    {
+      "at": "2026-09-30T00:50:50+00:00",
+      "max_calls": null,
+      "pace_seconds": 0.0
+    }
+  ]
+}

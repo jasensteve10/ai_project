@@ -1,0 +1,42 @@
+{
+  "source_hashes": {
+    "pdf": "b36e9fcb7141512ddf465245ec6ef1404669af03d2028101cb7f065222b6a517",
+    "csv": "e97725cd19922ad97817b1a27fe1982a2785540fec0665db387b9b316a75712a"
+  },
+  "pdf_pages": 35,
+  "candidate_rows": 1125,
+  "business_columns": 16,
+  "provenance_columns": 3,
+  "constituencies": 205,
+  "regions": 33,
+  "party_labels": 43,
+  "checks": 21,
+  "failed_checks": 0,
+  "national_turnout": 0.3503619596021538,
+  "mean_exact_constituency_turnout": 0.42216222947791343,
+  "mean_printed_constituency_turnout": 0.42216243902439027,
+  "national_invalid_rate": 0.022749954018699284,
+  "national_blank_rate_expressed": 0.010048346072403942,
+  "single_entry_constituencies": 11,
+  "contested_constituencies": 194,
+  "winner_below_half_expressed": 84,
+  "winner_below_half_candidate_votes": 82,
+  "margins_under_5pp": 30,
+  "margins_under_1pp": 3,
+  "repeated_candidate_labels_across_constituencies": 18,
+  "outlier_flags": 41,
+  "distinct_flagged_constituencies": 39,
+  "source_pdf_metadata": {
+    "Author": "CAMILLE KOTCHI SEKA",
+    "CreationDate": "D:20251229101313+00'00'",
+    "ModDate": "D:20251229101313+00'00'",
+    "Producer": "Microsoft® Excel® 2019",
+    "Creator": "Microsoft® Excel® 2019"
+  },
+  "source_pages_visually_reviewed_this_eda": [
+    1,
+    21,
+    22,
+    30
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "domain:regional_turnout",
+    "title": "Participation régionale ou nationale (pondérée)",
+    "text": "Taux de participation d'une région, d'un groupe ou du pays: SUM(votants) / NULLIF(SUM(inscrits), 0) sur mart.vw_circonscriptions. Mesure pondérée par les inscrits; c'est l'interprétation par défaut de « participation d'une région ». Participation nationale = 3 012 094 / 8 597 092."
+  },
+  {
+    "id": "domain:mean_constituency_turnout",
+    "title": "Moyenne non pondérée des taux de circonscription",
+    "text": "Uniquement si la question demande explicitement une moyenne des taux: AVG(taux_participation) sur mart.vw_circonscriptions, nommée moyenne_non_ponderee. Elle diffère de la participation pondérée."
+  },
+  {
+    "id": "domain:fractions",
+    "title": "Taux stockés en fractions",
+    "text": "taux_participation, score_pct et bulletins_blancs_pct sont des fractions entre 0 et 1 (0.35 = 35 %). Pour un pourcentage multiplier par 100 une seule fois. Un seuil « plus de 50 % » s'écrit > 0.5."
+  },
+  {
+    "id": "domain:expressed_ballots",
+    "title": "Suffrages exprimés, blancs et nuls",
+    "text": "votants = bulletins_nuls + suffrages_exprimes. Dans cette source, suffrages_exprimes inclut les bulletins blancs; la somme des score d'une circonscription = suffrages_exprimes - bulletins_blancs_nb. Taux de bulletins nuls = bulletins_nuls / votants. bulletins_blancs_pct = blancs / suffrages exprimés."
+  },
+  {
+    "id": "domain:no_double_count",
+    "title": "Éviter le double comptage des totaux",
+    "text": "Inscrits, votants, bureaux de vote, bulletins nuls/blancs et suffrages exprimés sont des attributs de circonscription: les sommer depuis mart.vw_circonscriptions (une ligne par circonscription), jamais depuis la vue des candidatures qui répète ces valeurs."
+  },
+  {
+    "id": "domain:elected_not_seats",
+    "title": "Élu ne signifie pas siège",
+    "text": "elu = TRUE correspond à la marque ELU(E) du PDF, une par circonscription (205). Une ligne peut être une liste; le nombre de sièges et les membres des listes ne sont pas disponibles. Compter des lignes élues = nombre de circonscriptions gagnées, pas de députés."
+  },
+  {
+    "id": "domain:independents",
+    "title": "Candidatures indépendantes",
+    "text": "parti = 'INDEPENDANT' regroupe toutes les candidatures sans parti. Ce n'est pas une organisation: les classements de partis doivent le signaler. Les libellés de partis sont conservés tels quels, sans fusion d'alias."
+  },
+  {
+    "id": "domain:winner_margin",
+    "title": "Vainqueur, second et écart",
+    "text": "Le vainqueur d'une circonscription est la ligne elu = TRUE (mart.vw_vainqueur). L'écart ou la marge compare le score du premier et du second: utiliser ROW_NUMBER() OVER (PARTITION BY circonscription_id ORDER BY score DESC) sur mart.vw_resultats_candidats. Marge en points = différence de score_pct."
+  },
+  {
+    "id": "domain:competition",
+    "title": "Nombre de candidatures et compétition",
+    "text": "Le nombre de candidatures d'une circonscription = COUNT(*) sur mart.vw_resultats_candidats groupé par circonscription_id. Circonscription sans concurrence = une seule candidature."
+  },
+  {
+    "id": "domain:provenance",
+    "title": "Localisation dans le PDF source",
+    "text": "source_page, source_table et source_row (base 1) localisent chaque candidature dans le PDF de la CEI. Pour citer la page d'un résultat, sélectionner source_page. Ne jamais inventer de numéro de page."
+  },
+  {
+    "id": "domain:scope",
+    "title": "Périmètre du jeu de données",
+    "text": "Résultats provisoires des élections législatives 2025 de Côte d'Ivoire (PDF CEI), par circonscription. Absents: autres élections ou années, résultats par bureau de vote, âge, sexe, sièges, membres des listes, données démographiques. Ces demandes sont unsupported."
+  },
+  {
+    "id": "domain:name_matching",
+    "title": "Recherche de noms géographiques",
+    "text": "circonscription_name décrit souvent plusieurs communes et sous-préfectures (« AGBOVILLE, COMMUNE »). Rechercher avec ILIKE '%NOM%' en majuscules; les régions gardent les espaces et tirets de la source (ex. 'HAUT- SASSANDRA'). Les identifiants de circonscription sont des chaînes à trois chiffres ('001')."
+  }
+]

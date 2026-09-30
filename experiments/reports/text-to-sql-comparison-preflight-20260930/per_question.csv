@@ -1,0 +1,19 @@
+question_id,repeat,question,answerability,A_outcome,A_success,B1_outcome,B1_success,B2_outcome,B2_success,B3_outcome,B3_success
+dev-001,0,Qui est arrivé en tête dans la circonscription de Bouaké ville ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-002,0,Combien d'inscrits compte la circonscription de Daloa ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-003,0,Combien de votants au total dans la région du Poro ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-004,0,Nombre total de voix obtenues par les candidatures indépendantes,answerable,correct,True,correct,True,correct,True,correct,True
+dev-005,0,Quelles sont les 3 circonscriptions avec le plus d'inscrits ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-008,0,Quelle est la participation globale dans les circonscriptions remportées par le PDCI-RDA ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-009,0,Quel est le taux de bulletins nuls au niveau national ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-010,0,Quelle part des voix des candidatures est allée au RHDP ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-011,0,Résultats de la circonscription de San-Pédro commune,answerable,correct,True,correct,True,correct,True,correct,True
+dev-012,0,Participation dans le Haut Sassandra,answerable,correct,True,correct,True,correct,True,correct,True
+dev-013,0,Quel est le score du candidat ?,ambiguous,correct_abstention,True,correct_abstention,True,correct_abstention,True,correct_abstention,True
+dev-014,0,Et à Korhogo ?,ambiguous,correct_abstention,True,correct_abstention,True,correct_abstention,True,correct_abstention,True
+dev-015,0,"Dans quelle région le RHDP a-t-il remporté le plus de circonscriptions, et combien ?",answerable,correct,True,correct,True,correct,True,correct,True
+dev-016,0,Quelle circonscription a le plus petit écart de voix entre le premier et le second ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-017,0,Combien de femmes ont été élues députées ?,unsupported,correct_abstention,True,correct_abstention,True,correct_abstention,True,correct_abstention,True
+dev-018,0,Quels étaient les résultats de la présidentielle 2020 à Abidjan ?,unsupported,correct_abstention,True,correct_abstention,True,correct_abstention,True,correct_abstention,True
+dev-019,0,À quelle page du PDF figure le résultat de la circonscription de Yamoussoukro commune ?,answerable,correct,True,correct,True,correct,True,correct,True
+dev-020,0,Sur quelle page du document source apparaît le candidat élu à Cocody ?,answerable,correct,True,correct,True,correct,True,correct,True

@@ -1,160 +1,73 @@
-###########################################
-# Building the Data base schema 
-# avec une couche brute et une couche mart 
-###########################################
-
-import duckdb as db 
+"""Build validated election marts and their versioned column catalog."""
+import argparse
+import hashlib
+import json
 from pathlib import Path
-import os 
 
-#------------------------------------------
-# Définition des chemins 
-#------------------------------------------
+import duckdb
+import pandas as pd
+from src.ingestion.ingestion import CONSTITUENCY_COLUMNS, validate_data
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-
-PARQUET = PROJECT_ROOT / "dataset" / "clean" / "edan_2025_resultats.parquet"
-DB_PATH = PROJECT_ROOT / "dataset" / "db" / "edan_2025.duckdb"
-
-BRUTE_SCHEMA = "brute"
-MART_SCHEMA = "mart"
-
-BRUTE_TABLE = "resultats"
-
-VW_CIRCO = "vw_circonscriptions"
-VW_CAND = "vw_resultats_candidats"
-VW_VAINQUEUR = "vw_vainqueur"
-
-"""
-        "region", "circonscription_id", "circonscription_name",
-        "nb_bureaux_vote", "inscrits", "votants", "taux_participation",
-        "bulletins_nuls", "suffrages_exprimes",
-        "bulletins_blancs_nb", "bulletins_blancs_pct",
-        "parti", "candidat", "score", "score_pct", "elu"
-"""
-
-#------------------------------------------
-# main
-#------------------------------------------
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PARQUET = PROJECT_ROOT / 'dataset/clean/edan_2025_resultats.parquet'
+DB_PATH = PROJECT_ROOT / 'dataset/db/edan_2025.duckdb'
+CATALOG_PATH = PROJECT_ROOT / 'dataset/clean/schema_catalog.json'
+DESCRIPTIONS = {
+    'mart.vw_circonscriptions': 'Une ligne par circonscription; totaux et participation sans double comptage.',
+    'mart.vw_resultats_candidats': 'Une ligne par candidature/liste; score = voix, elu = marque ELU(E) du PDF.',
+    'mart.vw_vainqueur': 'Candidatures/listes marquées ELU(E); leur nombre ne représente pas les sièges.',
+}
 
 
-def main() -> None:
-    
-    if not PARQUET.exists():
-        raise FileNotFoundError(f"Parquet not found: {PARQUET}")
+def read_catalog(con):
+    return {
+        relation: {
+            'description': description,
+            'columns': [{'name': r[0], 'type': r[1]} for r in con.execute(f'DESCRIBE {relation}').fetchall()],
+        }
+        for relation, description in DESCRIPTIONS.items()
+    }
 
 
-    # Connexion à la base de données
-    con = db.connect(DB_PATH)
-
-    #------------------------------------------
-    # Création des schémas
-    #------------------------------------------
-    con.execute(f"CREATE SCHEMA IF NOT EXISTS {BRUTE_SCHEMA}")
-    con.execute(f"CREATE SCHEMA IF NOT EXISTS {MART_SCHEMA}")
-
-    #------------------------------------------
-    # Création de la table brute
-    #------------------------------------------
-    con.execute(f"""
-        DROP TABLE IF EXISTS {BRUTE_SCHEMA}.{BRUTE_TABLE};
-    """)
-
-    con.execute(f"""
-        CREATE TABLE {BRUTE_SCHEMA}.{BRUTE_TABLE} AS
-        SELECT *
-        FROM read_parquet('{PARQUET}');
-    """)
-    #------------------------------------------
-    # Création des vues , circonscription , candidats , vainqueur
-    #------------------------------------------
-
-    ## Vues pour les circonscriptions ( normalisation des données au cas ou )
-    con.execute(f"""
-        DROP VIEW IF EXISTS {MART_SCHEMA}.{VW_CIRCO};
-    """)
-
-    con.execute(f"""
-        CREATE OR REPLACE VIEW 
-        {MART_SCHEMA}.{VW_CIRCO} AS 
-        SELECT 
-           circonscription_id :: VARCHAR(15) AS circonscription_id, 
-           TRIM(REGEXP_REPLACE(ANY_VALUE(circonscription_name), '\s+', ' ', 'g'))::VARCHAR AS circonscription_name,
-           ANY_VALUE(region)::VARCHAR AS region,        
-
-           MAX(nb_bureaux_vote)::BIGINT        AS nb_bureaux_vote,
-           MAX(inscrits)::BIGINT               AS inscrits,
-           MAX(votants)::BIGINT                AS votants,
-           MAX(taux_participation)::DOUBLE     AS taux_participation,
-
-           MAX(bulletins_nuls)::BIGINT         AS bulletins_nuls,
-           MAX(suffrages_exprimes)::BIGINT     AS suffrages_exprimes,
-
-           MAX(bulletins_blancs_nb)::BIGINT    AS bulletins_blancs_nb,
-           MAX(bulletins_blancs_pct)::DOUBLE   AS bulletins_blancs_pct    
-        FROM {BRUTE_SCHEMA}.{BRUTE_TABLE}
-        GROUP BY circonscription_id;
-    """)
-
-    ## Vues pour les candidats
-    con.execute(f"""
-        DROP VIEW IF EXISTS {MART_SCHEMA}.{VW_CAND};
-    """)
-
-    con.execute(f"""
-        CREATE OR REPLACE VIEW 
-        {MART_SCHEMA}.{VW_CAND} AS 
-        SELECT 
-            region::VARCHAR AS region,
-            circonscription_id :: VARCHAR(15) AS circonscription_id, 
-            parti::VARCHAR             AS parti,
-            candidat::VARCHAR          AS candidat,
-            CAST(score AS BIGINT)      AS score,
-            CAST(score_pct AS DOUBLE)  AS score_pct,
-            elu::BOOLEAN               AS elu
-        FROM {BRUTE_SCHEMA}.{BRUTE_TABLE};
-    """)
-
-    ## Vues pour vainqueur
-    con.execute(f"""
-        DROP VIEW IF EXISTS {MART_SCHEMA}.{VW_VAINQUEUR};
-    """)
-
-    con.execute(f"""
-        CREATE OR REPLACE VIEW 
-        {MART_SCHEMA}.{VW_VAINQUEUR} AS 
-        SELECT * FROM {BRUTE_SCHEMA}.{BRUTE_TABLE}
-        WHERE elu = true;
-    """)
-
-    print(" ####### les tables sont créées avec succès ####### ")
-    print(f" - Table: {BRUTE_SCHEMA}.{BRUTE_TABLE}")
-    print(f" - View : {MART_SCHEMA}.{VW_CIRCO}")
-    print(f" - View : {MART_SCHEMA}.{VW_CAND}")
-    print(f" - View : {MART_SCHEMA}.{VW_VAINQUEUR}")
+def build_database(parquet=PARQUET, db_path=DB_PATH, catalog_path=CATALOG_PATH):
+    df = pd.read_parquet(parquet)
+    validate_data(df)
+    Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+    with duckdb.connect(str(db_path)) as con:
+        con.execute('BEGIN TRANSACTION')
+        try:
+            con.execute('CREATE SCHEMA IF NOT EXISTS brute')
+            con.execute('CREATE SCHEMA IF NOT EXISTS mart')
+            con.register('validated_results', df)
+            con.execute('CREATE OR REPLACE TABLE brute.resultats AS SELECT * FROM validated_results')
+            # Consistency is checked above, so DISTINCT retains exact source values.
+            con.execute('CREATE OR REPLACE VIEW mart.vw_circonscriptions AS SELECT DISTINCT '
+                        + ', '.join(CONSTITUENCY_COLUMNS) + ' FROM brute.resultats')
+            con.execute('CREATE OR REPLACE VIEW mart.vw_resultats_candidats AS SELECT '
+                        'region, circonscription_id, circonscription_name, parti, candidat, score, score_pct, elu, '
+                        'source_page, source_table, source_row FROM brute.resultats')
+            con.execute('CREATE OR REPLACE VIEW mart.vw_vainqueur AS SELECT * FROM brute.resultats WHERE elu = TRUE')
+            catalog = read_catalog(con)
+            con.execute('COMMIT')
+        except Exception:
+            con.execute('ROLLBACK')
+            raise
+    payload = {'schema_version': hashlib.sha256(json.dumps(catalog, sort_keys=True).encode()).hexdigest(),
+               'relations': catalog}
+    Path(catalog_path).parent.mkdir(parents=True, exist_ok=True)
+    Path(catalog_path).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')
+    return payload
 
 
-    ## show tables
-    print(con.execute(f"SHOW TABLES FROM {MART_SCHEMA}").fetchall())
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--parquet', type=Path, default=PARQUET)
+    parser.add_argument('--db', type=Path, default=DB_PATH)
+    parser.add_argument('--catalog', type=Path, default=CATALOG_PATH)
+    args = parser.parse_args()
+    result = build_database(args.parquet, args.db, args.catalog)
+    print(f'Database built: {args.db}; schema version: {result["schema_version"]}')
 
-    ## affichange des tables 
-    df_brute = con.execute(f"SELECT * FROM {BRUTE_SCHEMA}.{BRUTE_TABLE}").fetchdf()
-    df_circo = con.execute(f"SELECT * FROM {MART_SCHEMA}.{VW_CIRCO}").fetchdf()
-    df_cand = con.execute(f"SELECT * FROM {MART_SCHEMA}.{VW_CAND}").fetchdf()
-    df_vainqueur = con.execute(f"SELECT * FROM {MART_SCHEMA}.{VW_VAINQUEUR}").fetchdf()
-    
-    print(df_brute.head(5))
-    print("#############################")
-    print(df_circo.head(5))
-    print("#############################")
-    print(df_cand.head(5))
-    print("#############################")
-    print(df_vainqueur.head(5))
-    
-    #------------------------------------------
-    # Fermeture de la connexion
-    #------------------------------------------
-    con.close()
 
-if __name__ == "__main__":
-    main()  
+if __name__ == '__main__':
+    main()
