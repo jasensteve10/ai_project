@@ -20,13 +20,15 @@ Files used by Community Cloud: `app/app.py`, `app/requirements.txt` (read before
 requirements), `.streamlit/config.toml`. Apps sleep after 12 h without traffic; memory limit 2.7 GB
 (measured peak ≈1.9 GB with E5 loaded).
 
-## Optional: live answers with your Gemini key
+## Live answers with your Gemini key (protected by an access code)
 
-Replace the secrets with the following (free tier; the app answers with real SQL). Anyone with
-the URL can then use your quota, so consider making the app private (App settings → Sharing).
+In **Manage app → Settings → Secrets**, replace the secrets with the following and save (the app
+restarts). Visitors without the code still get the examples, saved answers and retrieval context;
+only people with the code trigger Gemini calls on your free quota.
 
 ```toml
 PUBLIC_DEMO = "0"
+APP_ACCESS_CODE = "choose-a-code"
 E5_ALLOW_DOWNLOAD = "1"
 GOOGLE_API_KEY = "your-key"
 GEMINI_MODEL = "gemini-3.8-flash"
