@@ -22,7 +22,7 @@ from types import SimpleNamespace
 from src.agent.Agent import DB_PATH, ElectionSQLAgent, runtime_fingerprint
 from src.agent.llm import DEFAULT_CLAUDE_MODEL, make_provider_llm
 from src.evaluation.benchmark import file_hash, freeze_status, load_benchmark
-from src.evaluation.conditions import ContextBuilder, Retrievers, resolve_retriever
+from src.retrieval.context import ContextBuilder, Retrievers, resolve_retriever
 from src.evaluation.scoring import (SUCCESS, classify, complete_set, error_category, retrieval_metrics,
                                     slot_recall)
 from src.retrieval.corpus import CARDS_PATH, corpus_hash, verified_cards
@@ -135,7 +135,7 @@ def _append(path, row):
         f.write(json.dumps(row, ensure_ascii=False, default=str) + '\n')
 
 
-def _manifest(args, config, cards, records, bench_path, model, dense_revision=None):
+def _manifest(args, config, cards, records, bench_path, model, dense_revision=None, dense_ft_version=None):
     return {
         'run_id': args.run_id, 'created': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'),
         'mode': args.mode, 'split': args.split, 'conditions': args.conditions, 'repeats': args.repeats,
@@ -146,6 +146,8 @@ def _manifest(args, config, cards, records, bench_path, model, dense_revision=No
         'provider': getattr(args, 'provider', 'gemini') if args.mode == 'live' else None, 'llm_fallback': 'disabled',
         'model': model, 'runtime_fingerprint': runtime_fingerprint(DB_PATH, model=model) if model else None,
         'dense_model': config['dense_model'], 'dense_model_revision': dense_revision,
+        'dense_ft_model': config.get('dense_ft_model') if dense_ft_version else None,
+        'dense_ft_model_version': dense_ft_version,
         'rag_fingerprint': rag_fingerprint('evaluation', config_path=args.config),
         'answer_cache': 'disabled', 'git': _git(), 'versions': _versions(),
         'evaluation_fingerprint': hashlib.sha256(b''.join(
@@ -358,17 +360,21 @@ def main(argv=None):
     args.run_id = args.run_id or f'{dt.datetime.now():%Y%m%d-%H%M%S}-{args.split}-{args.mode}'
 
     cards = verified_cards()
-    retrievers = Retrievers(cards, config['dense_model'], corpus_hash(cards), config.get('dense_revision'))
+    retrievers = Retrievers(cards, config['dense_model'], corpus_hash(cards), config.get('dense_revision'),
+                            config.get('dense_ft_model'))
     builder = ContextBuilder(cards, config, retrievers)
     uses_dense = any(resolve_retriever(config['conditions'][c], config) in ('dense', 'hybrid')
                      for c in args.conditions if config['conditions'][c]['context'] == 'retrieval')
     dense_rev = retrievers.dense.model_revision if uses_dense else None
+    uses_ft = any(resolve_retriever(config['conditions'][c], config) == 'dense_ft'
+                  for c in args.conditions if config['conditions'][c]['context'] == 'retrieval')
+    ft_version = retrievers.dense_ft.model_revision if uses_ft else None
     if args.mode == 'live':
         model = (os.getenv('GEMINI_MODEL') if args.provider == 'gemini'
                  else os.getenv('ANTHROPIC_MODEL') or DEFAULT_CLAUDE_MODEL)
     else:
         model = 'fake-gold' if args.mode == 'fake' else None
-    manifest = _manifest(args, config, cards, records, bench_path, model, dense_rev)
+    manifest = _manifest(args, config, cards, records, bench_path, model, dense_rev, ft_version)
     run_dir = _prepare_run_dir(args, manifest)
 
     if args.mode == 'retrieval-only':

@@ -1,13 +1,17 @@
-/project
-/.vscode
-/_pycache_
-/.env
+# Environment and secrets
 .venv/
+.env
+.vscode/
+.DS_Store
+
+# Python caches
 __pycache__/
 *.py[cod]
 .pytest_cache/
-.DS_Store
-tmp/
 
-# Retrieval/experiment caches (rebuilt on demand)
+# Rebuilt on demand: models/ by python -m src.pipeline.train, embeddings by the E5 index
+models/
 dataset/retrieval/embeddings/
+
+# Office lock files
+~$*

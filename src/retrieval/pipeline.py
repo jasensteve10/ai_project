@@ -16,7 +16,7 @@ APP_CONDITIONS = ('B', 'C', 'D', 'A', 'F1', 'F3')
 def rag_fingerprint(condition, db_path=DB_PATH, config_path=CONFIG_PATH):
     digest = hashlib.sha256(runtime_fingerprint(db_path).encode())
     for path in [Path(config_path), CARDS_PATH, PDF_PATH, ROOT / 'src/semantic/glossary.json',
-                 ROOT / 'docs/eda/tables/data_dictionary.csv',
+                 ROOT / 'src/semantic/data_dictionary.csv',
                  *sorted((ROOT / 'src/retrieval').glob('*.py'))]:
         digest.update(path.read_bytes())
     digest.update(condition.encode())
@@ -52,7 +52,8 @@ class ElectionRAG:
         cards = verified_cards(db_path)
         self.corpus_version = corpus_hash(cards)
         retrievers = Retrievers(cards, self.config['dense_model'], self.corpus_version,
-                                self.config.get('dense_revision'))
+                                self.config.get('dense_revision'),
+                            self.config.get('dense_ft_model'))
         self.builder = ContextBuilder(cards, self.config, retrievers)
         self.agent = agent
         self.db_path = db_path

@@ -1,5 +1,4 @@
 """Streamlit client of the same RAG pipeline used by the experiment runner."""
-import json
 import os
 
 import pandas as pd
@@ -58,7 +57,7 @@ try:
     rag = init_rag(version, condition)
 except Exception as exc:
     st.error(f'Initialisation du RAG : {exc}')
-    st.info('Préparer les données : python -m src.retrieval.cli prepare')
+    st.info('Préparer les données : python -m src.pipeline.preprocess puis python -m src.pipeline.train --skip-finetune')
     st.stop()
 
 

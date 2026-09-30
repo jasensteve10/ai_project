@@ -1,0 +1,20 @@
+{
+  "rows": 1125,
+  "constituencies": 205,
+  "national_totals_reconcile": true,
+  "schema_version": "63778da16d99031a20b8a2f1213602714e8303f4f0cb6f1e1666b5bf6e6819af",
+  "cards": 300,
+  "corpus_sha256": "86412bb2b9e8d294edc8e33d0266799c01d336f1c0bbf3bf7936102aa6e0178b",
+  "benchmark_errors": [],
+  "benchmark_warnings": [],
+  "mode": "check",
+  "reproduces_committed_data": {
+    "csv_identical": true,
+    "parquet_content_identical": true,
+    "csv_rows": 1125,
+    "database_views_identical": true,
+    "schema_catalog_identical": true,
+    "cards_identical": true,
+    "gold_results_identical": true
+  }
+}

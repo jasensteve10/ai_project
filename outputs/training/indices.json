@@ -1,0 +1,21 @@
+{
+  "cards": 300,
+  "bm25": {
+    "k1": 1.5,
+    "b": 0.75,
+    "vocabulary": 1244,
+    "mean_card_tokens": 17.0
+  },
+  "e5": {
+    "model": "intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "embedding_matrix": [
+      300,
+      384
+    ],
+    "norms_min_max": [
+      0.9999998807907104,
+      1.0000001192092896
+    ]
+  }
+}

@@ -12,6 +12,19 @@ DEFAULT_MODEL = 'intfloat/multilingual-e5-small'
 DEFAULT_REVISION = '614241f622f53c4eeff9890bdc4f31cfecc418b3'
 
 
+def passage_text(card):
+    """E5 passage format; shared by indexing and fine-tuning."""
+    return f"passage: {card['title']}\n{card['text']}"
+
+
+def local_model_version(path):
+    """Fine-tuned local models are versioned by their weight hash."""
+    digest = hashlib.sha256()
+    for weights in sorted(Path(path).rglob('*.safetensors')):
+        digest.update(weights.read_bytes())
+    return 'sha256:' + digest.hexdigest()
+
+
 class DenseRetriever:
     def __init__(self, cards, model_name=DEFAULT_MODEL, cache_dir=CACHE_DIR, corpus_version=None, device=None,
                  revision=None, download=False):
@@ -19,18 +32,22 @@ class DenseRetriever:
         if not cards:
             raise ValueError('Dense retrieval requires a nonempty corpus')
         self.cards, self.model_name = cards, model_name
-        self.revision = revision or (DEFAULT_REVISION if model_name == DEFAULT_MODEL else None)
+        local = Path(model_name).is_dir()
+        if local and not (Path(model_name) / 'config.json').exists():
+            raise RuntimeError(f'Fine-tuned model missing: {model_name}; run python -m src.pipeline.train')
+        self.revision = (local_model_version(model_name) if local
+                         else revision or (DEFAULT_REVISION if model_name == DEFAULT_MODEL else None))
         if not self.revision:
             raise ValueError('An explicit dense model revision is required')
         try:
-            self.model = SentenceTransformer(model_name, revision=self.revision, device=device or 'cpu',
-                                              local_files_only=not download)
+            self.model = SentenceTransformer(model_name, device=device or 'cpu', local_files_only=not download,
+                                             **({} if local else {'revision': self.revision}))
         except OSError as exc:
-            raise RuntimeError('Modèle local absent : python -m src.retrieval.cli prepare --download-model') from exc
+            raise RuntimeError('Local E5 model missing: python -m src.pipeline.train --download-model') from exc
         # E5 expects "query: " / "passage: " prefixes; vectors are L2-normalized for cosine.
-        passages = [f"passage: {c['title']}\n{c['text']}" for c in cards]
-        key = hashlib.sha256((model_name + self.revision + (corpus_version or '') + '\x00'.join(passages)).encode()).hexdigest()[:16]
-        path = Path(cache_dir) / f'{model_name.replace("/", "__")}_{key}.npy'
+        passages = [passage_text(c) for c in cards]
+        key = hashlib.sha256((str(model_name) + self.revision + (corpus_version or '') + '\x00'.join(passages)).encode()).hexdigest()[:16]
+        path = Path(cache_dir) / f'{Path(str(model_name)).name if local else model_name.replace("/", "__")}_{key}.npy'
         if path.exists():
             self.matrix = np.load(path, allow_pickle=False)
         else:

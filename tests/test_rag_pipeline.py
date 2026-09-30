@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -7,7 +6,7 @@ import pytest
 from src.agent.Agent import ElectionSQLAgent
 from src.retrieval.corpus import build_cards, verified_cards, write_cards
 from src.retrieval.pipeline import ElectionRAG, run_with_context
-from src.evaluation.conditions import ContextBuilder as EvaluationContext
+from src.retrieval.context import ContextBuilder as EvaluationContext
 from src.retrieval.context import ContextBuilder
 
 

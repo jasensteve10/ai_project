@@ -1,0 +1,4817 @@
+{
+  "generated": 1201,
+  "dropped_benchmark_lookalikes": [
+    [
+      "résultats par bureau de vote",
+      "domain:scope"
+    ],
+    [
+      "région la me",
+      "entity:region:LA ME"
+    ],
+    [
+      "région La-Me",
+      "entity:region:LA ME"
+    ],
+    [
+      "Qui l’emporte à Yopougon ?",
+      "entity:circ:047"
+    ],
+    [
+      "Qui l’emporte à yopougon ?",
+      "entity:circ:047"
+    ]
+  ],
+  "train_pairs": 969,
+  "train_cards": 244,
+  "heldout_pairs": 227,
+  "heldout_cards": 56,
+  "train": [
+    [
+      "totaux par circonscription",
+      "schema:vw_circonscriptions"
+    ],
+    [
+      "inscrits et votants de chaque circonscription",
+      "schema:vw_circonscriptions"
+    ],
+    [
+      "bureaux de vote et participation",
+      "schema:vw_circonscriptions"
+    ],
+    [
+      "toutes les candidatures et leurs voix",
+      "schema:vw_resultats_candidats"
+    ],
+    [
+      "score de chaque liste",
+      "schema:vw_resultats_candidats"
+    ],
+    [
+      "tableau des candidats par circonscription",
+      "schema:vw_resultats_candidats"
+    ],
+    [
+      "liste des élus",
+      "schema:vw_vainqueur"
+    ],
+    [
+      "candidat élu dans chaque circonscription",
+      "schema:vw_vainqueur"
+    ],
+    [
+      "les gagnants",
+      "schema:vw_vainqueur"
+    ],
+    [
+      "bulletins nuls et blancs",
+      "schema:circ.ballots"
+    ],
+    [
+      "suffrages exprimés par circonscription",
+      "schema:circ.ballots"
+    ],
+    [
+      "voix obtenues par liste",
+      "schema:cand.scores"
+    ],
+    [
+      "pourcentage des voix d’un candidat",
+      "schema:cand.scores"
+    ],
+    [
+      "numéro de page du document",
+      "schema:cand.provenance"
+    ],
+    [
+      "ligne du tableau source",
+      "schema:cand.provenance"
+    ],
+    [
+      "taux de participation pondéré",
+      "domain:regional_turnout"
+    ],
+    [
+      "participation d’une région entière",
+      "domain:regional_turnout"
+    ],
+    [
+      "moyenne simple des taux",
+      "domain:mean_constituency_turnout"
+    ],
+    [
+      "participation moyenne non pondérée",
+      "domain:mean_constituency_turnout"
+    ],
+    [
+      "pourcentage ou fraction",
+      "domain:fractions"
+    ],
+    [
+      "seuil en pourcentage",
+      "domain:fractions"
+    ],
+    [
+      "différence entre votants et exprimés",
+      "domain:expressed_ballots"
+    ],
+    [
+      "taux de bulletins nuls",
+      "domain:expressed_ballots"
+    ],
+    [
+      "éviter de compter deux fois les inscrits",
+      "domain:no_double_count"
+    ],
+    [
+      "somme des inscrits correcte",
+      "domain:no_double_count"
+    ],
+    [
+      "nombre de sièges",
+      "domain:elected_not_seats"
+    ],
+    [
+      "élu ou député",
+      "domain:elected_not_seats"
+    ],
+    [
+      "candidats sans parti",
+      "domain:independents"
+    ],
+    [
+      "les indépendants",
+      "domain:independents"
+    ],
+    [
+      "écart entre premier et second",
+      "domain:winner_margin"
+    ],
+    [
+      "marge de victoire",
+      "domain:winner_margin"
+    ],
+    [
+      "nombre de candidats en lice",
+      "domain:competition"
+    ],
+    [
+      "circonscription sans adversaire",
+      "domain:competition"
+    ],
+    [
+      "citer la source",
+      "domain:provenance"
+    ],
+    [
+      "où trouver ce résultat dans le PDF",
+      "domain:provenance"
+    ],
+    [
+      "données démographiques",
+      "domain:scope"
+    ],
+    [
+      "élection précédente",
+      "domain:scope"
+    ],
+    [
+      "région agneby-tiassa",
+      "entity:region:AGNEBY-TIASSA"
+    ],
+    [
+      "région Agneby-Tiassa",
+      "entity:region:AGNEBY-TIASSA"
+    ],
+    [
+      "votants Agneby Tiassa",
+      "entity:region:AGNEBY-TIASSA"
+    ],
+    [
+      "votants agneby-tiassa",
+      "entity:region:AGNEBY-TIASSA"
+    ],
+    [
+      "participation en Bafing",
+      "entity:region:BAFING"
+    ],
+    [
+      "participation en bafing",
+      "entity:region:BAFING"
+    ],
+    [
+      "circonscriptions de bafing",
+      "entity:region:BAFING"
+    ],
+    [
+      "circonscriptions de Bafing",
+      "entity:region:BAFING"
+    ],
+    [
+      "région Bagoue",
+      "entity:region:BAGOUE"
+    ],
+    [
+      "région bagoue",
+      "entity:region:BAGOUE"
+    ],
+    [
+      "votants Bagoue",
+      "entity:region:BAGOUE"
+    ],
+    [
+      "votants bagoue",
+      "entity:region:BAGOUE"
+    ],
+    [
+      "votants belier",
+      "entity:region:BELIER"
+    ],
+    [
+      "votants Belier",
+      "entity:region:BELIER"
+    ],
+    [
+      "région Belier",
+      "entity:region:BELIER"
+    ],
+    [
+      "région belier",
+      "entity:region:BELIER"
+    ],
+    [
+      "région bounkani",
+      "entity:region:BOUNKANI"
+    ],
+    [
+      "région Bounkani",
+      "entity:region:BOUNKANI"
+    ],
+    [
+      "votants bounkani",
+      "entity:region:BOUNKANI"
+    ],
+    [
+      "votants Bounkani",
+      "entity:region:BOUNKANI"
+    ],
+    [
+      "circonscriptions de cavally",
+      "entity:region:CAVALLY"
+    ],
+    [
+      "circonscriptions de Cavally",
+      "entity:region:CAVALLY"
+    ],
+    [
+      "région cavally",
+      "entity:region:CAVALLY"
+    ],
+    [
+      "région Cavally",
+      "entity:region:CAVALLY"
+    ],
+    [
+      "circonscriptions de district autonome d",
+      "entity:region:DISTRICT AUTONOME D'ABIDJAN"
+    ],
+    [
+      "circonscriptions de District-Autonome-D",
+      "entity:region:DISTRICT AUTONOME D'ABIDJAN"
+    ],
+    [
+      "votants district autonome d",
+      "entity:region:DISTRICT AUTONOME D'ABIDJAN"
+    ],
+    [
+      "votants District Autonome D",
+      "entity:region:DISTRICT AUTONOME D'ABIDJAN"
+    ],
+    [
+      "région district autonome de yamoussoukro",
+      "entity:region:DISTRICT AUTONOME DE YAMOUSSOUKRO"
+    ],
+    [
+      "région District Autonome De Yamoussoukro",
+      "entity:region:DISTRICT AUTONOME DE YAMOUSSOUKRO"
+    ],
+    [
+      "votants District-Autonome-De-Yamoussoukro",
+      "entity:region:DISTRICT AUTONOME DE YAMOUSSOUKRO"
+    ],
+    [
+      "votants District Autonome De Yamoussoukro",
+      "entity:region:DISTRICT AUTONOME DE YAMOUSSOUKRO"
+    ],
+    [
+      "participation en gbeke",
+      "entity:region:GBEKE"
+    ],
+    [
+      "participation en Gbeke",
+      "entity:region:GBEKE"
+    ],
+    [
+      "votants gbeke",
+      "entity:region:GBEKE"
+    ],
+    [
+      "votants Gbeke",
+      "entity:region:GBEKE"
+    ],
+    [
+      "participation en Gbokle",
+      "entity:region:GBOKLE"
+    ],
+    [
+      "participation en gbokle",
+      "entity:region:GBOKLE"
+    ],
+    [
+      "circonscriptions de gbokle",
+      "entity:region:GBOKLE"
+    ],
+    [
+      "circonscriptions de Gbokle",
+      "entity:region:GBOKLE"
+    ],
+    [
+      "circonscriptions de Goh",
+      "entity:region:GOH"
+    ],
+    [
+      "circonscriptions de goh",
+      "entity:region:GOH"
+    ],
+    [
+      "votants Goh",
+      "entity:region:GOH"
+    ],
+    [
+      "votants goh",
+      "entity:region:GOH"
+    ],
+    [
+      "région gontougo",
+      "entity:region:GONTOUGO"
+    ],
+    [
+      "région Gontougo",
+      "entity:region:GONTOUGO"
+    ],
+    [
+      "participation en Gontougo",
+      "entity:region:GONTOUGO"
+    ],
+    [
+      "participation en gontougo",
+      "entity:region:GONTOUGO"
+    ],
+    [
+      "circonscriptions de grands ponts",
+      "entity:region:GRANDS PONTS"
+    ],
+    [
+      "circonscriptions de Grands-Ponts",
+      "entity:region:GRANDS PONTS"
+    ],
+    [
+      "région Grands-Ponts",
+      "entity:region:GRANDS PONTS"
+    ],
+    [
+      "région grands ponts",
+      "entity:region:GRANDS PONTS"
+    ],
+    [
+      "participation en Guemon",
+      "entity:region:GUEMON"
+    ],
+    [
+      "participation en guemon",
+      "entity:region:GUEMON"
+    ],
+    [
+      "votants guemon",
+      "entity:region:GUEMON"
+    ],
+    [
+      "votants Guemon",
+      "entity:region:GUEMON"
+    ],
+    [
+      "région Haut- Sassandra",
+      "entity:region:HAUT- SASSANDRA"
+    ],
+    [
+      "région Haut--Sassandra",
+      "entity:region:HAUT- SASSANDRA"
+    ],
+    [
+      "votants Haut- Sassandra",
+      "entity:region:HAUT- SASSANDRA"
+    ],
+    [
+      "votants Haut--Sassandra",
+      "entity:region:HAUT- SASSANDRA"
+    ],
+    [
+      "votants Iffou",
+      "entity:region:IFFOU"
+    ],
+    [
+      "votants iffou",
+      "entity:region:IFFOU"
+    ],
+    [
+      "circonscriptions de iffou",
+      "entity:region:IFFOU"
+    ],
+    [
+      "circonscriptions de Iffou",
+      "entity:region:IFFOU"
+    ],
+    [
+      "circonscriptions de la me",
+      "entity:region:LA ME"
+    ],
+    [
+      "circonscriptions de La Me",
+      "entity:region:LA ME"
+    ],
+    [
+      "participation en Marahoue",
+      "entity:region:MARAHOUE"
+    ],
+    [
+      "participation en marahoue",
+      "entity:region:MARAHOUE"
+    ],
+    [
+      "circonscriptions de marahoue",
+      "entity:region:MARAHOUE"
+    ],
+    [
+      "circonscriptions de Marahoue",
+      "entity:region:MARAHOUE"
+    ],
+    [
+      "région moronou",
+      "entity:region:MORONOU"
+    ],
+    [
+      "région Moronou",
+      "entity:region:MORONOU"
+    ],
+    [
+      "participation en Moronou",
+      "entity:region:MORONOU"
+    ],
+    [
+      "participation en moronou",
+      "entity:region:MORONOU"
+    ],
+    [
+      "votants Nawa",
+      "entity:region:NAWA"
+    ],
+    [
+      "votants nawa",
+      "entity:region:NAWA"
+    ],
+    [
+      "circonscriptions de nawa",
+      "entity:region:NAWA"
+    ],
+    [
+      "circonscriptions de Nawa",
+      "entity:region:NAWA"
+    ],
+    [
+      "participation en poro",
+      "entity:region:PORO"
+    ],
+    [
+      "participation en Poro",
+      "entity:region:PORO"
+    ],
+    [
+      "circonscriptions de poro",
+      "entity:region:PORO"
+    ],
+    [
+      "circonscriptions de Poro",
+      "entity:region:PORO"
+    ],
+    [
+      "région sud-comoe",
+      "entity:region:SUD-COMOE"
+    ],
+    [
+      "région Sud Comoe",
+      "entity:region:SUD-COMOE"
+    ],
+    [
+      "circonscriptions de sud-comoe",
+      "entity:region:SUD-COMOE"
+    ],
+    [
+      "circonscriptions de Sud Comoe",
+      "entity:region:SUD-COMOE"
+    ],
+    [
+      "région Tchologo",
+      "entity:region:TCHOLOGO"
+    ],
+    [
+      "région tchologo",
+      "entity:region:TCHOLOGO"
+    ],
+    [
+      "votants Tchologo",
+      "entity:region:TCHOLOGO"
+    ],
+    [
+      "votants tchologo",
+      "entity:region:TCHOLOGO"
+    ],
+    [
+      "circonscriptions de Tonkpi",
+      "entity:region:TONKPI"
+    ],
+    [
+      "circonscriptions de tonkpi",
+      "entity:region:TONKPI"
+    ],
+    [
+      "région tonkpi",
+      "entity:region:TONKPI"
+    ],
+    [
+      "région Tonkpi",
+      "entity:region:TONKPI"
+    ],
+    [
+      "participation en worodougou",
+      "entity:region:WORODOUGOU"
+    ],
+    [
+      "participation en Worodougou",
+      "entity:region:WORODOUGOU"
+    ],
+    [
+      "circonscriptions de worodougou",
+      "entity:region:WORODOUGOU"
+    ],
+    [
+      "circonscriptions de Worodougou",
+      "entity:region:WORODOUGOU"
+    ],
+    [
+      "Qui l’emporte à attobrou ?",
+      "entity:circ:001"
+    ],
+    [
+      "Qui l’emporte à Attobrou ?",
+      "entity:circ:001"
+    ],
+    [
+      "liste élue attobrou",
+      "entity:circ:001"
+    ],
+    [
+      "liste élue Attobrou",
+      "entity:circ:001"
+    ],
+    [
+      "circonscription 001",
+      "entity:circ:001"
+    ],
+    [
+      "circonscription 002",
+      "entity:circ:002"
+    ],
+    [
+      "Qui l’emporte à Azaguie ?",
+      "entity:circ:003"
+    ],
+    [
+      "Qui l’emporte à azaguie ?",
+      "entity:circ:003"
+    ],
+    [
+      "liste élue azaguie",
+      "entity:circ:003"
+    ],
+    [
+      "liste élue Azaguie",
+      "entity:circ:003"
+    ],
+    [
+      "circonscription 003",
+      "entity:circ:003"
+    ],
+    [
+      "résultats ananguie",
+      "entity:circ:004"
+    ],
+    [
+      "résultats Ananguie",
+      "entity:circ:004"
+    ],
+    [
+      "liste élue ananguie",
+      "entity:circ:004"
+    ],
+    [
+      "liste élue Ananguie",
+      "entity:circ:004"
+    ],
+    [
+      "circonscription 004",
+      "entity:circ:004"
+    ],
+    [
+      "inscrits à Sikensi",
+      "entity:circ:005"
+    ],
+    [
+      "inscrits à sikensi",
+      "entity:circ:005"
+    ],
+    [
+      "résultats Sikensi",
+      "entity:circ:005"
+    ],
+    [
+      "résultats sikensi",
+      "entity:circ:005"
+    ],
+    [
+      "circonscription 005",
+      "entity:circ:005"
+    ],
+    [
+      "Qui l’emporte à Gbolouville ?",
+      "entity:circ:006"
+    ],
+    [
+      "Qui l’emporte à gbolouville ?",
+      "entity:circ:006"
+    ],
+    [
+      "résultats gbolouville",
+      "entity:circ:006"
+    ],
+    [
+      "résultats Gbolouville",
+      "entity:circ:006"
+    ],
+    [
+      "circonscription 006",
+      "entity:circ:006"
+    ],
+    [
+      "inscrits à Morokro",
+      "entity:circ:007"
+    ],
+    [
+      "inscrits à morokro",
+      "entity:circ:007"
+    ],
+    [
+      "Qui l’emporte à Morokro ?",
+      "entity:circ:007"
+    ],
+    [
+      "Qui l’emporte à morokro ?",
+      "entity:circ:007"
+    ],
+    [
+      "circonscription 007",
+      "entity:circ:007"
+    ],
+    [
+      "inscrits à taabo",
+      "entity:circ:008"
+    ],
+    [
+      "inscrits à Taabo",
+      "entity:circ:008"
+    ],
+    [
+      "participation Taabo",
+      "entity:circ:008"
+    ],
+    [
+      "participation taabo",
+      "entity:circ:008"
+    ],
+    [
+      "circonscription 008",
+      "entity:circ:008"
+    ],
+    [
+      "résultats Mahandougou",
+      "entity:circ:009"
+    ],
+    [
+      "résultats mahandougou",
+      "entity:circ:009"
+    ],
+    [
+      "Qui l’emporte à Mahandougou ?",
+      "entity:circ:009"
+    ],
+    [
+      "Qui l’emporte à mahandougou ?",
+      "entity:circ:009"
+    ],
+    [
+      "circonscription 009",
+      "entity:circ:009"
+    ],
+    [
+      "liste élue Koro",
+      "entity:circ:010"
+    ],
+    [
+      "liste élue koro",
+      "entity:circ:010"
+    ],
+    [
+      "résultats Koro",
+      "entity:circ:010"
+    ],
+    [
+      "résultats koro",
+      "entity:circ:010"
+    ],
+    [
+      "circonscription 010",
+      "entity:circ:010"
+    ],
+    [
+      "Qui l’emporte à saboudougou ?",
+      "entity:circ:011"
+    ],
+    [
+      "Qui l’emporte à Saboudougou ?",
+      "entity:circ:011"
+    ],
+    [
+      "résultats Saboudougou",
+      "entity:circ:011"
+    ],
+    [
+      "résultats saboudougou",
+      "entity:circ:011"
+    ],
+    [
+      "circonscription 011",
+      "entity:circ:011"
+    ],
+    [
+      "participation Baya",
+      "entity:circ:014"
+    ],
+    [
+      "participation baya",
+      "entity:circ:014"
+    ],
+    [
+      "inscrits à baya",
+      "entity:circ:014"
+    ],
+    [
+      "inscrits à Baya",
+      "entity:circ:014"
+    ],
+    [
+      "circonscription 014",
+      "entity:circ:014"
+    ],
+    [
+      "Qui l’emporte à Boundiali ?",
+      "entity:circ:015"
+    ],
+    [
+      "Qui l’emporte à boundiali ?",
+      "entity:circ:015"
+    ],
+    [
+      "inscrits à Boundiali",
+      "entity:circ:015"
+    ],
+    [
+      "inscrits à boundiali",
+      "entity:circ:015"
+    ],
+    [
+      "circonscription 015",
+      "entity:circ:015"
+    ],
+    [
+      "participation Blessegue",
+      "entity:circ:016"
+    ],
+    [
+      "participation blessegue",
+      "entity:circ:016"
+    ],
+    [
+      "Qui l’emporte à blessegue ?",
+      "entity:circ:016"
+    ],
+    [
+      "Qui l’emporte à Blessegue ?",
+      "entity:circ:016"
+    ],
+    [
+      "circonscription 016",
+      "entity:circ:016"
+    ],
+    [
+      "liste élue Kolia",
+      "entity:circ:017"
+    ],
+    [
+      "liste élue kolia",
+      "entity:circ:017"
+    ],
+    [
+      "participation Kolia",
+      "entity:circ:017"
+    ],
+    [
+      "participation kolia",
+      "entity:circ:017"
+    ],
+    [
+      "circonscription 017",
+      "entity:circ:017"
+    ],
+    [
+      "Qui l’emporte à Papara ?",
+      "entity:circ:018"
+    ],
+    [
+      "Qui l’emporte à papara ?",
+      "entity:circ:018"
+    ],
+    [
+      "liste élue papara",
+      "entity:circ:018"
+    ],
+    [
+      "liste élue Papara",
+      "entity:circ:018"
+    ],
+    [
+      "circonscription 018",
+      "entity:circ:018"
+    ],
+    [
+      "inscrits à Lomokankro",
+      "entity:circ:020"
+    ],
+    [
+      "inscrits à lomokankro",
+      "entity:circ:020"
+    ],
+    [
+      "participation lomokankro",
+      "entity:circ:020"
+    ],
+    [
+      "participation Lomokankro",
+      "entity:circ:020"
+    ],
+    [
+      "circonscription 020",
+      "entity:circ:020"
+    ],
+    [
+      "circonscription 021",
+      "entity:circ:021"
+    ],
+    [
+      "liste élue bouandougou",
+      "entity:circ:023"
+    ],
+    [
+      "liste élue Bouandougou",
+      "entity:circ:023"
+    ],
+    [
+      "Qui l’emporte à bouandougou ?",
+      "entity:circ:023"
+    ],
+    [
+      "Qui l’emporte à Bouandougou ?",
+      "entity:circ:023"
+    ],
+    [
+      "circonscription 023",
+      "entity:circ:023"
+    ],
+    [
+      "participation Dianra",
+      "entity:circ:024"
+    ],
+    [
+      "participation dianra",
+      "entity:circ:024"
+    ],
+    [
+      "liste élue Dianra",
+      "entity:circ:024"
+    ],
+    [
+      "liste élue dianra",
+      "entity:circ:024"
+    ],
+    [
+      "circonscription 024",
+      "entity:circ:024"
+    ],
+    [
+      "Qui l’emporte à Kongasso ?",
+      "entity:circ:027"
+    ],
+    [
+      "Qui l’emporte à kongasso ?",
+      "entity:circ:027"
+    ],
+    [
+      "inscrits à Kongasso",
+      "entity:circ:027"
+    ],
+    [
+      "inscrits à kongasso",
+      "entity:circ:027"
+    ],
+    [
+      "circonscription 027",
+      "entity:circ:027"
+    ],
+    [
+      "participation Bouna",
+      "entity:circ:028"
+    ],
+    [
+      "participation bouna",
+      "entity:circ:028"
+    ],
+    [
+      "liste élue Bouna",
+      "entity:circ:028"
+    ],
+    [
+      "liste élue bouna",
+      "entity:circ:028"
+    ],
+    [
+      "circonscription 028",
+      "entity:circ:028"
+    ],
+    [
+      "participation Youndouo",
+      "entity:circ:029"
+    ],
+    [
+      "participation youndouo",
+      "entity:circ:029"
+    ],
+    [
+      "liste élue youndouo",
+      "entity:circ:029"
+    ],
+    [
+      "liste élue Youndouo",
+      "entity:circ:029"
+    ],
+    [
+      "circonscription 029",
+      "entity:circ:029"
+    ],
+    [
+      "Qui l’emporte à kalamon ?",
+      "entity:circ:030"
+    ],
+    [
+      "Qui l’emporte à Kalamon ?",
+      "entity:circ:030"
+    ],
+    [
+      "liste élue kalamon",
+      "entity:circ:030"
+    ],
+    [
+      "liste élue Kalamon",
+      "entity:circ:030"
+    ],
+    [
+      "circonscription 030",
+      "entity:circ:030"
+    ],
+    [
+      "liste élue bogofa",
+      "entity:circ:031"
+    ],
+    [
+      "liste élue Bogofa",
+      "entity:circ:031"
+    ],
+    [
+      "inscrits à bogofa",
+      "entity:circ:031"
+    ],
+    [
+      "inscrits à Bogofa",
+      "entity:circ:031"
+    ],
+    [
+      "circonscription 031",
+      "entity:circ:031"
+    ],
+    [
+      "liste élue tehini",
+      "entity:circ:032"
+    ],
+    [
+      "liste élue Tehini",
+      "entity:circ:032"
+    ],
+    [
+      "résultats tehini",
+      "entity:circ:032"
+    ],
+    [
+      "résultats Tehini",
+      "entity:circ:032"
+    ],
+    [
+      "circonscription 032",
+      "entity:circ:032"
+    ],
+    [
+      "participation nizahon",
+      "entity:circ:034"
+    ],
+    [
+      "participation Nizahon",
+      "entity:circ:034"
+    ],
+    [
+      "Qui l’emporte à nizahon ?",
+      "entity:circ:034"
+    ],
+    [
+      "Qui l’emporte à Nizahon ?",
+      "entity:circ:034"
+    ],
+    [
+      "circonscription 034",
+      "entity:circ:034"
+    ],
+    [
+      "circonscription 035",
+      "entity:circ:035"
+    ],
+    [
+      "participation Zagne",
+      "entity:circ:036"
+    ],
+    [
+      "participation zagne",
+      "entity:circ:036"
+    ],
+    [
+      "résultats zagne",
+      "entity:circ:036"
+    ],
+    [
+      "résultats Zagne",
+      "entity:circ:036"
+    ],
+    [
+      "circonscription 036",
+      "entity:circ:036"
+    ],
+    [
+      "liste élue tiobly",
+      "entity:circ:037"
+    ],
+    [
+      "liste élue Tiobly",
+      "entity:circ:037"
+    ],
+    [
+      "participation tiobly",
+      "entity:circ:037"
+    ],
+    [
+      "participation Tiobly",
+      "entity:circ:037"
+    ],
+    [
+      "circonscription 037",
+      "entity:circ:037"
+    ],
+    [
+      "résultats Attecoube",
+      "entity:circ:040"
+    ],
+    [
+      "résultats attecoube",
+      "entity:circ:040"
+    ],
+    [
+      "liste élue Attecoube",
+      "entity:circ:040"
+    ],
+    [
+      "liste élue attecoube",
+      "entity:circ:040"
+    ],
+    [
+      "circonscription 040",
+      "entity:circ:040"
+    ],
+    [
+      "liste élue cocody",
+      "entity:circ:041"
+    ],
+    [
+      "liste élue Cocody",
+      "entity:circ:041"
+    ],
+    [
+      "Qui l’emporte à Cocody ?",
+      "entity:circ:041"
+    ],
+    [
+      "Qui l’emporte à cocody ?",
+      "entity:circ:041"
+    ],
+    [
+      "circonscription 041",
+      "entity:circ:041"
+    ],
+    [
+      "inscrits à Koumassi",
+      "entity:circ:042"
+    ],
+    [
+      "inscrits à koumassi",
+      "entity:circ:042"
+    ],
+    [
+      "résultats Koumassi",
+      "entity:circ:042"
+    ],
+    [
+      "résultats koumassi",
+      "entity:circ:042"
+    ],
+    [
+      "circonscription 042",
+      "entity:circ:042"
+    ],
+    [
+      "résultats Marcory",
+      "entity:circ:043"
+    ],
+    [
+      "résultats marcory",
+      "entity:circ:043"
+    ],
+    [
+      "inscrits à Marcory",
+      "entity:circ:043"
+    ],
+    [
+      "inscrits à marcory",
+      "entity:circ:043"
+    ],
+    [
+      "circonscription 043",
+      "entity:circ:043"
+    ],
+    [
+      "inscrits à plateau",
+      "entity:circ:044"
+    ],
+    [
+      "inscrits à Plateau",
+      "entity:circ:044"
+    ],
+    [
+      "participation plateau",
+      "entity:circ:044"
+    ],
+    [
+      "participation Plateau",
+      "entity:circ:044"
+    ],
+    [
+      "circonscription 044",
+      "entity:circ:044"
+    ],
+    [
+      "inscrits à Port Bouet",
+      "entity:circ:045"
+    ],
+    [
+      "inscrits à Port-Bouet",
+      "entity:circ:045"
+    ],
+    [
+      "participation port-bouet",
+      "entity:circ:045"
+    ],
+    [
+      "participation Port-Bouet",
+      "entity:circ:045"
+    ],
+    [
+      "circonscription 045",
+      "entity:circ:045"
+    ],
+    [
+      "participation Treichville",
+      "entity:circ:046"
+    ],
+    [
+      "participation treichville",
+      "entity:circ:046"
+    ],
+    [
+      "inscrits à Treichville",
+      "entity:circ:046"
+    ],
+    [
+      "inscrits à treichville",
+      "entity:circ:046"
+    ],
+    [
+      "circonscription 046",
+      "entity:circ:046"
+    ],
+    [
+      "participation Yopougon",
+      "entity:circ:047"
+    ],
+    [
+      "participation yopougon",
+      "entity:circ:047"
+    ],
+    [
+      "circonscription 047",
+      "entity:circ:047"
+    ],
+    [
+      "résultats anyama",
+      "entity:circ:048"
+    ],
+    [
+      "résultats Anyama",
+      "entity:circ:048"
+    ],
+    [
+      "Qui l’emporte à anyama ?",
+      "entity:circ:048"
+    ],
+    [
+      "Qui l’emporte à Anyama ?",
+      "entity:circ:048"
+    ],
+    [
+      "circonscription 048",
+      "entity:circ:048"
+    ],
+    [
+      "Qui l’emporte à bingerville ?",
+      "entity:circ:049"
+    ],
+    [
+      "Qui l’emporte à Bingerville ?",
+      "entity:circ:049"
+    ],
+    [
+      "résultats Bingerville",
+      "entity:circ:049"
+    ],
+    [
+      "résultats bingerville",
+      "entity:circ:049"
+    ],
+    [
+      "circonscription 049",
+      "entity:circ:049"
+    ],
+    [
+      "Qui l’emporte à songon ?",
+      "entity:circ:050"
+    ],
+    [
+      "Qui l’emporte à Songon ?",
+      "entity:circ:050"
+    ],
+    [
+      "participation songon",
+      "entity:circ:050"
+    ],
+    [
+      "participation Songon",
+      "entity:circ:050"
+    ],
+    [
+      "circonscription 050",
+      "entity:circ:050"
+    ],
+    [
+      "résultats atiiegouakro",
+      "entity:circ:051"
+    ],
+    [
+      "résultats Atiiegouakro",
+      "entity:circ:051"
+    ],
+    [
+      "participation Atiiegouakro",
+      "entity:circ:051"
+    ],
+    [
+      "participation atiiegouakro",
+      "entity:circ:051"
+    ],
+    [
+      "circonscription 051",
+      "entity:circ:051"
+    ],
+    [
+      "circonscription 053",
+      "entity:circ:053"
+    ],
+    [
+      "Qui l’emporte à Goulia ?",
+      "entity:circ:054"
+    ],
+    [
+      "Qui l’emporte à goulia ?",
+      "entity:circ:054"
+    ],
+    [
+      "inscrits à Goulia",
+      "entity:circ:054"
+    ],
+    [
+      "inscrits à goulia",
+      "entity:circ:054"
+    ],
+    [
+      "circonscription 054",
+      "entity:circ:054"
+    ],
+    [
+      "participation beoumi",
+      "entity:circ:056"
+    ],
+    [
+      "participation Beoumi",
+      "entity:circ:056"
+    ],
+    [
+      "inscrits à beoumi",
+      "entity:circ:056"
+    ],
+    [
+      "inscrits à Beoumi",
+      "entity:circ:056"
+    ],
+    [
+      "circonscription 056",
+      "entity:circ:056"
+    ],
+    [
+      "participation Bodokro",
+      "entity:circ:057"
+    ],
+    [
+      "participation bodokro",
+      "entity:circ:057"
+    ],
+    [
+      "résultats Bodokro",
+      "entity:circ:057"
+    ],
+    [
+      "résultats bodokro",
+      "entity:circ:057"
+    ],
+    [
+      "circonscription 057",
+      "entity:circ:057"
+    ],
+    [
+      "inscrits à diabo",
+      "entity:circ:059"
+    ],
+    [
+      "inscrits à Diabo",
+      "entity:circ:059"
+    ],
+    [
+      "participation Diabo",
+      "entity:circ:059"
+    ],
+    [
+      "participation diabo",
+      "entity:circ:059"
+    ],
+    [
+      "circonscription 059",
+      "entity:circ:059"
+    ],
+    [
+      "circonscription 060",
+      "entity:circ:060"
+    ],
+    [
+      "liste élue Djebonoua",
+      "entity:circ:062"
+    ],
+    [
+      "liste élue djebonoua",
+      "entity:circ:062"
+    ],
+    [
+      "résultats Djebonoua",
+      "entity:circ:062"
+    ],
+    [
+      "résultats djebonoua",
+      "entity:circ:062"
+    ],
+    [
+      "circonscription 062",
+      "entity:circ:062"
+    ],
+    [
+      "inscrits à sago",
+      "entity:circ:064"
+    ],
+    [
+      "inscrits à Sago",
+      "entity:circ:064"
+    ],
+    [
+      "Qui l’emporte à sago ?",
+      "entity:circ:064"
+    ],
+    [
+      "Qui l’emporte à Sago ?",
+      "entity:circ:064"
+    ],
+    [
+      "circonscription 064",
+      "entity:circ:064"
+    ],
+    [
+      "résultats sassandra",
+      "entity:circ:065"
+    ],
+    [
+      "résultats Sassandra",
+      "entity:circ:065"
+    ],
+    [
+      "participation sassandra",
+      "entity:circ:065"
+    ],
+    [
+      "participation Sassandra",
+      "entity:circ:065"
+    ],
+    [
+      "circonscription 065",
+      "entity:circ:065"
+    ],
+    [
+      "résultats fresco",
+      "entity:circ:066"
+    ],
+    [
+      "résultats Fresco",
+      "entity:circ:066"
+    ],
+    [
+      "Qui l’emporte à Fresco ?",
+      "entity:circ:066"
+    ],
+    [
+      "Qui l’emporte à fresco ?",
+      "entity:circ:066"
+    ],
+    [
+      "circonscription 066",
+      "entity:circ:066"
+    ],
+    [
+      "participation yopohue",
+      "entity:circ:067"
+    ],
+    [
+      "participation Yopohue",
+      "entity:circ:067"
+    ],
+    [
+      "Qui l’emporte à Yopohue ?",
+      "entity:circ:067"
+    ],
+    [
+      "Qui l’emporte à yopohue ?",
+      "entity:circ:067"
+    ],
+    [
+      "circonscription 067",
+      "entity:circ:067"
+    ],
+    [
+      "participation dignago",
+      "entity:circ:068"
+    ],
+    [
+      "participation Dignago",
+      "entity:circ:068"
+    ],
+    [
+      "liste élue dignago",
+      "entity:circ:068"
+    ],
+    [
+      "liste élue Dignago",
+      "entity:circ:068"
+    ],
+    [
+      "circonscription 068",
+      "entity:circ:068"
+    ],
+    [
+      "Qui l’emporte à doukouyo ?",
+      "entity:circ:069"
+    ],
+    [
+      "Qui l’emporte à Doukouyo ?",
+      "entity:circ:069"
+    ],
+    [
+      "résultats Doukouyo",
+      "entity:circ:069"
+    ],
+    [
+      "résultats doukouyo",
+      "entity:circ:069"
+    ],
+    [
+      "circonscription 069",
+      "entity:circ:069"
+    ],
+    [
+      "inscrits à Tonla",
+      "entity:circ:071"
+    ],
+    [
+      "inscrits à tonla",
+      "entity:circ:071"
+    ],
+    [
+      "Qui l’emporte à Tonla ?",
+      "entity:circ:071"
+    ],
+    [
+      "Qui l’emporte à tonla ?",
+      "entity:circ:071"
+    ],
+    [
+      "circonscription 071",
+      "entity:circ:071"
+    ],
+    [
+      "participation guepahouo",
+      "entity:circ:072"
+    ],
+    [
+      "participation Guepahouo",
+      "entity:circ:072"
+    ],
+    [
+      "liste élue guepahouo",
+      "entity:circ:072"
+    ],
+    [
+      "liste élue Guepahouo",
+      "entity:circ:072"
+    ],
+    [
+      "circonscription 072",
+      "entity:circ:072"
+    ],
+    [
+      "participation laoudi-ba",
+      "entity:circ:074"
+    ],
+    [
+      "participation Laoudi Ba",
+      "entity:circ:074"
+    ],
+    [
+      "Qui l’emporte à Laoudi Ba ?",
+      "entity:circ:074"
+    ],
+    [
+      "Qui l’emporte à laoudi-ba ?",
+      "entity:circ:074"
+    ],
+    [
+      "circonscription 074",
+      "entity:circ:074"
+    ],
+    [
+      "participation Tabagne",
+      "entity:circ:075"
+    ],
+    [
+      "participation tabagne",
+      "entity:circ:075"
+    ],
+    [
+      "liste élue tabagne",
+      "entity:circ:075"
+    ],
+    [
+      "liste élue Tabagne",
+      "entity:circ:075"
+    ],
+    [
+      "circonscription 075",
+      "entity:circ:075"
+    ],
+    [
+      "résultats Tagadi",
+      "entity:circ:076"
+    ],
+    [
+      "résultats tagadi",
+      "entity:circ:076"
+    ],
+    [
+      "participation tagadi",
+      "entity:circ:076"
+    ],
+    [
+      "participation Tagadi",
+      "entity:circ:076"
+    ],
+    [
+      "circonscription 076",
+      "entity:circ:076"
+    ],
+    [
+      "liste élue Boahia",
+      "entity:circ:077"
+    ],
+    [
+      "liste élue boahia",
+      "entity:circ:077"
+    ],
+    [
+      "participation Boahia",
+      "entity:circ:077"
+    ],
+    [
+      "participation boahia",
+      "entity:circ:077"
+    ],
+    [
+      "circonscription 077",
+      "entity:circ:077"
+    ],
+    [
+      "participation tienkoikro",
+      "entity:circ:078"
+    ],
+    [
+      "participation Tienkoikro",
+      "entity:circ:078"
+    ],
+    [
+      "inscrits à tienkoikro",
+      "entity:circ:078"
+    ],
+    [
+      "inscrits à Tienkoikro",
+      "entity:circ:078"
+    ],
+    [
+      "circonscription 078",
+      "entity:circ:078"
+    ],
+    [
+      "résultats amanvi",
+      "entity:circ:081"
+    ],
+    [
+      "résultats Amanvi",
+      "entity:circ:081"
+    ],
+    [
+      "Qui l’emporte à amanvi ?",
+      "entity:circ:081"
+    ],
+    [
+      "Qui l’emporte à Amanvi ?",
+      "entity:circ:081"
+    ],
+    [
+      "circonscription 081",
+      "entity:circ:081"
+    ],
+    [
+      "participation Kouassia-Niaguini",
+      "entity:circ:082"
+    ],
+    [
+      "participation Kouassia Niaguini",
+      "entity:circ:082"
+    ],
+    [
+      "inscrits à kouassia-niaguini",
+      "entity:circ:082"
+    ],
+    [
+      "inscrits à Kouassia Niaguini",
+      "entity:circ:082"
+    ],
+    [
+      "circonscription 082",
+      "entity:circ:082"
+    ],
+    [
+      "résultats Dabou",
+      "entity:circ:083"
+    ],
+    [
+      "résultats dabou",
+      "entity:circ:083"
+    ],
+    [
+      "participation Dabou",
+      "entity:circ:083"
+    ],
+    [
+      "participation dabou",
+      "entity:circ:083"
+    ],
+    [
+      "circonscription 083",
+      "entity:circ:083"
+    ],
+    [
+      "Qui l’emporte à Toukouzou ?",
+      "entity:circ:084"
+    ],
+    [
+      "Qui l’emporte à toukouzou ?",
+      "entity:circ:084"
+    ],
+    [
+      "résultats toukouzou",
+      "entity:circ:084"
+    ],
+    [
+      "résultats Toukouzou",
+      "entity:circ:084"
+    ],
+    [
+      "circonscription 084",
+      "entity:circ:084"
+    ],
+    [
+      "Qui l’emporte à jacqueville ?",
+      "entity:circ:085"
+    ],
+    [
+      "Qui l’emporte à Jacqueville ?",
+      "entity:circ:085"
+    ],
+    [
+      "résultats jacqueville",
+      "entity:circ:085"
+    ],
+    [
+      "résultats Jacqueville",
+      "entity:circ:085"
+    ],
+    [
+      "circonscription 085",
+      "entity:circ:085"
+    ],
+    [
+      "participation Gohouo-Zagna",
+      "entity:circ:086"
+    ],
+    [
+      "participation Gohouo Zagna",
+      "entity:circ:086"
+    ],
+    [
+      "résultats gohouo-zagna",
+      "entity:circ:086"
+    ],
+    [
+      "résultats Gohouo Zagna",
+      "entity:circ:086"
+    ],
+    [
+      "circonscription 086",
+      "entity:circ:086"
+    ],
+    [
+      "participation Blenimeouin",
+      "entity:circ:087"
+    ],
+    [
+      "participation blenimeouin",
+      "entity:circ:087"
+    ],
+    [
+      "résultats Blenimeouin",
+      "entity:circ:087"
+    ],
+    [
+      "résultats blenimeouin",
+      "entity:circ:087"
+    ],
+    [
+      "circonscription 087",
+      "entity:circ:087"
+    ],
+    [
+      "Qui l’emporte à Facobly ?",
+      "entity:circ:091"
+    ],
+    [
+      "Qui l’emporte à facobly ?",
+      "entity:circ:091"
+    ],
+    [
+      "résultats Facobly",
+      "entity:circ:091"
+    ],
+    [
+      "résultats facobly",
+      "entity:circ:091"
+    ],
+    [
+      "circonscription 091",
+      "entity:circ:091"
+    ],
+    [
+      "liste élue totrodrou",
+      "entity:circ:092"
+    ],
+    [
+      "liste élue Totrodrou",
+      "entity:circ:092"
+    ],
+    [
+      "inscrits à totrodrou",
+      "entity:circ:092"
+    ],
+    [
+      "inscrits à Totrodrou",
+      "entity:circ:092"
+    ],
+    [
+      "circonscription 092",
+      "entity:circ:092"
+    ],
+    [
+      "inscrits à bassawa",
+      "entity:circ:093"
+    ],
+    [
+      "inscrits à Bassawa",
+      "entity:circ:093"
+    ],
+    [
+      "participation bassawa",
+      "entity:circ:093"
+    ],
+    [
+      "participation Bassawa",
+      "entity:circ:093"
+    ],
+    [
+      "circonscription 093",
+      "entity:circ:093"
+    ],
+    [
+      "participation sokala-sobara",
+      "entity:circ:094"
+    ],
+    [
+      "participation Sokala-Sobara",
+      "entity:circ:094"
+    ],
+    [
+      "inscrits à Sokala-Sobara",
+      "entity:circ:094"
+    ],
+    [
+      "inscrits à sokala-sobara",
+      "entity:circ:094"
+    ],
+    [
+      "circonscription 094",
+      "entity:circ:094"
+    ],
+    [
+      "inscrits à bonieredougou",
+      "entity:circ:095"
+    ],
+    [
+      "inscrits à Bonieredougou",
+      "entity:circ:095"
+    ],
+    [
+      "Qui l’emporte à bonieredougou ?",
+      "entity:circ:095"
+    ],
+    [
+      "Qui l’emporte à Bonieredougou ?",
+      "entity:circ:095"
+    ],
+    [
+      "circonscription 095",
+      "entity:circ:095"
+    ],
+    [
+      "liste élue katiola",
+      "entity:circ:096"
+    ],
+    [
+      "liste élue Katiola",
+      "entity:circ:096"
+    ],
+    [
+      "Qui l’emporte à Katiola ?",
+      "entity:circ:096"
+    ],
+    [
+      "Qui l’emporte à katiola ?",
+      "entity:circ:096"
+    ],
+    [
+      "circonscription 096",
+      "entity:circ:096"
+    ],
+    [
+      "participation tortiya",
+      "entity:circ:097"
+    ],
+    [
+      "participation Tortiya",
+      "entity:circ:097"
+    ],
+    [
+      "inscrits à Tortiya",
+      "entity:circ:097"
+    ],
+    [
+      "inscrits à tortiya",
+      "entity:circ:097"
+    ],
+    [
+      "circonscription 097",
+      "entity:circ:097"
+    ],
+    [
+      "résultats tafire",
+      "entity:circ:098"
+    ],
+    [
+      "résultats Tafire",
+      "entity:circ:098"
+    ],
+    [
+      "participation Tafire",
+      "entity:circ:098"
+    ],
+    [
+      "participation tafire",
+      "entity:circ:098"
+    ],
+    [
+      "circonscription 098",
+      "entity:circ:098"
+    ],
+    [
+      "liste élue Gonate",
+      "entity:circ:099"
+    ],
+    [
+      "liste élue gonate",
+      "entity:circ:099"
+    ],
+    [
+      "résultats Gonate",
+      "entity:circ:099"
+    ],
+    [
+      "résultats gonate",
+      "entity:circ:099"
+    ],
+    [
+      "circonscription 099",
+      "entity:circ:099"
+    ],
+    [
+      "résultats daloa",
+      "entity:circ:100"
+    ],
+    [
+      "résultats Daloa",
+      "entity:circ:100"
+    ],
+    [
+      "Qui l’emporte à Daloa ?",
+      "entity:circ:100"
+    ],
+    [
+      "Qui l’emporte à daloa ?",
+      "entity:circ:100"
+    ],
+    [
+      "circonscription 100",
+      "entity:circ:100"
+    ],
+    [
+      "liste élue zahibo",
+      "entity:circ:101"
+    ],
+    [
+      "liste élue Zahibo",
+      "entity:circ:101"
+    ],
+    [
+      "participation zahibo",
+      "entity:circ:101"
+    ],
+    [
+      "participation Zahibo",
+      "entity:circ:101"
+    ],
+    [
+      "circonscription 101",
+      "entity:circ:101"
+    ],
+    [
+      "liste élue issia",
+      "entity:circ:102"
+    ],
+    [
+      "liste élue Issia",
+      "entity:circ:102"
+    ],
+    [
+      "résultats Issia",
+      "entity:circ:102"
+    ],
+    [
+      "résultats issia",
+      "entity:circ:102"
+    ],
+    [
+      "circonscription 102",
+      "entity:circ:102"
+    ],
+    [
+      "inscrits à namane",
+      "entity:circ:103"
+    ],
+    [
+      "inscrits à Namane",
+      "entity:circ:103"
+    ],
+    [
+      "participation namane",
+      "entity:circ:103"
+    ],
+    [
+      "participation Namane",
+      "entity:circ:103"
+    ],
+    [
+      "circonscription 103",
+      "entity:circ:103"
+    ],
+    [
+      "résultats saioua",
+      "entity:circ:104"
+    ],
+    [
+      "résultats Saioua",
+      "entity:circ:104"
+    ],
+    [
+      "inscrits à saioua",
+      "entity:circ:104"
+    ],
+    [
+      "inscrits à Saioua",
+      "entity:circ:104"
+    ],
+    [
+      "circonscription 104",
+      "entity:circ:104"
+    ],
+    [
+      "participation Vavoua",
+      "entity:circ:105"
+    ],
+    [
+      "participation vavoua",
+      "entity:circ:105"
+    ],
+    [
+      "résultats Vavoua",
+      "entity:circ:105"
+    ],
+    [
+      "résultats vavoua",
+      "entity:circ:105"
+    ],
+    [
+      "circonscription 105",
+      "entity:circ:105"
+    ],
+    [
+      "participation dania",
+      "entity:circ:106"
+    ],
+    [
+      "participation Dania",
+      "entity:circ:106"
+    ],
+    [
+      "inscrits à Dania",
+      "entity:circ:106"
+    ],
+    [
+      "inscrits à dania",
+      "entity:circ:106"
+    ],
+    [
+      "circonscription 106",
+      "entity:circ:106"
+    ],
+    [
+      "résultats Seitifla",
+      "entity:circ:107"
+    ],
+    [
+      "résultats seitifla",
+      "entity:circ:107"
+    ],
+    [
+      "participation Seitifla",
+      "entity:circ:107"
+    ],
+    [
+      "participation seitifla",
+      "entity:circ:107"
+    ],
+    [
+      "circonscription 107",
+      "entity:circ:107"
+    ],
+    [
+      "résultats Domangbeu",
+      "entity:circ:108"
+    ],
+    [
+      "résultats domangbeu",
+      "entity:circ:108"
+    ],
+    [
+      "inscrits à domangbeu",
+      "entity:circ:108"
+    ],
+    [
+      "inscrits à Domangbeu",
+      "entity:circ:108"
+    ],
+    [
+      "circonscription 108",
+      "entity:circ:108"
+    ],
+    [
+      "liste élue Ananda",
+      "entity:circ:109"
+    ],
+    [
+      "liste élue ananda",
+      "entity:circ:109"
+    ],
+    [
+      "inscrits à ananda",
+      "entity:circ:109"
+    ],
+    [
+      "inscrits à Ananda",
+      "entity:circ:109"
+    ],
+    [
+      "circonscription 109",
+      "entity:circ:109"
+    ],
+    [
+      "liste élue N'Gattakro",
+      "entity:circ:110"
+    ],
+    [
+      "liste élue n'gattakro",
+      "entity:circ:110"
+    ],
+    [
+      "Qui l’emporte à n'gattakro ?",
+      "entity:circ:110"
+    ],
+    [
+      "Qui l’emporte à N'Gattakro ?",
+      "entity:circ:110"
+    ],
+    [
+      "circonscription 110",
+      "entity:circ:110"
+    ],
+    [
+      "Qui l’emporte à Bonguera ?",
+      "entity:circ:112"
+    ],
+    [
+      "Qui l’emporte à bonguera ?",
+      "entity:circ:112"
+    ],
+    [
+      "participation bonguera",
+      "entity:circ:112"
+    ],
+    [
+      "participation Bonguera",
+      "entity:circ:112"
+    ],
+    [
+      "circonscription 112",
+      "entity:circ:112"
+    ],
+    [
+      "circonscription 114",
+      "entity:circ:114"
+    ],
+    [
+      "Qui l’emporte à dame ?",
+      "entity:circ:117"
+    ],
+    [
+      "Qui l’emporte à Dame ?",
+      "entity:circ:117"
+    ],
+    [
+      "inscrits à dame",
+      "entity:circ:117"
+    ],
+    [
+      "inscrits à Dame",
+      "entity:circ:117"
+    ],
+    [
+      "circonscription 117",
+      "entity:circ:117"
+    ],
+    [
+      "liste élue seguelon",
+      "entity:circ:119"
+    ],
+    [
+      "liste élue Seguelon",
+      "entity:circ:119"
+    ],
+    [
+      "participation Seguelon",
+      "entity:circ:119"
+    ],
+    [
+      "participation seguelon",
+      "entity:circ:119"
+    ],
+    [
+      "circonscription 119",
+      "entity:circ:119"
+    ],
+    [
+      "Qui l’emporte à madinani ?",
+      "entity:circ:120"
+    ],
+    [
+      "Qui l’emporte à Madinani ?",
+      "entity:circ:120"
+    ],
+    [
+      "liste élue Madinani",
+      "entity:circ:120"
+    ],
+    [
+      "liste élue madinani",
+      "entity:circ:120"
+    ],
+    [
+      "circonscription 120",
+      "entity:circ:120"
+    ],
+    [
+      "résultats Bako",
+      "entity:circ:121"
+    ],
+    [
+      "résultats bako",
+      "entity:circ:121"
+    ],
+    [
+      "participation Bako",
+      "entity:circ:121"
+    ],
+    [
+      "participation bako",
+      "entity:circ:121"
+    ],
+    [
+      "circonscription 121",
+      "entity:circ:121"
+    ],
+    [
+      "Qui l’emporte à Seydougou ?",
+      "entity:circ:122"
+    ],
+    [
+      "Qui l’emporte à seydougou ?",
+      "entity:circ:122"
+    ],
+    [
+      "participation seydougou",
+      "entity:circ:122"
+    ],
+    [
+      "participation Seydougou",
+      "entity:circ:122"
+    ],
+    [
+      "circonscription 122",
+      "entity:circ:122"
+    ],
+    [
+      "circonscription 123",
+      "entity:circ:123"
+    ],
+    [
+      "résultats Samango",
+      "entity:circ:124"
+    ],
+    [
+      "résultats samango",
+      "entity:circ:124"
+    ],
+    [
+      "liste élue samango",
+      "entity:circ:124"
+    ],
+    [
+      "liste élue Samango",
+      "entity:circ:124"
+    ],
+    [
+      "circonscription 124",
+      "entity:circ:124"
+    ],
+    [
+      "inscrits à nebo",
+      "entity:circ:125"
+    ],
+    [
+      "inscrits à Nebo",
+      "entity:circ:125"
+    ],
+    [
+      "participation nebo",
+      "entity:circ:125"
+    ],
+    [
+      "participation Nebo",
+      "entity:circ:125"
+    ],
+    [
+      "circonscription 125",
+      "entity:circ:125"
+    ],
+    [
+      "circonscription 126",
+      "entity:circ:126"
+    ],
+    [
+      "résultats hire",
+      "entity:circ:127"
+    ],
+    [
+      "résultats Hire",
+      "entity:circ:127"
+    ],
+    [
+      "inscrits à hire",
+      "entity:circ:127"
+    ],
+    [
+      "inscrits à Hire",
+      "entity:circ:127"
+    ],
+    [
+      "circonscription 127",
+      "entity:circ:127"
+    ],
+    [
+      "liste élue guitry",
+      "entity:circ:128"
+    ],
+    [
+      "liste élue Guitry",
+      "entity:circ:128"
+    ],
+    [
+      "Qui l’emporte à guitry ?",
+      "entity:circ:128"
+    ],
+    [
+      "Qui l’emporte à Guitry ?",
+      "entity:circ:128"
+    ],
+    [
+      "circonscription 128",
+      "entity:circ:128"
+    ],
+    [
+      "Qui l’emporte à zikisso ?",
+      "entity:circ:130"
+    ],
+    [
+      "Qui l’emporte à Zikisso ?",
+      "entity:circ:130"
+    ],
+    [
+      "inscrits à Zikisso",
+      "entity:circ:130"
+    ],
+    [
+      "inscrits à zikisso",
+      "entity:circ:130"
+    ],
+    [
+      "circonscription 130",
+      "entity:circ:130"
+    ],
+    [
+      "Qui l’emporte à goudouko ?",
+      "entity:circ:131"
+    ],
+    [
+      "Qui l’emporte à Goudouko ?",
+      "entity:circ:131"
+    ],
+    [
+      "participation Goudouko",
+      "entity:circ:131"
+    ],
+    [
+      "participation goudouko",
+      "entity:circ:131"
+    ],
+    [
+      "circonscription 131",
+      "entity:circ:131"
+    ],
+    [
+      "inscrits à lakota",
+      "entity:circ:132"
+    ],
+    [
+      "inscrits à Lakota",
+      "entity:circ:132"
+    ],
+    [
+      "liste élue Lakota",
+      "entity:circ:132"
+    ],
+    [
+      "liste élue lakota",
+      "entity:circ:132"
+    ],
+    [
+      "circonscription 132",
+      "entity:circ:132"
+    ],
+    [
+      "Qui l’emporte à tibeita ?",
+      "entity:circ:133"
+    ],
+    [
+      "Qui l’emporte à Tibeita ?",
+      "entity:circ:133"
+    ],
+    [
+      "inscrits à Tibeita",
+      "entity:circ:133"
+    ],
+    [
+      "inscrits à tibeita",
+      "entity:circ:133"
+    ],
+    [
+      "circonscription 133",
+      "entity:circ:133"
+    ],
+    [
+      "circonscription 134",
+      "entity:circ:134"
+    ],
+    [
+      "inscrits à Bonon",
+      "entity:circ:135"
+    ],
+    [
+      "inscrits à bonon",
+      "entity:circ:135"
+    ],
+    [
+      "liste élue Bonon",
+      "entity:circ:135"
+    ],
+    [
+      "liste élue bonon",
+      "entity:circ:135"
+    ],
+    [
+      "circonscription 135",
+      "entity:circ:135"
+    ],
+    [
+      "Qui l’emporte à kononfla ?",
+      "entity:circ:136"
+    ],
+    [
+      "Qui l’emporte à Kononfla ?",
+      "entity:circ:136"
+    ],
+    [
+      "inscrits à Kononfla",
+      "entity:circ:136"
+    ],
+    [
+      "inscrits à kononfla",
+      "entity:circ:136"
+    ],
+    [
+      "circonscription 136",
+      "entity:circ:136"
+    ],
+    [
+      "résultats Kouetinfla",
+      "entity:circ:137"
+    ],
+    [
+      "résultats kouetinfla",
+      "entity:circ:137"
+    ],
+    [
+      "Qui l’emporte à Kouetinfla ?",
+      "entity:circ:137"
+    ],
+    [
+      "Qui l’emporte à kouetinfla ?",
+      "entity:circ:137"
+    ],
+    [
+      "circonscription 137",
+      "entity:circ:137"
+    ],
+    [
+      "liste élue kanzra",
+      "entity:circ:139"
+    ],
+    [
+      "liste élue Kanzra",
+      "entity:circ:139"
+    ],
+    [
+      "Qui l’emporte à Kanzra ?",
+      "entity:circ:139"
+    ],
+    [
+      "Qui l’emporte à kanzra ?",
+      "entity:circ:139"
+    ],
+    [
+      "circonscription 139",
+      "entity:circ:139"
+    ],
+    [
+      "circonscription 140",
+      "entity:circ:140"
+    ],
+    [
+      "circonscription 141",
+      "entity:circ:141"
+    ],
+    [
+      "Qui l’emporte à Agou ?",
+      "entity:circ:142"
+    ],
+    [
+      "Qui l’emporte à agou ?",
+      "entity:circ:142"
+    ],
+    [
+      "liste élue agou",
+      "entity:circ:142"
+    ],
+    [
+      "liste élue Agou",
+      "entity:circ:142"
+    ],
+    [
+      "circonscription 142",
+      "entity:circ:142"
+    ],
+    [
+      "Qui l’emporte à assikoi ?",
+      "entity:circ:143"
+    ],
+    [
+      "Qui l’emporte à Assikoi ?",
+      "entity:circ:143"
+    ],
+    [
+      "résultats Assikoi",
+      "entity:circ:143"
+    ],
+    [
+      "résultats assikoi",
+      "entity:circ:143"
+    ],
+    [
+      "circonscription 143",
+      "entity:circ:143"
+    ],
+    [
+      "Qui l’emporte à affery ?",
+      "entity:circ:144"
+    ],
+    [
+      "Qui l’emporte à Affery ?",
+      "entity:circ:144"
+    ],
+    [
+      "inscrits à Affery",
+      "entity:circ:144"
+    ],
+    [
+      "inscrits à affery",
+      "entity:circ:144"
+    ],
+    [
+      "circonscription 144",
+      "entity:circ:144"
+    ],
+    [
+      "liste élue akoupe",
+      "entity:circ:145"
+    ],
+    [
+      "liste élue Akoupe",
+      "entity:circ:145"
+    ],
+    [
+      "Qui l’emporte à Akoupe ?",
+      "entity:circ:145"
+    ],
+    [
+      "Qui l’emporte à akoupe ?",
+      "entity:circ:145"
+    ],
+    [
+      "circonscription 145",
+      "entity:circ:145"
+    ],
+    [
+      "participation Abongoua",
+      "entity:circ:147"
+    ],
+    [
+      "participation abongoua",
+      "entity:circ:147"
+    ],
+    [
+      "résultats abongoua",
+      "entity:circ:147"
+    ],
+    [
+      "résultats Abongoua",
+      "entity:circ:147"
+    ],
+    [
+      "circonscription 147",
+      "entity:circ:147"
+    ],
+    [
+      "liste élue gueyo",
+      "entity:circ:148"
+    ],
+    [
+      "liste élue Gueyo",
+      "entity:circ:148"
+    ],
+    [
+      "participation Gueyo",
+      "entity:circ:148"
+    ],
+    [
+      "participation gueyo",
+      "entity:circ:148"
+    ],
+    [
+      "circonscription 148",
+      "entity:circ:148"
+    ],
+    [
+      "inscrits à Buyo",
+      "entity:circ:149"
+    ],
+    [
+      "inscrits à buyo",
+      "entity:circ:149"
+    ],
+    [
+      "liste élue buyo",
+      "entity:circ:149"
+    ],
+    [
+      "liste élue Buyo",
+      "entity:circ:149"
+    ],
+    [
+      "circonscription 149",
+      "entity:circ:149"
+    ],
+    [
+      "inscrits à meagui",
+      "entity:circ:150"
+    ],
+    [
+      "inscrits à Meagui",
+      "entity:circ:150"
+    ],
+    [
+      "Qui l’emporte à meagui ?",
+      "entity:circ:150"
+    ],
+    [
+      "Qui l’emporte à Meagui ?",
+      "entity:circ:150"
+    ],
+    [
+      "circonscription 150",
+      "entity:circ:150"
+    ],
+    [
+      "résultats Grand Zatiry",
+      "entity:circ:151"
+    ],
+    [
+      "résultats grand-zatiry",
+      "entity:circ:151"
+    ],
+    [
+      "inscrits à Grand Zatiry",
+      "entity:circ:151"
+    ],
+    [
+      "inscrits à grand-zatiry",
+      "entity:circ:151"
+    ],
+    [
+      "circonscription 151",
+      "entity:circ:151"
+    ],
+    [
+      "participation Soubre",
+      "entity:circ:153"
+    ],
+    [
+      "participation soubre",
+      "entity:circ:153"
+    ],
+    [
+      "inscrits à soubre",
+      "entity:circ:153"
+    ],
+    [
+      "inscrits à Soubre",
+      "entity:circ:153"
+    ],
+    [
+      "circonscription 153",
+      "entity:circ:153"
+    ],
+    [
+      "liste élue Arrah",
+      "entity:circ:154"
+    ],
+    [
+      "liste élue arrah",
+      "entity:circ:154"
+    ],
+    [
+      "résultats Arrah",
+      "entity:circ:154"
+    ],
+    [
+      "résultats arrah",
+      "entity:circ:154"
+    ],
+    [
+      "circonscription 154",
+      "entity:circ:154"
+    ],
+    [
+      "liste élue Kouadioblekro",
+      "entity:circ:155"
+    ],
+    [
+      "liste élue kouadioblekro",
+      "entity:circ:155"
+    ],
+    [
+      "participation Kouadioblekro",
+      "entity:circ:155"
+    ],
+    [
+      "participation kouadioblekro",
+      "entity:circ:155"
+    ],
+    [
+      "circonscription 155",
+      "entity:circ:155"
+    ],
+    [
+      "liste élue Kouassi Kouassikro",
+      "entity:circ:156"
+    ],
+    [
+      "liste élue kouassi-kouassikro",
+      "entity:circ:156"
+    ],
+    [
+      "participation Kouassi-Kouassikro",
+      "entity:circ:156"
+    ],
+    [
+      "participation kouassi-kouassikro",
+      "entity:circ:156"
+    ],
+    [
+      "circonscription 156",
+      "entity:circ:156"
+    ],
+    [
+      "circonscription 157",
+      "entity:circ:157"
+    ],
+    [
+      "participation Assie Koumassi",
+      "entity:circ:158"
+    ],
+    [
+      "participation assie-koumassi",
+      "entity:circ:158"
+    ],
+    [
+      "Qui l’emporte à assie-koumassi ?",
+      "entity:circ:158"
+    ],
+    [
+      "Qui l’emporte à Assie-Koumassi ?",
+      "entity:circ:158"
+    ],
+    [
+      "circonscription 158",
+      "entity:circ:158"
+    ],
+    [
+      "résultats Abigui",
+      "entity:circ:159"
+    ],
+    [
+      "résultats abigui",
+      "entity:circ:159"
+    ],
+    [
+      "Qui l’emporte à abigui ?",
+      "entity:circ:159"
+    ],
+    [
+      "Qui l’emporte à Abigui ?",
+      "entity:circ:159"
+    ],
+    [
+      "circonscription 159",
+      "entity:circ:159"
+    ],
+    [
+      "participation dimbokro",
+      "entity:circ:160"
+    ],
+    [
+      "participation Dimbokro",
+      "entity:circ:160"
+    ],
+    [
+      "résultats dimbokro",
+      "entity:circ:160"
+    ],
+    [
+      "résultats Dimbokro",
+      "entity:circ:160"
+    ],
+    [
+      "circonscription 160",
+      "entity:circ:160"
+    ],
+    [
+      "résultats Anoumaba",
+      "entity:circ:161"
+    ],
+    [
+      "résultats anoumaba",
+      "entity:circ:161"
+    ],
+    [
+      "liste élue anoumaba",
+      "entity:circ:161"
+    ],
+    [
+      "liste élue Anoumaba",
+      "entity:circ:161"
+    ],
+    [
+      "circonscription 161",
+      "entity:circ:161"
+    ],
+    [
+      "inscrits à m'batto",
+      "entity:circ:162"
+    ],
+    [
+      "inscrits à M'Batto",
+      "entity:circ:162"
+    ],
+    [
+      "liste élue M'Batto",
+      "entity:circ:162"
+    ],
+    [
+      "liste élue m'batto",
+      "entity:circ:162"
+    ],
+    [
+      "circonscription 162",
+      "entity:circ:162"
+    ],
+    [
+      "inscrits à dikodougou",
+      "entity:circ:163"
+    ],
+    [
+      "inscrits à Dikodougou",
+      "entity:circ:163"
+    ],
+    [
+      "Qui l’emporte à dikodougou ?",
+      "entity:circ:163"
+    ],
+    [
+      "Qui l’emporte à Dikodougou ?",
+      "entity:circ:163"
+    ],
+    [
+      "circonscription 163",
+      "entity:circ:163"
+    ],
+    [
+      "inscrits à Bougou",
+      "entity:circ:164"
+    ],
+    [
+      "inscrits à bougou",
+      "entity:circ:164"
+    ],
+    [
+      "Qui l’emporte à bougou ?",
+      "entity:circ:164"
+    ],
+    [
+      "Qui l’emporte à Bougou ?",
+      "entity:circ:164"
+    ],
+    [
+      "circonscription 164",
+      "entity:circ:164"
+    ],
+    [
+      "Qui l’emporte à Komborodougou ?",
+      "entity:circ:167"
+    ],
+    [
+      "Qui l’emporte à komborodougou ?",
+      "entity:circ:167"
+    ],
+    [
+      "inscrits à Komborodougou",
+      "entity:circ:167"
+    ],
+    [
+      "inscrits à komborodougou",
+      "entity:circ:167"
+    ],
+    [
+      "circonscription 167",
+      "entity:circ:167"
+    ],
+    [
+      "inscrits à sirasso",
+      "entity:circ:168"
+    ],
+    [
+      "inscrits à Sirasso",
+      "entity:circ:168"
+    ],
+    [
+      "liste élue Sirasso",
+      "entity:circ:168"
+    ],
+    [
+      "liste élue sirasso",
+      "entity:circ:168"
+    ],
+    [
+      "circonscription 168",
+      "entity:circ:168"
+    ],
+    [
+      "participation kiemou",
+      "entity:circ:169"
+    ],
+    [
+      "participation Kiemou",
+      "entity:circ:169"
+    ],
+    [
+      "résultats Kiemou",
+      "entity:circ:169"
+    ],
+    [
+      "résultats kiemou",
+      "entity:circ:169"
+    ],
+    [
+      "circonscription 169",
+      "entity:circ:169"
+    ],
+    [
+      "résultats kombolokoura",
+      "entity:circ:170"
+    ],
+    [
+      "résultats Kombolokoura",
+      "entity:circ:170"
+    ],
+    [
+      "inscrits à kombolokoura",
+      "entity:circ:170"
+    ],
+    [
+      "inscrits à Kombolokoura",
+      "entity:circ:170"
+    ],
+    [
+      "circonscription 170",
+      "entity:circ:170"
+    ],
+    [
+      "circonscription 171",
+      "entity:circ:171"
+    ],
+    [
+      "participation sinematiali",
+      "entity:circ:172"
+    ],
+    [
+      "participation Sinematiali",
+      "entity:circ:172"
+    ],
+    [
+      "résultats Sinematiali",
+      "entity:circ:172"
+    ],
+    [
+      "résultats sinematiali",
+      "entity:circ:172"
+    ],
+    [
+      "circonscription 172",
+      "entity:circ:172"
+    ],
+    [
+      "participation Doba",
+      "entity:circ:173"
+    ],
+    [
+      "participation doba",
+      "entity:circ:173"
+    ],
+    [
+      "liste élue Doba",
+      "entity:circ:173"
+    ],
+    [
+      "liste élue doba",
+      "entity:circ:173"
+    ],
+    [
+      "circonscription 173",
+      "entity:circ:173"
+    ],
+    [
+      "résultats grand-bereby",
+      "entity:circ:174"
+    ],
+    [
+      "résultats Grand Bereby",
+      "entity:circ:174"
+    ],
+    [
+      "liste élue grand-bereby",
+      "entity:circ:174"
+    ],
+    [
+      "liste élue Grand Bereby",
+      "entity:circ:174"
+    ],
+    [
+      "circonscription 174",
+      "entity:circ:174"
+    ],
+    [
+      "circonscription 175",
+      "entity:circ:175"
+    ],
+    [
+      "Qui l’emporte à grabo ?",
+      "entity:circ:177"
+    ],
+    [
+      "Qui l’emporte à Grabo ?",
+      "entity:circ:177"
+    ],
+    [
+      "inscrits à grabo",
+      "entity:circ:177"
+    ],
+    [
+      "inscrits à Grabo",
+      "entity:circ:177"
+    ],
+    [
+      "circonscription 177",
+      "entity:circ:177"
+    ],
+    [
+      "circonscription 178",
+      "entity:circ:178"
+    ],
+    [
+      "liste élue kouakro",
+      "entity:circ:179"
+    ],
+    [
+      "liste élue Kouakro",
+      "entity:circ:179"
+    ],
+    [
+      "Qui l’emporte à kouakro ?",
+      "entity:circ:179"
+    ],
+    [
+      "Qui l’emporte à Kouakro ?",
+      "entity:circ:179"
+    ],
+    [
+      "circonscription 179",
+      "entity:circ:179"
+    ],
+    [
+      "participation Ayame",
+      "entity:circ:180"
+    ],
+    [
+      "participation ayame",
+      "entity:circ:180"
+    ],
+    [
+      "liste élue ayame",
+      "entity:circ:180"
+    ],
+    [
+      "liste élue Ayame",
+      "entity:circ:180"
+    ],
+    [
+      "circonscription 180",
+      "entity:circ:180"
+    ],
+    [
+      "liste élue etueboue",
+      "entity:circ:181"
+    ],
+    [
+      "liste élue Etueboue",
+      "entity:circ:181"
+    ],
+    [
+      "Qui l’emporte à etueboue ?",
+      "entity:circ:181"
+    ],
+    [
+      "Qui l’emporte à Etueboue ?",
+      "entity:circ:181"
+    ],
+    [
+      "circonscription 181",
+      "entity:circ:181"
+    ],
+    [
+      "Qui l’emporte à Bongo ?",
+      "entity:circ:182"
+    ],
+    [
+      "Qui l’emporte à bongo ?",
+      "entity:circ:182"
+    ],
+    [
+      "inscrits à Bongo",
+      "entity:circ:182"
+    ],
+    [
+      "inscrits à bongo",
+      "entity:circ:182"
+    ],
+    [
+      "circonscription 182",
+      "entity:circ:182"
+    ],
+    [
+      "résultats Grand-Bassam",
+      "entity:circ:183"
+    ],
+    [
+      "résultats Grand Bassam",
+      "entity:circ:183"
+    ],
+    [
+      "inscrits à Grand-Bassam",
+      "entity:circ:183"
+    ],
+    [
+      "inscrits à grand-bassam",
+      "entity:circ:183"
+    ],
+    [
+      "circonscription 183",
+      "entity:circ:183"
+    ],
+    [
+      "inscrits à nouamou",
+      "entity:circ:184"
+    ],
+    [
+      "inscrits à Nouamou",
+      "entity:circ:184"
+    ],
+    [
+      "liste élue nouamou",
+      "entity:circ:184"
+    ],
+    [
+      "liste élue Nouamou",
+      "entity:circ:184"
+    ],
+    [
+      "circonscription 184",
+      "entity:circ:184"
+    ],
+    [
+      "Qui l’emporte à kong ?",
+      "entity:circ:185"
+    ],
+    [
+      "Qui l’emporte à Kong ?",
+      "entity:circ:185"
+    ],
+    [
+      "inscrits à Kong",
+      "entity:circ:185"
+    ],
+    [
+      "inscrits à kong",
+      "entity:circ:185"
+    ],
+    [
+      "circonscription 185",
+      "entity:circ:185"
+    ],
+    [
+      "circonscription 186",
+      "entity:circ:186"
+    ],
+    [
+      "Qui l’emporte à toumoukro ?",
+      "entity:circ:188"
+    ],
+    [
+      "Qui l’emporte à Toumoukro ?",
+      "entity:circ:188"
+    ],
+    [
+      "participation Toumoukro",
+      "entity:circ:188"
+    ],
+    [
+      "participation toumoukro",
+      "entity:circ:188"
+    ],
+    [
+      "circonscription 188",
+      "entity:circ:188"
+    ],
+    [
+      "liste élue Ouangolodougou",
+      "entity:circ:189"
+    ],
+    [
+      "liste élue ouangolodougou",
+      "entity:circ:189"
+    ],
+    [
+      "participation ouangolodougou",
+      "entity:circ:189"
+    ],
+    [
+      "participation Ouangolodougou",
+      "entity:circ:189"
+    ],
+    [
+      "circonscription 189",
+      "entity:circ:189"
+    ],
+    [
+      "participation Gbangbegouine",
+      "entity:circ:191"
+    ],
+    [
+      "participation gbangbegouine",
+      "entity:circ:191"
+    ],
+    [
+      "Qui l’emporte à Gbangbegouine ?",
+      "entity:circ:191"
+    ],
+    [
+      "Qui l’emporte à gbangbegouine ?",
+      "entity:circ:191"
+    ],
+    [
+      "circonscription 191",
+      "entity:circ:191"
+    ],
+    [
+      "résultats Sipilou",
+      "entity:circ:192"
+    ],
+    [
+      "résultats sipilou",
+      "entity:circ:192"
+    ],
+    [
+      "liste élue Sipilou",
+      "entity:circ:192"
+    ],
+    [
+      "liste élue sipilou",
+      "entity:circ:192"
+    ],
+    [
+      "circonscription 192",
+      "entity:circ:192"
+    ],
+    [
+      "résultats gbon-houye",
+      "entity:circ:193"
+    ],
+    [
+      "résultats Gbon-Houye",
+      "entity:circ:193"
+    ],
+    [
+      "inscrits à gbon-houye",
+      "entity:circ:193"
+    ],
+    [
+      "inscrits à Gbon-Houye",
+      "entity:circ:193"
+    ],
+    [
+      "circonscription 193",
+      "entity:circ:193"
+    ],
+    [
+      "liste élue mahapleu",
+      "entity:circ:194"
+    ],
+    [
+      "liste élue Mahapleu",
+      "entity:circ:194"
+    ],
+    [
+      "résultats Mahapleu",
+      "entity:circ:194"
+    ],
+    [
+      "résultats mahapleu",
+      "entity:circ:194"
+    ],
+    [
+      "circonscription 194",
+      "entity:circ:194"
+    ],
+    [
+      "inscrits à ziogouine",
+      "entity:circ:195"
+    ],
+    [
+      "inscrits à Ziogouine",
+      "entity:circ:195"
+    ],
+    [
+      "participation Ziogouine",
+      "entity:circ:195"
+    ],
+    [
+      "participation ziogouine",
+      "entity:circ:195"
+    ],
+    [
+      "circonscription 195",
+      "entity:circ:195"
+    ],
+    [
+      "circonscription 197",
+      "entity:circ:197"
+    ],
+    [
+      "participation Banneu",
+      "entity:circ:198"
+    ],
+    [
+      "participation banneu",
+      "entity:circ:198"
+    ],
+    [
+      "Qui l’emporte à banneu ?",
+      "entity:circ:198"
+    ],
+    [
+      "Qui l’emporte à Banneu ?",
+      "entity:circ:198"
+    ],
+    [
+      "circonscription 198",
+      "entity:circ:198"
+    ],
+    [
+      "Qui l’emporte à goulaleu ?",
+      "entity:circ:199"
+    ],
+    [
+      "Qui l’emporte à Goulaleu ?",
+      "entity:circ:199"
+    ],
+    [
+      "résultats Goulaleu",
+      "entity:circ:199"
+    ],
+    [
+      "résultats goulaleu",
+      "entity:circ:199"
+    ],
+    [
+      "circonscription 199",
+      "entity:circ:199"
+    ],
+    [
+      "inscrits à Djibrosso",
+      "entity:circ:200"
+    ],
+    [
+      "inscrits à djibrosso",
+      "entity:circ:200"
+    ],
+    [
+      "participation Djibrosso",
+      "entity:circ:200"
+    ],
+    [
+      "participation djibrosso",
+      "entity:circ:200"
+    ],
+    [
+      "circonscription 200",
+      "entity:circ:200"
+    ],
+    [
+      "Qui l’emporte à Kani ?",
+      "entity:circ:201"
+    ],
+    [
+      "Qui l’emporte à kani ?",
+      "entity:circ:201"
+    ],
+    [
+      "participation Kani",
+      "entity:circ:201"
+    ],
+    [
+      "participation kani",
+      "entity:circ:201"
+    ],
+    [
+      "circonscription 201",
+      "entity:circ:201"
+    ],
+    [
+      "participation bobi-diarabana",
+      "entity:circ:202"
+    ],
+    [
+      "participation Bobi Diarabana",
+      "entity:circ:202"
+    ],
+    [
+      "inscrits à bobi-diarabana",
+      "entity:circ:202"
+    ],
+    [
+      "inscrits à Bobi-Diarabana",
+      "entity:circ:202"
+    ],
+    [
+      "circonscription 202",
+      "entity:circ:202"
+    ],
+    [
+      "circonscription 203",
+      "entity:circ:203"
+    ],
+    [
+      "liste élue Kamalo",
+      "entity:circ:205"
+    ],
+    [
+      "liste élue kamalo",
+      "entity:circ:205"
+    ],
+    [
+      "inscrits à Kamalo",
+      "entity:circ:205"
+    ],
+    [
+      "inscrits à kamalo",
+      "entity:circ:205"
+    ],
+    [
+      "circonscription 205",
+      "entity:circ:205"
+    ],
+    [
+      "voix du ACI",
+      "entity:party:ACI"
+    ],
+    [
+      "candidatures ACI",
+      "entity:party:ACI"
+    ],
+    [
+      "voix du ADCI",
+      "entity:party:ADCI"
+    ],
+    [
+      "élus ADCI",
+      "entity:party:ADCI"
+    ],
+    [
+      "élus AIRD",
+      "entity:party:AIRD"
+    ],
+    [
+      "voix du AIRD",
+      "entity:party:AIRD"
+    ],
+    [
+      "candidatures APR.CI",
+      "entity:party:APR.CI"
+    ],
+    [
+      "voix du APR.CI",
+      "entity:party:APR.CI"
+    ],
+    [
+      "candidatures CNDCI",
+      "entity:party:CNDCI"
+    ],
+    [
+      "voix du CNDCI",
+      "entity:party:CNDCI"
+    ],
+    [
+      "élus CNJB-ADO",
+      "entity:party:CNJB-ADO"
+    ],
+    [
+      "candidatures CNJB-ADO",
+      "entity:party:CNJB-ADO"
+    ],
+    [
+      "voix du CNPCIN",
+      "entity:party:CNPCIN"
+    ],
+    [
+      "élus CNPCIN",
+      "entity:party:CNPCIN"
+    ],
+    [
+      "voix du CODE",
+      "entity:party:CODE"
+    ],
+    [
+      "élus CODE",
+      "entity:party:CODE"
+    ],
+    [
+      "voix du CRI PANAFRICAIN",
+      "entity:party:CRI PANAFRICAIN"
+    ],
+    [
+      "candidatures CRI PANAFRICAIN",
+      "entity:party:CRI PANAFRICAIN"
+    ],
+    [
+      "candidatures EDS",
+      "entity:party:EDS"
+    ],
+    [
+      "élus EDS",
+      "entity:party:EDS"
+    ],
+    [
+      "voix du FNDR",
+      "entity:party:FNDR"
+    ],
+    [
+      "candidatures FNDR",
+      "entity:party:FNDR"
+    ],
+    [
+      "voix du FPP",
+      "entity:party:FPP"
+    ],
+    [
+      "élus FPP",
+      "entity:party:FPP"
+    ],
+    [
+      "candidatures GP-PAIX",
+      "entity:party:GP-PAIX"
+    ],
+    [
+      "voix du GP-PAIX",
+      "entity:party:GP-PAIX"
+    ],
+    [
+      "élus INDEPENDANT",
+      "entity:party:INDEPENDANT"
+    ],
+    [
+      "voix du INDEPENDANT",
+      "entity:party:INDEPENDANT"
+    ],
+    [
+      "candidatures LE BUFFLE",
+      "entity:party:LE BUFFLE"
+    ],
+    [
+      "voix du LE BUFFLE",
+      "entity:party:LE BUFFLE"
+    ],
+    [
+      "candidatures MDR",
+      "entity:party:MDR"
+    ],
+    [
+      "élus MDR",
+      "entity:party:MDR"
+    ],
+    [
+      "voix du MERCI",
+      "entity:party:MERCI"
+    ],
+    [
+      "candidatures MERCI",
+      "entity:party:MERCI"
+    ],
+    [
+      "élus MGC",
+      "entity:party:MGC"
+    ],
+    [
+      "candidatures MGC",
+      "entity:party:MGC"
+    ],
+    [
+      "candidatures MIRDEP",
+      "entity:party:MIRDEP"
+    ],
+    [
+      "voix du MIRDEP",
+      "entity:party:MIRDEP"
+    ],
+    [
+      "candidatures MNRP",
+      "entity:party:MNRP"
+    ],
+    [
+      "élus MNRP",
+      "entity:party:MNRP"
+    ],
+    [
+      "candidatures P.B.J.V",
+      "entity:party:P.B.J.V"
+    ],
+    [
+      "voix du P.B.J.V",
+      "entity:party:P.B.J.V"
+    ],
+    [
+      "voix du PDCI - FPI - ADCI",
+      "entity:party:PDCI - FPI - ADCI"
+    ],
+    [
+      "candidatures PDCI - FPI - ADCI",
+      "entity:party:PDCI - FPI - ADCI"
+    ],
+    [
+      "candidatures PDCI-RDA",
+      "entity:party:PDCI-RDA"
+    ],
+    [
+      "élus PDCI-RDA",
+      "entity:party:PDCI-RDA"
+    ],
+    [
+      "voix du PIA/CODE",
+      "entity:party:PIA/CODE"
+    ],
+    [
+      "candidatures PIA/CODE",
+      "entity:party:PIA/CODE"
+    ],
+    [
+      "voix du PIA/PRI/CODE",
+      "entity:party:PIA/PRI/CODE"
+    ],
+    [
+      "candidatures PIA/PRI/CODE",
+      "entity:party:PIA/PRI/CODE"
+    ],
+    [
+      "élus PPSD",
+      "entity:party:PPSD"
+    ],
+    [
+      "candidatures PPSD",
+      "entity:party:PPSD"
+    ],
+    [
+      "candidatures PRO CI",
+      "entity:party:PRO CI"
+    ],
+    [
+      "élus PRO CI",
+      "entity:party:PRO CI"
+    ],
+    [
+      "candidatures RDP",
+      "entity:party:RDP"
+    ],
+    [
+      "élus RDP",
+      "entity:party:RDP"
+    ],
+    [
+      "élus REEL.CI",
+      "entity:party:REEL.CI"
+    ],
+    [
+      "voix du REEL.CI",
+      "entity:party:REEL.CI"
+    ],
+    [
+      "voix du UDP",
+      "entity:party:UDP"
+    ],
+    [
+      "élus UDP",
+      "entity:party:UDP"
+    ],
+    [
+      "élus UFD",
+      "entity:party:UFD"
+    ],
+    [
+      "voix du UFD",
+      "entity:party:UFD"
+    ],
+    [
+      "élus UNCI",
+      "entity:party:UNCI"
+    ],
+    [
+      "candidatures UNCI",
+      "entity:party:UNCI"
+    ],
+    [
+      "élus UNPR",
+      "entity:party:UNPR"
+    ],
+    [
+      "candidatures UNPR",
+      "entity:party:UNPR"
+    ],
+    [
+      "élus URCI",
+      "entity:party:URCI"
+    ],
+    [
+      "candidatures URCI",
+      "entity:party:URCI"
+    ]
+  ],
+  "heldout": [
+    [
+      "nombre de votants et d’inscrits",
+      "schema:circ.turnout"
+    ],
+    [
+      "colonnes de participation",
+      "schema:circ.turnout"
+    ],
+    [
+      "orthographe des noms de lieux",
+      "domain:name_matching"
+    ],
+    [
+      "chercher une commune",
+      "domain:name_matching"
+    ],
+    [
+      "votants bere",
+      "entity:region:BERE"
+    ],
+    [
+      "votants Bere",
+      "entity:region:BERE"
+    ],
+    [
+      "participation en Bere",
+      "entity:region:BERE"
+    ],
+    [
+      "participation en bere",
+      "entity:region:BERE"
+    ],
+    [
+      "participation en folon",
+      "entity:region:FOLON"
+    ],
+    [
+      "participation en Folon",
+      "entity:region:FOLON"
+    ],
+    [
+      "région folon",
+      "entity:region:FOLON"
+    ],
+    [
+      "région Folon",
+      "entity:region:FOLON"
+    ],
+    [
+      "votants Hambol",
+      "entity:region:HAMBOL"
+    ],
+    [
+      "votants hambol",
+      "entity:region:HAMBOL"
+    ],
+    [
+      "participation en hambol",
+      "entity:region:HAMBOL"
+    ],
+    [
+      "participation en Hambol",
+      "entity:region:HAMBOL"
+    ],
+    [
+      "circonscriptions de Indenie Djuablin",
+      "entity:region:INDENIE-DJUABLIN"
+    ],
+    [
+      "circonscriptions de indenie-djuablin",
+      "entity:region:INDENIE-DJUABLIN"
+    ],
+    [
+      "votants indenie-djuablin",
+      "entity:region:INDENIE-DJUABLIN"
+    ],
+    [
+      "votants Indenie-Djuablin",
+      "entity:region:INDENIE-DJUABLIN"
+    ],
+    [
+      "circonscriptions de kabadougou",
+      "entity:region:KABADOUGOU"
+    ],
+    [
+      "circonscriptions de Kabadougou",
+      "entity:region:KABADOUGOU"
+    ],
+    [
+      "région Kabadougou",
+      "entity:region:KABADOUGOU"
+    ],
+    [
+      "région kabadougou",
+      "entity:region:KABADOUGOU"
+    ],
+    [
+      "région Loh-Djiboua",
+      "entity:region:LOH-DJIBOUA"
+    ],
+    [
+      "région Loh Djiboua",
+      "entity:region:LOH-DJIBOUA"
+    ],
+    [
+      "circonscriptions de Loh Djiboua",
+      "entity:region:LOH-DJIBOUA"
+    ],
+    [
+      "circonscriptions de Loh-Djiboua",
+      "entity:region:LOH-DJIBOUA"
+    ],
+    [
+      "région n",
+      "entity:region:N'ZI"
+    ],
+    [
+      "région N",
+      "entity:region:N'ZI"
+    ],
+    [
+      "votants N",
+      "entity:region:N'ZI"
+    ],
+    [
+      "votants n",
+      "entity:region:N'ZI"
+    ],
+    [
+      "votants San Pedro",
+      "entity:region:SAN-PEDRO"
+    ],
+    [
+      "votants san-pedro",
+      "entity:region:SAN-PEDRO"
+    ],
+    [
+      "région San Pedro",
+      "entity:region:SAN-PEDRO"
+    ],
+    [
+      "région San-Pedro",
+      "entity:region:SAN-PEDRO"
+    ],
+    [
+      "Qui l’emporte à guinteguela ?",
+      "entity:circ:012"
+    ],
+    [
+      "Qui l’emporte à Guinteguela ?",
+      "entity:circ:012"
+    ],
+    [
+      "inscrits à Guinteguela",
+      "entity:circ:012"
+    ],
+    [
+      "inscrits à guinteguela",
+      "entity:circ:012"
+    ],
+    [
+      "circonscription 012",
+      "entity:circ:012"
+    ],
+    [
+      "circonscription 013",
+      "entity:circ:013"
+    ],
+    [
+      "résultats molonou-ble",
+      "entity:circ:019"
+    ],
+    [
+      "résultats Molonou-Ble",
+      "entity:circ:019"
+    ],
+    [
+      "participation Molonou-Ble",
+      "entity:circ:019"
+    ],
+    [
+      "participation Molonou Ble",
+      "entity:circ:019"
+    ],
+    [
+      "circonscription 019",
+      "entity:circ:019"
+    ],
+    [
+      "résultats djekanou",
+      "entity:circ:022"
+    ],
+    [
+      "résultats Djekanou",
+      "entity:circ:022"
+    ],
+    [
+      "inscrits à Djekanou",
+      "entity:circ:022"
+    ],
+    [
+      "inscrits à djekanou",
+      "entity:circ:022"
+    ],
+    [
+      "circonscription 022",
+      "entity:circ:022"
+    ],
+    [
+      "participation Mankono",
+      "entity:circ:025"
+    ],
+    [
+      "participation mankono",
+      "entity:circ:025"
+    ],
+    [
+      "inscrits à Mankono",
+      "entity:circ:025"
+    ],
+    [
+      "inscrits à mankono",
+      "entity:circ:025"
+    ],
+    [
+      "circonscription 025",
+      "entity:circ:025"
+    ],
+    [
+      "Qui l’emporte à sarhala ?",
+      "entity:circ:026"
+    ],
+    [
+      "Qui l’emporte à Sarhala ?",
+      "entity:circ:026"
+    ],
+    [
+      "résultats Sarhala",
+      "entity:circ:026"
+    ],
+    [
+      "résultats sarhala",
+      "entity:circ:026"
+    ],
+    [
+      "circonscription 026",
+      "entity:circ:026"
+    ],
+    [
+      "liste élue zeaglo",
+      "entity:circ:033"
+    ],
+    [
+      "liste élue Zeaglo",
+      "entity:circ:033"
+    ],
+    [
+      "résultats Zeaglo",
+      "entity:circ:033"
+    ],
+    [
+      "résultats zeaglo",
+      "entity:circ:033"
+    ],
+    [
+      "circonscription 033",
+      "entity:circ:033"
+    ],
+    [
+      "inscrits à abobo",
+      "entity:circ:038"
+    ],
+    [
+      "inscrits à Abobo",
+      "entity:circ:038"
+    ],
+    [
+      "participation abobo",
+      "entity:circ:038"
+    ],
+    [
+      "participation Abobo",
+      "entity:circ:038"
+    ],
+    [
+      "circonscription 038",
+      "entity:circ:038"
+    ],
+    [
+      "résultats adjame",
+      "entity:circ:039"
+    ],
+    [
+      "résultats Adjame",
+      "entity:circ:039"
+    ],
+    [
+      "Qui l’emporte à Adjame ?",
+      "entity:circ:039"
+    ],
+    [
+      "Qui l’emporte à adjame ?",
+      "entity:circ:039"
+    ],
+    [
+      "circonscription 039",
+      "entity:circ:039"
+    ],
+    [
+      "inscrits à kossou",
+      "entity:circ:052"
+    ],
+    [
+      "inscrits à Kossou",
+      "entity:circ:052"
+    ],
+    [
+      "résultats Kossou",
+      "entity:circ:052"
+    ],
+    [
+      "résultats kossou",
+      "entity:circ:052"
+    ],
+    [
+      "circonscription 052",
+      "entity:circ:052"
+    ],
+    [
+      "inscrits à Minignan",
+      "entity:circ:055"
+    ],
+    [
+      "inscrits à minignan",
+      "entity:circ:055"
+    ],
+    [
+      "participation minignan",
+      "entity:circ:055"
+    ],
+    [
+      "participation Minignan",
+      "entity:circ:055"
+    ],
+    [
+      "circonscription 055",
+      "entity:circ:055"
+    ],
+    [
+      "Qui l’emporte à Botro ?",
+      "entity:circ:058"
+    ],
+    [
+      "Qui l’emporte à botro ?",
+      "entity:circ:058"
+    ],
+    [
+      "résultats botro",
+      "entity:circ:058"
+    ],
+    [
+      "résultats Botro",
+      "entity:circ:058"
+    ],
+    [
+      "circonscription 058",
+      "entity:circ:058"
+    ],
+    [
+      "Qui l’emporte à brobo ?",
+      "entity:circ:061"
+    ],
+    [
+      "Qui l’emporte à Brobo ?",
+      "entity:circ:061"
+    ],
+    [
+      "liste élue brobo",
+      "entity:circ:061"
+    ],
+    [
+      "liste élue Brobo",
+      "entity:circ:061"
+    ],
+    [
+      "circonscription 061",
+      "entity:circ:061"
+    ],
+    [
+      "liste élue sakassou",
+      "entity:circ:063"
+    ],
+    [
+      "liste élue Sakassou",
+      "entity:circ:063"
+    ],
+    [
+      "inscrits à sakassou",
+      "entity:circ:063"
+    ],
+    [
+      "inscrits à Sakassou",
+      "entity:circ:063"
+    ],
+    [
+      "circonscription 063",
+      "entity:circ:063"
+    ],
+    [
+      "circonscription 070",
+      "entity:circ:070"
+    ],
+    [
+      "inscrits à bondoukou",
+      "entity:circ:073"
+    ],
+    [
+      "inscrits à Bondoukou",
+      "entity:circ:073"
+    ],
+    [
+      "participation Bondoukou",
+      "entity:circ:073"
+    ],
+    [
+      "participation bondoukou",
+      "entity:circ:073"
+    ],
+    [
+      "circonscription 073",
+      "entity:circ:073"
+    ],
+    [
+      "participation Koun Fao",
+      "entity:circ:079"
+    ],
+    [
+      "participation koun-fao",
+      "entity:circ:079"
+    ],
+    [
+      "inscrits à Koun-Fao",
+      "entity:circ:079"
+    ],
+    [
+      "inscrits à koun-fao",
+      "entity:circ:079"
+    ],
+    [
+      "circonscription 079",
+      "entity:circ:079"
+    ],
+    [
+      "liste élue Bandakagni Tomora",
+      "entity:circ:080"
+    ],
+    [
+      "liste élue bandakagni-tomora",
+      "entity:circ:080"
+    ],
+    [
+      "Qui l’emporte à bandakagni-tomora ?",
+      "entity:circ:080"
+    ],
+    [
+      "Qui l’emporte à Bandakagni-Tomora ?",
+      "entity:circ:080"
+    ],
+    [
+      "circonscription 080",
+      "entity:circ:080"
+    ],
+    [
+      "inscrits à gbapleu",
+      "entity:circ:088"
+    ],
+    [
+      "inscrits à Gbapleu",
+      "entity:circ:088"
+    ],
+    [
+      "Qui l’emporte à gbapleu ?",
+      "entity:circ:088"
+    ],
+    [
+      "Qui l’emporte à Gbapleu ?",
+      "entity:circ:088"
+    ],
+    [
+      "circonscription 088",
+      "entity:circ:088"
+    ],
+    [
+      "circonscription 089",
+      "entity:circ:089"
+    ],
+    [
+      "inscrits à Guehiebly",
+      "entity:circ:090"
+    ],
+    [
+      "inscrits à guehiebly",
+      "entity:circ:090"
+    ],
+    [
+      "Qui l’emporte à guehiebly ?",
+      "entity:circ:090"
+    ],
+    [
+      "Qui l’emporte à Guehiebly ?",
+      "entity:circ:090"
+    ],
+    [
+      "circonscription 090",
+      "entity:circ:090"
+    ],
+    [
+      "inscrits à Ettrokro",
+      "entity:circ:111"
+    ],
+    [
+      "inscrits à ettrokro",
+      "entity:circ:111"
+    ],
+    [
+      "Qui l’emporte à Ettrokro ?",
+      "entity:circ:111"
+    ],
+    [
+      "Qui l’emporte à ettrokro ?",
+      "entity:circ:111"
+    ],
+    [
+      "circonscription 111",
+      "entity:circ:111"
+    ],
+    [
+      "résultats nafana",
+      "entity:circ:113"
+    ],
+    [
+      "résultats Nafana",
+      "entity:circ:113"
+    ],
+    [
+      "liste élue Nafana",
+      "entity:circ:113"
+    ],
+    [
+      "liste élue nafana",
+      "entity:circ:113"
+    ],
+    [
+      "circonscription 113",
+      "entity:circ:113"
+    ],
+    [
+      "liste élue Amelekia",
+      "entity:circ:115"
+    ],
+    [
+      "liste élue amelekia",
+      "entity:circ:115"
+    ],
+    [
+      "inscrits à Amelekia",
+      "entity:circ:115"
+    ],
+    [
+      "inscrits à amelekia",
+      "entity:circ:115"
+    ],
+    [
+      "circonscription 115",
+      "entity:circ:115"
+    ],
+    [
+      "participation agnibilekrou",
+      "entity:circ:116"
+    ],
+    [
+      "participation Agnibilekrou",
+      "entity:circ:116"
+    ],
+    [
+      "inscrits à agnibilekrou",
+      "entity:circ:116"
+    ],
+    [
+      "inscrits à Agnibilekrou",
+      "entity:circ:116"
+    ],
+    [
+      "circonscription 116",
+      "entity:circ:116"
+    ],
+    [
+      "participation diamarakro",
+      "entity:circ:118"
+    ],
+    [
+      "participation Diamarakro",
+      "entity:circ:118"
+    ],
+    [
+      "résultats Diamarakro",
+      "entity:circ:118"
+    ],
+    [
+      "résultats diamarakro",
+      "entity:circ:118"
+    ],
+    [
+      "circonscription 118",
+      "entity:circ:118"
+    ],
+    [
+      "Qui l’emporte à yocoboue ?",
+      "entity:circ:129"
+    ],
+    [
+      "Qui l’emporte à Yocoboue ?",
+      "entity:circ:129"
+    ],
+    [
+      "résultats yocoboue",
+      "entity:circ:129"
+    ],
+    [
+      "résultats Yocoboue",
+      "entity:circ:129"
+    ],
+    [
+      "circonscription 129",
+      "entity:circ:129"
+    ],
+    [
+      "résultats Maminigui",
+      "entity:circ:138"
+    ],
+    [
+      "résultats maminigui",
+      "entity:circ:138"
+    ],
+    [
+      "Qui l’emporte à Maminigui ?",
+      "entity:circ:138"
+    ],
+    [
+      "Qui l’emporte à maminigui ?",
+      "entity:circ:138"
+    ],
+    [
+      "circonscription 138",
+      "entity:circ:138"
+    ],
+    [
+      "inscrits à Danguira",
+      "entity:circ:146"
+    ],
+    [
+      "inscrits à danguira",
+      "entity:circ:146"
+    ],
+    [
+      "liste élue danguira",
+      "entity:circ:146"
+    ],
+    [
+      "liste élue Danguira",
+      "entity:circ:146"
+    ],
+    [
+      "circonscription 146",
+      "entity:circ:146"
+    ],
+    [
+      "Qui l’emporte à Okrouyo ?",
+      "entity:circ:152"
+    ],
+    [
+      "Qui l’emporte à okrouyo ?",
+      "entity:circ:152"
+    ],
+    [
+      "participation okrouyo",
+      "entity:circ:152"
+    ],
+    [
+      "participation Okrouyo",
+      "entity:circ:152"
+    ],
+    [
+      "circonscription 152",
+      "entity:circ:152"
+    ],
+    [
+      "participation katiali",
+      "entity:circ:165"
+    ],
+    [
+      "participation Katiali",
+      "entity:circ:165"
+    ],
+    [
+      "liste élue Katiali",
+      "entity:circ:165"
+    ],
+    [
+      "liste élue katiali",
+      "entity:circ:165"
+    ],
+    [
+      "circonscription 165",
+      "entity:circ:165"
+    ],
+    [
+      "résultats tioroniaradougou",
+      "entity:circ:166"
+    ],
+    [
+      "résultats Tioroniaradougou",
+      "entity:circ:166"
+    ],
+    [
+      "liste élue tioroniaradougou",
+      "entity:circ:166"
+    ],
+    [
+      "liste élue Tioroniaradougou",
+      "entity:circ:166"
+    ],
+    [
+      "circonscription 166",
+      "entity:circ:166"
+    ],
+    [
+      "inscrits à djamandioke",
+      "entity:circ:176"
+    ],
+    [
+      "inscrits à Djamandioke",
+      "entity:circ:176"
+    ],
+    [
+      "liste élue djamandioke",
+      "entity:circ:176"
+    ],
+    [
+      "liste élue Djamandioke",
+      "entity:circ:176"
+    ],
+    [
+      "circonscription 176",
+      "entity:circ:176"
+    ],
+    [
+      "liste élue koumbala",
+      "entity:circ:187"
+    ],
+    [
+      "liste élue Koumbala",
+      "entity:circ:187"
+    ],
+    [
+      "résultats koumbala",
+      "entity:circ:187"
+    ],
+    [
+      "résultats Koumbala",
+      "entity:circ:187"
+    ],
+    [
+      "circonscription 187",
+      "entity:circ:187"
+    ],
+    [
+      "participation Biankouma",
+      "entity:circ:190"
+    ],
+    [
+      "participation biankouma",
+      "entity:circ:190"
+    ],
+    [
+      "inscrits à Biankouma",
+      "entity:circ:190"
+    ],
+    [
+      "inscrits à biankouma",
+      "entity:circ:190"
+    ],
+    [
+      "circonscription 190",
+      "entity:circ:190"
+    ],
+    [
+      "résultats Sangouine",
+      "entity:circ:196"
+    ],
+    [
+      "résultats sangouine",
+      "entity:circ:196"
+    ],
+    [
+      "participation sangouine",
+      "entity:circ:196"
+    ],
+    [
+      "participation Sangouine",
+      "entity:circ:196"
+    ],
+    [
+      "circonscription 196",
+      "entity:circ:196"
+    ],
+    [
+      "liste élue Massala",
+      "entity:circ:204"
+    ],
+    [
+      "liste élue massala",
+      "entity:circ:204"
+    ],
+    [
+      "Qui l’emporte à massala ?",
+      "entity:circ:204"
+    ],
+    [
+      "Qui l’emporte à Massala ?",
+      "entity:circ:204"
+    ],
+    [
+      "circonscription 204",
+      "entity:circ:204"
+    ],
+    [
+      "candidatures ADCI - GP-PAIX - VALEUR",
+      "entity:party:ADCI - GP-PAIX - VALEUR"
+    ],
+    [
+      "élus ADCI - GP-PAIX - VALEUR",
+      "entity:party:ADCI - GP-PAIX - VALEUR"
+    ],
+    [
+      "voix du AIDE",
+      "entity:party:AIDE"
+    ],
+    [
+      "candidatures AIDE",
+      "entity:party:AIDE"
+    ],
+    [
+      "élus FPI",
+      "entity:party:FPI"
+    ],
+    [
+      "candidatures FPI",
+      "entity:party:FPI"
+    ],
+    [
+      "élus GJPA-CI",
+      "entity:party:GJPA-CI"
+    ],
+    [
+      "candidatures GJPA-CI",
+      "entity:party:GJPA-CI"
+    ],
+    [
+      "élus ICON",
+      "entity:party:ICON"
+    ],
+    [
+      "voix du ICON",
+      "entity:party:ICON"
+    ],
+    [
+      "candidatures MLPCI",
+      "entity:party:MLPCI"
+    ],
+    [
+      "élus MLPCI",
+      "entity:party:MLPCI"
+    ],
+    [
+      "voix du PDCI-RDA - EDS",
+      "entity:party:PDCI-RDA - EDS"
+    ],
+    [
+      "élus PDCI-RDA - EDS",
+      "entity:party:PDCI-RDA - EDS"
+    ],
+    [
+      "candidatures RHDP",
+      "entity:party:RHDP"
+    ],
+    [
+      "voix du RHDP",
+      "entity:party:RHDP"
+    ],
+    [
+      "élus UDCY",
+      "entity:party:UDCY"
+    ],
+    [
+      "candidatures UDCY",
+      "entity:party:UDCY"
+    ]
+  ]
+}

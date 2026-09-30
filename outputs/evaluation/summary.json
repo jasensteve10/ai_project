@@ -1,0 +1,65 @@
+{
+  "retrieval_run": "retrieval-dev-finetuned",
+  "generation_run": "text-to-sql-comparison-haiku-20260930",
+  "retrieval": [
+    {
+      "retriever": "B1 — BM25",
+      "questions": 16,
+      "complete_context": 10,
+      "mean_slot_recall": 0.796875,
+      "recall@5": 0.6041666666666666,
+      "ndcg@5": 0.6229708702034172,
+      "complete@5": 6
+    },
+    {
+      "retriever": "B2 — E5",
+      "questions": 16,
+      "complete_context": 15,
+      "mean_slot_recall": 0.9791666666666666,
+      "recall@5": 0.609375,
+      "ndcg@5": 0.6173108148381381,
+      "complete@5": 5
+    },
+    {
+      "retriever": "B2-FT — fine-tuned E5",
+      "questions": 16,
+      "complete_context": 11,
+      "mean_slot_recall": 0.8489583333333334,
+      "recall@5": 0.609375,
+      "ndcg@5": 0.5642873637989864,
+      "complete@5": 6
+    },
+    {
+      "retriever": "B3 — hybrid",
+      "questions": 16,
+      "complete_context": 14,
+      "mean_slot_recall": 0.9375,
+      "recall@5": 0.546875,
+      "ndcg@5": 0.5636250791772585,
+      "complete@5": 4
+    }
+  ],
+  "training_heldout": {
+    "heldout_pretrained": {
+      "epoch": 0,
+      "n": 227,
+      "recall@1": 0.7444933920704846,
+      "recall@5": 0.9030837004405287,
+      "mrr": 0.8200548802109805
+    },
+    "heldout_finetuned": {
+      "epoch": 3,
+      "train_loss": 0.05718189633626025,
+      "seconds": 149.71885225002188,
+      "n": 227,
+      "recall@1": 0.8986784140969163,
+      "recall@5": 0.9691629955947136,
+      "mrr": 0.9333413588369536
+    },
+    "delta": {
+      "recall@1": 0.1541850220264317,
+      "recall@5": 0.06607929515418498,
+      "mrr": 0.11328647862597307
+    }
+  }
+}

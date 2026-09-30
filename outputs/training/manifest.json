@@ -1,0 +1,32 @@
+{
+  "command": "python -m src.pipeline.train",
+  "config": {
+    "base_model": "intfloat/multilingual-e5-small",
+    "base_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "output_dir": "models/e5-small-edan-ft",
+    "seed": 42,
+    "device": "auto",
+    "epochs": 3,
+    "batch_size": 32,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "temperature": 0.05,
+    "max_grad_norm": 1.0,
+    "max_seq_length": 256,
+    "heldout_fraction": 0.2,
+    "leakage_jaccard_threshold": 0.5
+  },
+  "device": "mps",
+  "corpus_sha256": "86412bb2b9e8d294edc8e33d0266799c01d336f1c0bbf3bf7936102aa6e0178b",
+  "weights_sha256": "3a27a1623a9d457fbdcbac53c2d18aa7aacf5f00f94c72a63e5355f7928812fd",
+  "python": "3.14.4",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "libraries": {
+    "torch": "2.14.0",
+    "sentence-transformers": "6.1.0",
+    "transformers": "5.17.0",
+    "numpy": "2.5.3"
+  },
+  "note": "MPS/GPU kernels are not bit-for-bit deterministic; the seed fixes data order and initial state."
+}

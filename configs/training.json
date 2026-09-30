@@ -1,0 +1,17 @@
+{
+  "base_model": "intfloat/multilingual-e5-small",
+  "base_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "output_dir": "models/e5-small-edan-ft",
+  "seed": 42,
+  "device": "auto",
+  "epochs": 3,
+  "batch_size": 32,
+  "learning_rate": 2e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "temperature": 0.05,
+  "max_grad_norm": 1.0,
+  "max_seq_length": 256,
+  "heldout_fraction": 0.2,
+  "leakage_jaccard_threshold": 0.5
+}

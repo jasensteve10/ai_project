@@ -2,24 +2,28 @@
 
 A       all schema + domain cards (full-schema baseline with fixed definitions), no entity cards
 B/C/D   per-kind top-k from BM25 / dense / RRF(BM25, dense)
+C_FT    per-kind top-k from the fine-tuned dense retriever (src/pipeline/train.py)
 F1/F3   the dev-selected static retriever + bounded agent search (1 or 3 retrieval calls)
 ORACLE  human-labelled relevant cards (diagnostic: isolates generation/execution errors)
 FULL    every card (optional diagnostic: long-context upper bound on coverage)
 """
+from pathlib import Path
+
 from src.retrieval.bm25 import BM25
 from src.retrieval.corpus import format_cards
 from src.retrieval.fusion import rrf
 
 KINDS = ('schema', 'domain', 'entity')
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class Retrievers:
     """Lazily built retrievers returning full rankings of card IDs."""
 
-    def __init__(self, cards, dense_model, corpus_version, dense_revision=None):
+    def __init__(self, cards, dense_model, corpus_version, dense_revision=None, dense_ft_model=None):
         self.cards, self.dense_model, self.corpus_version = cards, dense_model, corpus_version
-        self._bm25 = self._dense = None
-        self.dense_revision = dense_revision
+        self._bm25 = self._dense = self._dense_ft = None
+        self.dense_revision, self.dense_ft_model = dense_revision, dense_ft_model
 
     @property
     def dense(self):
@@ -29,6 +33,16 @@ class Retrievers:
                                          revision=self.dense_revision)
         return self._dense
 
+    @property
+    def dense_ft(self):
+        if self._dense_ft is None:
+            if not self.dense_ft_model:
+                raise ValueError('No fine-tuned model configured (dense_ft_model)')
+            from src.retrieval.dense import DenseRetriever
+            self._dense_ft = DenseRetriever(self.cards, str(ROOT / self.dense_ft_model),
+                                            corpus_version=self.corpus_version)
+        return self._dense_ft
+
     def rank(self, name, query):
         n = len(self.cards)
         if name == 'bm25':
@@ -37,6 +51,8 @@ class Retrievers:
             return [cid for cid, _ in self._bm25.search(query, n)]
         if name == 'dense':
             return [cid for cid, _ in self.dense.search(query, n)]
+        if name == 'dense_ft':
+            return [cid for cid, _ in self.dense_ft.search(query, n)]
         if name == 'hybrid':
             return [cid for cid, _ in rrf([[(c, 0) for c in self.rank('bm25', query)],
                                            [(c, 0) for c in self.rank('dense', query)]], top=n)]

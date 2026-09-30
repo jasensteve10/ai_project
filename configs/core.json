@@ -54,6 +54,10 @@
     },
     "FULL": {
       "context": "full_corpus"
+    },
+    "C_FT": {
+      "context": "retrieval",
+      "retriever": "dense_ft"
     }
   },
   "default_conditions": [
@@ -72,5 +76,6 @@
     "output_per_million_tokens": null,
     "note": "Fill from the provider's price page for the exact model, with the date checked. Free-tier runs have no billed cost; any cost shown is an estimate."
   },
-  "dense_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3"
+  "dense_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "dense_ft_model": "models/e5-small-edan-ft"
 }

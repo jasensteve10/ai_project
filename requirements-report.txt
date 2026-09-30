@@ -1,3 +1,0 @@
-# Optional PDF report authoring stack; no model calls required.
--r requirements-eda.txt
-reportlab==5.0.1

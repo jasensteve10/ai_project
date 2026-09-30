@@ -2,9 +2,8 @@
 import duckdb
 import pytest
 pytest.importorskip('matplotlib')
-pytest.importorskip('markdown')
-from src.analysis.eda import derive_units, profile_pdf
-from src.ingestion.ingestion import PDF_PATH
+from src.eda.analysis import derive_units, profile_pdf
+from src.preprocessing.ingestion import PDF_PATH
 
 
 def test_raw_structural_blanks_are_counted(extracted):

@@ -1,6 +1,6 @@
 import pytest
-from src.ingestion.ingestion import extract_pdf, transform_data
-from src.schema.schema import build_database
+from src.preprocessing.ingestion import extract_pdf, transform_data
+from src.preprocessing.schema import build_database
 
 
 @pytest.fixture(scope='session')

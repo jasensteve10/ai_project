@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
-from src.ETL_fonctions.fonctions_ingest import _normalize_text, _is_header_row
-from src.ingestion.ingestion import build_audit, validate_data, OUTPUT_DIR
-from src.schema.schema import build_database
+from src.preprocessing.extract import _normalize_text, _is_header_row
+from src.preprocessing.ingestion import build_audit, validate_data, OUTPUT_DIR
+from src.preprocessing.schema import build_database
 
 
 def test_pdf_reconciles_with_national_totals(extracted):

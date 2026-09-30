@@ -13,7 +13,7 @@ from src.evaluation.runner import main as run
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG = ROOT / 'configs/text_to_sql_comparison.json'
-AUDIT = ROOT / 'docs/evaluation/comparison_preflight_2026-09-30.json'
+AUDIT = ROOT / 'experiments/preflight/comparison_preflight_2026-09-30.json'
 
 
 def verify_preflight(config, root=ROOT, audit_path=AUDIT):

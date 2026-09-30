@@ -1,0 +1,20 @@
+column,unit_of_observation,unit,definition
+region,constituency,text,Source region/district label; 33 observed labels.
+circonscription_id,constituency,text ID,Three-character identifier; preserve leading zeros.
+circonscription_name,constituency,text,Source constituency name; names can describe multiple communes.
+nb_bureaux_vote,constituency,count,Polling stations.
+inscrits,constituency,persons,Registered voters.
+votants,constituency,persons,Voters; equals invalid plus expressed ballots.
+taux_participation,constituency,fraction,"Voters / registered, rounded in PDF to 0.01 percentage points."
+bulletins_nuls,constituency,ballots,Invalid ballots; derived rate denominator is voters.
+suffrages_exprimes,constituency,ballots,Expressed ballots in this source include blank ballots.
+bulletins_blancs_nb,constituency,ballots,Blank ballots.
+bulletins_blancs_pct,constituency,fraction,"Blank / expressed, rounded in source."
+parti,candidate/list,text,Party/grouping label; INDEPENDANT pools independent entries.
+candidat,candidate/list,text,Candidate or list label; not necessarily a person or unique identity.
+score,candidate/list,votes,Votes for the candidate/list.
+score_pct,candidate/list,fraction,"Score / expressed, rounded in source; includes blanks in denominator."
+elu,candidate/list,boolean,True for PDF marker ELU(E); not a seat count.
+source_page,provenance,integer,One-based PDF page of candidate row.
+source_table,provenance,integer,One-based table after corrected extraction.
+source_row,provenance,integer,"One-based row after corrected extraction, including headers."

@@ -11,7 +11,6 @@ import json
 import math
 import random
 from collections import Counter, defaultdict
-from pathlib import Path
 
 from src.evaluation.benchmark import file_hash, load_benchmark
 from src.evaluation.runner import PROJECT_ROOT, RUNS_DIR, read_traces

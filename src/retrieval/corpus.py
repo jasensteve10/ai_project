@@ -7,11 +7,11 @@ from pathlib import Path
 
 import duckdb
 
-from src.schema.schema import DB_PATH, DESCRIPTIONS, read_catalog
+from src.preprocessing.schema import DB_PATH, DESCRIPTIONS, read_catalog
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 GLOSSARY_PATH = PROJECT_ROOT / 'src/semantic/glossary.json'
-DICTIONARY_PATH = PROJECT_ROOT / 'docs/eda/tables/data_dictionary.csv'
+DICTIONARY_PATH = PROJECT_ROOT / 'src/semantic/data_dictionary.csv'
 CARDS_PATH = PROJECT_ROOT / 'dataset/retrieval/cards.jsonl'
 PDF_PATH = PROJECT_ROOT / 'dataset/raw/EDAN_2025_RESULTAT_NATIONAL_DETAILS.pdf'
 
